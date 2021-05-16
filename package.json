@@ -1,72 +1,42 @@
 {
-  "name": "ulka",
-  "version": "0.6.8-rc.2",
-  "description": "Ulka - A simpler static site generator written in JavaScript",
-  "main": "./src/index.js",
-  "bin": {
-    "ulka": "./bin/index.js"
-  },
-  "scripts": {
-    "test": "cross-env FORCE_COLOR=1 jest tests",
-    "test:e2e": "cross-env FORCE_COLOR=1 jest tests/e2e",
-    "test:unit": "cross-env FORCE_COLOR=1 jest tests/unit",
-    "eslint": "eslint \"**/*.js\" --color",
-    "eslint:fix": "eslint \"**/*.js\" --fix --color",
-    "prettier": "prettier \"**/*.js\"",
-    "prettier:write": "prettier --write \"**/*.js\"",
-    "lint-staged": "lint-staged",
-    "prepublishOnly": "npm run eslint && npm run test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ulkajs/ulka.git"
-  },
-  "keywords": [
-    "generator",
-    "website",
-    "jekyll",
-    "blog",
-    "ssg",
-    "gatsby",
-    "11ty",
-    "html",
-    "markdown",
-    "templates",
-    "static-site"
+  "name": "ulka-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
-  "author": "Roshan Acharya",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ulkajs/ulka/issues"
-  },
-  "homepage": "https://github.com/ulkajs/ulka#readme",
-  "dependencies": {
-    "chalk": "^4.1.0",
-    "chokidar": "^3.4.2",
-    "commander": "^6.1.0",
-    "front-matter": "^4.0.2",
-    "hosted-git-info": "^3.0.6",
-    "node-fetch": "^2.6.1",
-    "portfinder": "^1.0.28",
-    "prompts": "^2.3.2",
-    "remarkable": "^2.0.1",
-    "ulka-parser": "^0.4.1",
-    "ws": "^7.3.1"
+  "scripts": {
+    "build": "scripty",
+    "clean": "scripty",
+    "cb": "scripty",
+    "lint": "scripty"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.14",
-    "cheerio": "^1.0.0-rc.3",
-    "cross-env": "^7.0.2",
-    "eslint": "^7.10.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^6.12.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.3.0",
-    "jest": "^26.5.2",
-    "lint-staged": "^10.4.0",
-    "prettier": "^2.1.2"
+    "@types/node": "^15.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "jest": "^26.6.3",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.0",
+    "scripty": "^2.0.0",
+    "ts-jest": "^26.5.6",
+    "typescript": "^4.2.4",
+    "wsrun": "^5.2.4",
+    "yorkie": "^2.0.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": "eslint --fix"
+    "*.ts": [
+      "prettier --write",
+      "eslint"
+    ]
   }
 }

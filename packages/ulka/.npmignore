@@ -1,0 +1,5 @@
+node_modules/
+src/
+.npmignore
+tsconfig.json
+rollup.config.js

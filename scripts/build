@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+const { execSync } = require("child_process");
+const c = require("ansi-colors");
+
+console.log(c.green.bold("┏━━━ 📦 Building ━━━━━━━━━━━━━━━━━━━"));
+execSync("yarn wsrun -c build", { stdio: "inherit" });
