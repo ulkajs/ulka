@@ -7,9 +7,7 @@ import matter from 'gray-matter'
 import { UlkaError } from '../UlkaError'
 
 import type { FileInfo } from '../FileInfo'
-
-// TODO: import type later
-type Collection = any
+import type { Collection } from '../Collection'
 
 const writeFile = util.promisify(fs.writeFile)
 const mkdir = util.promisify(fs.mkdir)

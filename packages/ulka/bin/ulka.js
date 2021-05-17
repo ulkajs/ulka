@@ -1,4 +1,4 @@
-#!/bin/usr/env node
+#!/usr/bin/env node
 
 const c = require('ansi-colors')
 const { program } = require('commander')
