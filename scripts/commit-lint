@@ -1,10 +1,8 @@
 #!/usr/bin/env node
 const c = require('ansi-colors')
 
-const msgPath = process.env.GIT_PARAMS
-const msg = require('fs').readFileSync(msgPath, 'utf-8').trim()
-
-console.log(c.greenBright.bold('┏━━━ 🧹 Commit Lint ━━━━━━━━━━━━━━━━━━━\n'))
+const path = process.env.GIT_PARAMS
+const msg = require('fs').readFileSync(path, 'utf-8').trim()
 
 const regex =
   /(feat|fix|docs|style|refactor|perf|test|build|ci|chore)(\(.+\))?: .+/

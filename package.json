@@ -35,7 +35,7 @@
   },
   "gitHooks": {
     "pre-commit": "lint-staged",
-    "commit-msg": "./scripts/commit-lint "
+    "commit-msg": "./scripts/commit-lint"
   },
   "lint-staged": {
     "*.ts": [
