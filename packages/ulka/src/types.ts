@@ -1,6 +1,5 @@
-// TODO: import later
-type Ulka = any
-type Template = any
+import type { Ulka } from './Ulka'
+import type { Template } from './Templates/Template'
 
 export interface ContentConfig {
   forEach: (temp: Template, index: number, temps: Template[]) => any
