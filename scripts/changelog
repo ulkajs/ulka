@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+const { execSync } = require('child_process')
+const c = require('ansi-colors')
+
+console.log(
+  c.blueBright.bold('┏━━━ 📝 Generating Changelog ━━━━━━━━━━━━━━━━━━━\n')
+)
+execSync('yarn wsrun -c changelog', { stdio: 'inherit' })

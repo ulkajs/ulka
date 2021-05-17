@@ -5,7 +5,7 @@ const path = process.env.GIT_PARAMS
 const msg = require('fs').readFileSync(path, 'utf-8').trim()
 
 const regex =
-  /(feat|fix|docs|style|refactor|perf|test|build|ci|chore)(\(.+\))?: .+/
+  /^(feat|fix|docs|style|refactor|perf|test|build|ci|chore)(\(.+\))?: .+/
 
 if (!regex.test(msg)) {
   console.error(c.red('Invalid commit message format.\n\n'))

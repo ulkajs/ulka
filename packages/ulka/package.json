@@ -11,7 +11,8 @@
     "build": "rollup -c",
     "clean": "rimraf dist",
     "cb": "run-s clean build",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path ."
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
+    "release": "../../scripts/release"
   },
   "repository": {
     "type": "git",
