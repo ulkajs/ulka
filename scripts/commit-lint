@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+const c = require('ansi-colors')
+
+const msgPath = process.env.GIT_PARAMS
+const msg = require('fs').readFileSync(msgPath, 'utf-8').trim()
+
+console.log(c.greenBright.bold('┏━━━ 🧹 Commit Lint ━━━━━━━━━━━━━━━━━━━\n'))
+
+const regex =
+  /(feat|fix|docs|style|refactor|perf|test|build|ci|chore)(\(.+\))?: .+/
+
+if (!regex.test(msg)) {
+  console.error(c.red('Invalid commit message format.\n\n'))
+  process.exit(1)
+}

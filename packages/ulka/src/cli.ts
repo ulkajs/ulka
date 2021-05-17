@@ -1,1 +1,1 @@
-console.log("cli.js");
+console.log('cli.js')

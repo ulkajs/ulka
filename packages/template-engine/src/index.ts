@@ -1,1 +1,1 @@
-export default "Hello World From Template Engine";
+export default 'Hello World From Template Engine'
