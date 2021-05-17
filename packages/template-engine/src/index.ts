@@ -21,7 +21,7 @@ function render(str: string, data: { [key: string]: any }, options: Options) {
       result = result.join('')
     }
 
-    return result
+    return result || ''
   })
 }
 
