@@ -7,17 +7,12 @@ import c from 'ansi-colors'
 import mime from 'mime-types'
 import getPort from 'get-port'
 
-import { getNetworkAddress } from './utils'
+import { box, getNetworkAddress } from './utils'
 
 const ip = getNetworkAddress()
 export class UlkaServer {
   public server: http.Server
   public wss: ReturnType<typeof wsServer>
-
-  public middlewares: ((
-    req: http.IncomingMessage,
-    res: http.ServerResponse
-  ) => any)[] = []
 
   constructor(public base: string, public port: number) {
     this.server = this.createServer()
@@ -44,8 +39,6 @@ export class UlkaServer {
 
   private requestListener(req: http.IncomingMessage, res: http.ServerResponse) {
     const { pathname } = new url.URL(req.url!, `http://localhost:${this.port}`)
-
-    this.middlewares.forEach((m) => m(req, res))
 
     let filepath = path.join(this.base, pathname)
     let exists = fs.existsSync(filepath)
@@ -84,11 +77,11 @@ export class UlkaServer {
   }
 
   log() {
-    const local = `http://localhost:${this.port}`
-    const network = `http://${ip}:${this.port}`
+    const local = c.bold('- Local:    ') + `http://localhost:${this.port}`
+    const network = c.bold('- Network:  ') + `http://${ip}:${this.port}`
     const listening = c.greenBright(`Listening...`)
 
-    const log = `\n\n${listening}\n${network}\n\n${local}\n\n`
+    const log = box(`\n\n${listening}\n\n${local}\n${network}\n\n`)
     console.log(log)
   }
 }
