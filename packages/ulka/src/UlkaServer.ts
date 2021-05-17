@@ -7,9 +7,9 @@ import c from 'ansi-colors'
 import mime from 'mime-types'
 import getPort from 'get-port'
 
-import { box, getNetworkAddress } from './utils'
+import { box, getNetworkAddress, liveReloadScript } from './utils'
 
-const ip = getNetworkAddress()
+export const ip = getNetworkAddress()
 export class UlkaServer {
   public server: http.Server
   public wss: ReturnType<typeof wsServer>
@@ -102,27 +102,4 @@ function wsServer(server: http.Server) {
       this.send('reload-css')
     },
   }
-}
-
-function liveReloadScript() {
-  return `<script>
-if ('WebSocket' in window) {
-  const protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-  const address = protocol + window.location.host + window.location.pathname;
-  const ws = new WebSocket(address);
-      
-  ws.addEventListener('message', e => {
-    if(e.data === "reload"){
-      location.reload()
-    }else if(e.data === "reload-css"){
-      const links = document.querySelectorAll("link[rel='stylesheet']")
-      links.forEach(link => (link.href += ""))
-    }else {
-      console.log(e.data)
-    }
-  });
-}else {
-    console.warn("Your browser doesn't support websockets, so can't live reload")
-}
-</script>`
 }
