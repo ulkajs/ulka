@@ -1,6 +1,7 @@
 import os from 'os'
 import path from 'path'
 import c from 'ansi-colors'
+import chokidar from 'chokidar'
 
 import { UlkaError } from './UlkaError'
 
@@ -192,4 +193,23 @@ if ('WebSocket' in window) {
     console.warn("Your browser doesn't support websockets, so can't live reload")
 }
 </script>`
+}
+
+export function createWatcher(ulka: Ulka) {
+  return chokidar.watch(ulka.cwd, {
+    ignoreInitial: true,
+    awaitWriteFinish: {
+      pollInterval: 25,
+      stabilityThreshold: 100,
+    },
+    ignored: [
+      '**/node_modules/**',
+      '**/.vscode/**',
+      '**/.git/**',
+      '**/{package,package-lock,tsconfig}.json',
+      '**/yarn.lock',
+      ulka.configs.output,
+    ],
+    cwd: ulka.cwd,
+  })
 }
