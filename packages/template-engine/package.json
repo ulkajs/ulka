@@ -1,5 +1,5 @@
 {
-  "name": "@ulka/template-engine",
+  "name": "@ulkajs/template-engine",
   "version": "1.0.0",
   "description": "Simple template engine for ulka static site generator",
   "main": "dist/index.js",

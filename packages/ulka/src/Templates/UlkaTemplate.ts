@@ -1,4 +1,4 @@
-import * as ulka from '@ulka/template-engine'
+import * as ulka from '@ulkajs/template-engine'
 
 import { Template } from './Template'
 
