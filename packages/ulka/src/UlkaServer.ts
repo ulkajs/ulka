@@ -7,6 +7,9 @@ import c from 'ansi-colors'
 import mime from 'mime-types'
 import getPort from 'get-port'
 
+import { getNetworkAddress } from './utils'
+
+const ip = getNetworkAddress()
 export class UlkaServer {
   public server: http.Server
   public wss: ReturnType<typeof wsServer>
@@ -82,9 +85,10 @@ export class UlkaServer {
 
   log() {
     const local = `http://localhost:${this.port}`
+    const network = `http://${ip}:${this.port}`
     const listening = c.greenBright(`Listening...`)
 
-    const log = `\n\n${listening}\n\n${local}\n\n`
+    const log = `\n\n${listening}\n${network}\n\n${local}\n\n`
     console.log(log)
   }
 }
