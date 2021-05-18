@@ -63,7 +63,7 @@ async function run() {
       name: 'template',
       choices: templates.map((m) => ({
         value: m.name,
-        message: m.color(m.name),
+        message: m.color(m.name + '-starter'),
       })),
     }))
   }

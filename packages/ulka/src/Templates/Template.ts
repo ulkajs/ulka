@@ -66,6 +66,8 @@ export class Template {
 
   public async render(ctx?: object) {
     try {
+      await mkdir(path.parse(this.buildPath).dir, { recursive: true })
+
       const fn = await this.compile()
       const content = await fn(ctx)
       this.content = await this.layout(content)
@@ -96,7 +98,6 @@ export class Template {
 
   public async write(content: string | Buffer = this.content) {
     try {
-      await mkdir(path.parse(this.buildPath).dir, { recursive: true })
       await writeFile(this.buildPath, content)
     } catch (e) {
       const cwd = this.collection.ulka.cwd

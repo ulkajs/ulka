@@ -113,11 +113,16 @@ export function resolvePlugin(pluginConfig: PluginConfig, ulka: Ulka) {
 
   let plugin: { [key: string]: any } = {}
   try {
-    const req = require(resolved)
-    if (typeof req !== 'function')
-      c.redBright(`> ${name} exports ${typeof req} instead of function`)
+    let req = require(resolved)
+    if (req.default) req = req.default
 
-    plugin = req(options)
+    if (typeof req === 'function') {
+      plugin = req(options)
+    } else {
+      console.log(
+        c.redBright(`> ${name} exports ${typeof req} instead of function`)
+      )
+    }
   } catch (e) {
     if (e.code === 'MODULE_NOT_FOUND') {
       c.redBright(`> Can't resolve plugin ${name}`)
