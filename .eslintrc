@@ -15,5 +15,5 @@
     "no-useless-constructor": "off",
     "@typescript-eslint/no-useless-constructor": ["error"]
   },
-  "ignorePatterns": ["scripts/**"]
+  "ignorePatterns": ["scripts/**", "**/dist/**"]
 }
