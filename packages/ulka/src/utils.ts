@@ -213,3 +213,7 @@ export function createWatcher(ulka: Ulka) {
     cwd: ulka.cwd,
   })
 }
+
+export function defineConfig(configs: Configs) {
+  return configs
+}

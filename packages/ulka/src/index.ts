@@ -52,8 +52,9 @@ export async function watch(ulka: Ulka, verbose = false): Promise<FSWatcher> {
   return watcher
 }
 
-export { Ulka }
+export { Ulka, clearConsole }
 export { FileInfo } from './FileInfo'
+export { defineConfig } from './utils'
 export { UlkaError } from './UlkaError'
 export { Collection } from './Collection'
 export { UlkaServer } from './UlkaServer'
