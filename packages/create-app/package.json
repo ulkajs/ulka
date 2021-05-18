@@ -1,0 +1,30 @@
+{
+  "name": "@ulkajs/create-app",
+  "version": "1.0.0",
+  "bin": {
+    "create-app": "index.js"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "echo \"build placeholder\"",
+    "clean": "echo \"clean placeholder\"",
+    "cb": "echo \"cb placeholder\"",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package create-app",
+    "release": "./scripts/update && ../../scripts/release --skipBuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ulkajs/ulka.git",
+    "directory": "packages/create-app"
+  },
+  "bugs": {
+    "url": "https://github.com/vitejs/vite/issues"
+  },
+  "homepage": "https://github.com/vitejs/vite/tree/main/packages/create-app#readme",
+  "devDependencies": {
+    "ansi-colors": "^4.1.1",
+    "enquirer": "^2.3.6",
+    "minimist": "^1.2.5"
+  }
+}
