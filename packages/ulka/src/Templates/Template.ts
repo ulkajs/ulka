@@ -49,9 +49,9 @@ export class Template {
       }
 
       const _ = { ...this.context, content, ...ctx }
-      const contentWith_ = await renderFunc({ _ })
+      const contentWithLayout = await renderFunc({ _ })
 
-      return contentWith_
+      return tpl.layout(contentWithLayout, { _ })
     } catch (e) {
       const cwd = this.collection.ulka.cwd
       const rlpath = path.relative(cwd, lpath)
