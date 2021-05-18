@@ -20,6 +20,7 @@ const currentVersion = pkg.version
 
 const isDryRun = args.dry
 const skipBuild = args.skipBuild
+const skipChangelog = args.skipChangelog
 
 const versionIncrements = [
   'patch',
@@ -96,8 +97,10 @@ async function main() {
     console.log(`(skipped)`)
   }
 
-  step('Generating changelog....')
-  await run('yarn', ['changelog'])
+  if (!skipChangelog) {
+    step('Generating changelog....')
+    await run('yarn', ['changelog'])
+  }
 
   const { stdout } = await run('git', ['diff'], { stdio: 'pipe' })
   if (stdout) {

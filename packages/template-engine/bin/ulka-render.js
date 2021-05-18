@@ -7,7 +7,7 @@ const { render } = require('../dist')
 const pkg = require('../package.json')
 
 const cwd = process.cwd()
-const args = process.argv.splice(2)
+const args = process.argv.slice(2)
 
 const helpText = `
 Usage: ulka-render <input> [options]
