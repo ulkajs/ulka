@@ -33,7 +33,7 @@ export const run: (...args: any[]) => Promise<void> = async ({
     process.exit(0)
   }
 
-  ulka.port = port
+  ulka.server.port = port
   await ulka.server.findPort()
 
   await watch(ulka, vrbse)
