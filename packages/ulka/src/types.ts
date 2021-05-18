@@ -22,7 +22,7 @@ export interface Configs {
   plugins: PluginConfig[]
 }
 
-type PluginFunction = (arg: { ulka: Ulka; [key: string]: any }) => any
+export type PluginFunction = (arg: { ulka: Ulka; [key: string]: any }) => any
 
 export interface Plugins {
   afterSetup: PluginFunction[]

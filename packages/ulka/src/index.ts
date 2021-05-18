@@ -1,15 +1,9 @@
 import c from 'ansi-colors'
 
+import type { FSWatcher } from 'chokidar'
+
 import { Ulka } from './Ulka'
 import { runPlugins, createWatcher, clearConsole } from './utils'
-
-export { Ulka }
-export { FileInfo } from './FileInfo'
-export { engines } from './Templates'
-export { UlkaError } from './UlkaError'
-export { Collection } from './Collection'
-export { UlkaServer } from './UlkaServer'
-export type { Configs, ContentConfig, PluginConfig, Plugins } from './types'
 
 export async function setup(cwd: string, task: string, cpath: string) {
   const ulka = new Ulka(cwd, task, cpath)
@@ -33,7 +27,7 @@ export async function build(ulka: Ulka) {
   await runPlugins('afterBuild', { ulka })
 }
 
-export async function watch(ulka: Ulka, verbose = false) {
+export async function watch(ulka: Ulka, verbose = false): Promise<FSWatcher> {
   await build(ulka)
 
   const watcher = createWatcher(ulka)
@@ -57,3 +51,24 @@ export async function watch(ulka: Ulka, verbose = false) {
 
   return watcher
 }
+
+export { Ulka }
+export { FileInfo } from './FileInfo'
+export { UlkaError } from './UlkaError'
+export { Collection } from './Collection'
+export { UlkaServer } from './UlkaServer'
+export type {
+  Configs,
+  ContentConfig,
+  PluginConfig,
+  Plugins,
+  PluginFunction,
+} from './types'
+export {
+  Engines,
+  EjsTemplate,
+  LiquidTemplate,
+  MdTemplate,
+  Template,
+  UlkaTemplate,
+} from './Templates'

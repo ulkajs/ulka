@@ -3,3 +3,6 @@ src/
 .npmignore
 tsconfig.json
 rollup.config.js
+api-extractor.json
+CHANGELOG.md
+temp/

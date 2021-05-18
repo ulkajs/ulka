@@ -1,7 +1,7 @@
 import fs from 'fs'
 import c from 'ansi-colors'
 
-import { engines } from './Templates'
+import { engines, Engines } from './Templates'
 import { UlkaServer } from './UlkaServer'
 import { Collection } from './Collection'
 import { readConfigs, resolvePlugin } from './utils'
@@ -9,7 +9,7 @@ import { readConfigs, resolvePlugin } from './utils'
 import type { Configs, Plugins } from './types'
 
 export class Ulka {
-  public engines = engines
+  public engines: Engines = engines
   public layout?: Collection
   public configs: Configs
   public server: UlkaServer

@@ -12,7 +12,7 @@ import { box, getNetworkAddress, liveReloadScript } from './utils'
 export const ip = getNetworkAddress()
 export class UlkaServer {
   public server: http.Server
-  public wss: ReturnType<typeof wsServer>
+  public wss: { send(data: string): void; reload(): void; reloadCss(): void }
 
   constructor(public base: string, public port: number) {
     this.server = this.createServer()

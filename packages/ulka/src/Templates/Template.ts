@@ -6,8 +6,8 @@ import matter from 'gray-matter'
 
 import { UlkaError } from '../UlkaError'
 
-import type { FileInfo } from '../FileInfo'
-import type { Collection } from '../Collection'
+import { FileInfo } from '../FileInfo'
+import { Collection } from '../Collection'
 
 const writeFile = util.promisify(fs.writeFile)
 const mkdir = util.promisify(fs.mkdir)

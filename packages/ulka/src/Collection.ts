@@ -5,8 +5,8 @@ import { FileInfo } from './FileInfo'
 import { UlkaError } from './UlkaError'
 
 import type { Ulka } from './Ulka'
+import type { Template } from './Templates'
 import type { ContentConfig } from './types'
-import type { Template } from './Templates/Template'
 
 export class Collection {
   public contents: Template[] = []
