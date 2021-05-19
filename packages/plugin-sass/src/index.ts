@@ -2,12 +2,18 @@ import fs from 'fs'
 import sass from 'sass'
 import { Template, PluginFunction } from 'ulka'
 
+// cache filepath, sass and css
+const cache: { [key: string]: { sass: string; css: Buffer } } = {}
+
 class SassTemplate extends Template {
   static sass = sass
   static opts: sass.Options = {}
 
   async compile() {
     return async () => {
+      if (cache[this.fileinfo.filepath]?.sass === this.content)
+        return cache[this.fileinfo.filepath].css
+
       const result = SassTemplate.sass.renderSync({
         data: this.content as string,
         file: this.fileinfo.filepath,
@@ -16,8 +22,13 @@ class SassTemplate extends Template {
         indentedSyntax: this.fileinfo.parsedpath.ext === '.sass',
       })
 
-      if (SassTemplate.opts.sourceMap) {
-        fs.writeFileSync(this.buildPath + '.map', result.map!)
+      if (result.map) {
+        fs.writeFileSync(this.buildPath + '.map', result.map)
+      }
+
+      cache[this.fileinfo.filepath] = {
+        sass: this.content as string,
+        css: result.css,
       }
 
       return result.css
