@@ -1,9 +1,14 @@
 {
   "name": "@ulkajs/plugin-sass",
   "version": "1.0.0",
-  "description": "Use sass with ulkajs",
+  "description": "Sass and Scss support plugin for ulkajs",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
+  "author": {
+    "name": "Roshan Acharya",
+    "email": "acharyaroshan2357@gmail.com"
+  },
   "scripts": {
     "cb": "run-s clean build",
     "build": "tsc",
@@ -11,11 +16,17 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package plugin-sass",
     "release": "./scripts/update && ../../scripts/release --skipBuild"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ulkajs/ulka.git",
+    "directory": "packages/plugin-sass"
+  },
+  "bugs": {
+    "url": "https://github.com/ulkajs/ulka/issues"
+  },
+  "homepage": "https://github.com/ulkajs/ulka/tree/main/packages/plugin-sass#readme",
   "devDependencies": {
-    "@types/node": "^15.3.0",
-    "@types/sass": "^1.16.0",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.2.4"
+    "@types/sass": "^1.16.0"
   },
   "peerDependencies": {
     "sass": "^1.32.13",

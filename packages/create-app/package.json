@@ -2,16 +2,20 @@
   "name": "@ulkajs/create-app",
   "version": "1.0.0",
   "bin": {
-    "create-app": "index.js"
+    "create-app": "bin/index.js"
   },
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
+  "author": {
+    "name": "Roshan Acharya",
+    "email": "acharyaroshan2357@gmail.com"
+  },
   "scripts": {
-    "build": "echo \"build placeholder\"",
-    "clean": "echo \"clean placeholder\"",
-    "cb": "echo \"cb placeholder\"",
+    "cb": "run-s clean build",
+    "build": "tsc",
+    "clean": "rimraf dist",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package create-app",
-    "release": "./scripts/update && ../../scripts/release --skipBuild"
+    "release": "./scripts/update && ../../scripts/release"
   },
   "repository": {
     "type": "git",
@@ -19,10 +23,10 @@
     "directory": "packages/create-app"
   },
   "bugs": {
-    "url": "https://github.com/vitejs/vite/issues"
+    "url": "https://github.com/ulkajs/ulka/issues"
   },
-  "homepage": "https://github.com/vitejs/vite/tree/main/packages/create-app#readme",
-  "devDependencies": {
+  "homepage": "https://github.com/ulkajs/ulka/tree/main/packages/create-app#readme",
+  "dependencies": {
     "ansi-colors": "^4.1.1",
     "enquirer": "^2.3.6",
     "minimist": "^1.2.5"

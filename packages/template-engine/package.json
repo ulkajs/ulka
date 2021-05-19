@@ -6,7 +6,10 @@
   "bin": {
     "ulka-render": "bin/ulka-render.js"
   },
-  "author": "Roshan Acharya",
+  "author": {
+    "name": "Roshan Acharya",
+    "email": "acharyaroshan2357@gmail.com"
+  },
   "license": "MIT",
   "scripts": {
     "build": "tsc",
@@ -17,14 +20,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ulkajs/ulka.git"
+    "url": "git+https://github.com/ulkajs/ulka.git",
+    "directory": "packages/template-engine"
   },
   "bugs": {
     "url": "https://github.com/ulkajs/ulka/issues"
   },
-  "homepage": "https://github.com/ulkajs/ulka/tree/main/packages/template-engine#readme",
-  "devDependencies": {
-    "@types/node": "^15.3.0",
-    "typescript": "^4.2.4"
-  }
+  "homepage": "https://github.com/ulkajs/ulka/tree/main/packages/template-engine#readme"
 }
