@@ -4,12 +4,12 @@ import c from 'ansi-colors'
 import { engines, Engines } from './Templates'
 import { UlkaServer } from './UlkaServer'
 import { Collection } from './Collection'
-import { readConfigs, resolvePlugin } from './utils'
+import { readConfigs, resolvePlugin, runPlugins } from './utils'
 
 import type { Configs, Plugins } from './types'
 
 export class Ulka {
-  public engines: Engines = engines
+  public engines: Engines = engines()
   public layout?: Collection
   public configs: Configs
   public server: UlkaServer
@@ -36,6 +36,13 @@ export class Ulka {
         return target[key].contents.map((c) => c.context)
       },
     })
+  }
+
+  async setup() {
+    this.engines = engines()
+    this.reset()
+    await runPlugins('afterSetup', { ulka: this })
+    return this
   }
 
   reset() {

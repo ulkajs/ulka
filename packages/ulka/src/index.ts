@@ -1,4 +1,5 @@
 import c from 'ansi-colors'
+import rimraf from 'rimraf'
 
 import type { FSWatcher } from 'chokidar'
 
@@ -6,8 +7,7 @@ import { Ulka } from './Ulka'
 import { runPlugins, createWatcher, clearConsole } from './utils'
 
 export async function setup(cwd: string, task: string, cpath: string) {
-  const ulka = new Ulka(cwd, task, cpath)
-  await runPlugins('afterSetup', { ulka })
+  const ulka = await new Ulka(cwd, task, cpath).setup()
   return ulka
 }
 
@@ -37,6 +37,15 @@ export async function watch(ulka: Ulka, verbose = false): Promise<FSWatcher> {
 
     clearConsole()
     console.log(c.blueBright(`> Change detected in ${filepath}\n`))
+
+    if (eventName === 'unlink')
+      rimraf.sync(ulka.configs.output, { disableGlob: true })
+
+    if (ulka.configpath.includes(filepath)) {
+      rimraf.sync(ulka.configs.output, { disableGlob: true })
+      Object.keys(require.cache).forEach((key) => delete require.cache[key])
+      await ulka.setup()
+    }
 
     ulka.reset()
     ulka.configs.verbose = verbose

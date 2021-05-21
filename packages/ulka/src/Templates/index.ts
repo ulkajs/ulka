@@ -13,12 +13,14 @@ export interface Engines {
   [key: string]: typeof Template
 }
 
-export const engines: Engines = {
-  '.ejs': EjsTemplate,
-  '.liquid': LiquidTemplate,
-  '.md': MdTemplate,
-  '.ulka': UlkaTemplate,
-  default: Template,
+export function engines(): Engines {
+  return {
+    '.ejs': EjsTemplate,
+    '.liquid': LiquidTemplate,
+    '.md': MdTemplate,
+    '.ulka': UlkaTemplate,
+    default: Template,
+  }
 }
 
 export { MdTemplate, EjsTemplate, LiquidTemplate, UlkaTemplate, Template }

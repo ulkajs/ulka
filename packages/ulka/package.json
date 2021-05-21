@@ -41,6 +41,7 @@
     "@types/ejs": "^3.0.6",
     "@types/markdown-it": "^12.0.1",
     "@types/mime-types": "^2.1.0",
+    "@types/rimraf": "^3.0.0",
     "@types/ws": "^7.4.4",
     "@ulkajs/template-engine": "1.0.0",
     "ansi-colors": "^4.1.1",
