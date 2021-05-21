@@ -18,19 +18,20 @@ export function getNetworkAddress() {
       }
     }
   }
+  return 'Not Found'
 }
 
-export function box(str: string, padding = 3) {
+export function box(str: string, padding = 3, fn: Function = c.green) {
   const ch = {
     e: ' ',
-    top: c.green('─'),
-    left: c.green('│'),
-    right: c.green('│'),
-    bottom: c.green('─'),
-    topLeft: c.green('╭'),
-    topRight: c.green('╮'),
-    bottomLeft: c.green('╰'),
-    bottomRight: c.green('╯'),
+    top: fn('─'),
+    left: fn('│'),
+    right: fn('│'),
+    bottom: fn('─'),
+    topLeft: fn('╭'),
+    topRight: fn('╮'),
+    bottomLeft: fn('╰'),
+    bottomRight: fn('╯'),
   }
 
   const arr = str.split('\n').map((v, i, a) => {
@@ -38,8 +39,6 @@ export function box(str: string, padding = 3) {
   })
 
   const max = Math.max(...arr.map((l) => c.unstyle(l).length)) + padding
-
-  if (process.stdout.columns < max + padding) return str.split('\n').join('\n ')
 
   return arr
     .map((l, i) => {
@@ -147,7 +146,10 @@ export function resolvePlugin(pluginConfig: PluginConfig, ulka: Ulka) {
   }
 }
 
-function validContentConfig(conf: ContentConfig, cName: string): ContentConfig {
+export function validContentConfig(
+  conf: ContentConfig,
+  cName: string
+): ContentConfig {
   if (typeof conf.match !== 'string' && !Array.isArray(conf.match)) {
     console.log(c.red(`> Please provide valid "match" for content ${cName}`))
     conf.match = []

@@ -22,7 +22,7 @@ export class Ulka {
   constructor(
     public cwd: string,
     public task: string,
-    public configpath = 'ulka-config',
+    public configpath: string,
     public port = 8080
   ) {
     this.plugins = emptyPlugins()

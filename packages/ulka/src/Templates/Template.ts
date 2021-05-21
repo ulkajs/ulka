@@ -84,17 +84,17 @@ export class Template {
     }
   }
 
-  async renderAndWrite() {
-    const ulka = this.collection.ulka
+  // async renderAndWrite() {
+  //   const ulka = this.collection.ulka
 
-    await this.render()
+  //   await this.render()
 
-    await this.write()
+  //   await this.write()
 
-    ulka.configs.verbose && this.log()
+  //   ulka.configs.verbose && this.log()
 
-    return this
-  }
+  //   return this
+  // }
 
   public async write(content: string | Buffer = this.content) {
     try {

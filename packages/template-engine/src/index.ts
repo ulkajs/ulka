@@ -7,7 +7,11 @@ export interface Options {
 
 export { render }
 
-function render(str: string, data: { [key: string]: any }, options: Options) {
+function render(
+  str: string,
+  data: { [key: string]: any } = {},
+  options: Options = { base: process.cwd() }
+) {
   const ctx = vm.createContext(context(data, options))
 
   return str.replace(/\\?{%(.*?)%}/gs, (match, js, index) => {
@@ -36,12 +40,16 @@ function context(ctx: any, options: Options) {
 function customRequire(requirePath: string, options: Options) {
   if (!options.base) throw new Error(`"base" is a required option.`)
 
-  const req = require.resolve(requirePath, { paths: [options.base] })
+  let req = ''
+  try {
+    req = require.resolve(requirePath, { paths: [options.base] })
+  } catch (err) {
+    throw new Error(`Couldn't require ${requirePath}`)
+  }
 
   try {
     return require(req)
   } catch (e) {
-    if (fs.existsSync(req)) return fs.readFileSync(req, 'utf-8')
-    else throw new Error(`Couldn't find file ${requirePath}`)
+    return fs.readFileSync(req, 'utf-8')
   }
 }

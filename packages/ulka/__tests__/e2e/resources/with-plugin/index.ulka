@@ -1,0 +1,6 @@
+---
+_link: "index.html"
+_layout: "someinvalidlayout.ejs"
+---
+<div class="reading-time">{% time %}</div>
+<div class="after-setup">{% afterSetup %}</div>
