@@ -132,15 +132,16 @@ export class Template {
 
     this.context = {
       matter,
-      content: this.content,
-      configs: this.collection.ulka.configs,
-      cwd: this.collection.ulka.cwd,
-      task: this.collection.ulka.task,
       link: this.link,
+      content: this.content,
       fileinfo: this.fileinfo,
       buildPath: this.buildPath,
       name: this.collection.name,
+      cwd: this.collection.ulka.cwd,
+      task: this.collection.ulka.task,
+      configs: this.collection.ulka.configs,
       collections: this.collection.ulka.collectionContents,
+      _collections: this.collection.ulka.collections,
       ...ctx,
     }
 

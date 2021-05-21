@@ -40,7 +40,6 @@ export class Ulka {
 
   async setup() {
     this.engines = engines()
-    this.reset()
     await runPlugins('afterSetup', { ulka: this })
     return this
   }
@@ -49,6 +48,7 @@ export class Ulka {
     this.collections = {}
     this.layout = undefined
     this.layoutFuncCache = {}
+
     this.plugins = emptyPlugins()
     this.configs = readConfigs(this)
     this.configs.plugins.forEach((p) => resolvePlugin(p, this))

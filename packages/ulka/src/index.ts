@@ -7,8 +7,7 @@ import { Ulka } from './Ulka'
 import { runPlugins, createWatcher, clearConsole } from './utils'
 
 export async function setup(cwd: string, task: string, cpath: string) {
-  const ulka = await new Ulka(cwd, task, cpath).setup()
-  return ulka
+  return await new Ulka(cwd, task, cpath).setup()
 }
 
 export async function build(ulka: Ulka) {
@@ -46,7 +45,6 @@ export async function watch(ulka: Ulka, verbose = false): Promise<FSWatcher> {
       Object.keys(require.cache).forEach((key) => delete require.cache[key])
       await ulka.setup()
     }
-
     ulka.reset()
     ulka.configs.verbose = verbose
     await build(ulka)
