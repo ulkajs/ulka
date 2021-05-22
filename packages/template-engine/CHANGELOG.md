@@ -1,3 +1,9 @@
+## v1.0.0
+
+- `const/let` is no longer replaced
+- Drop support for express
+- Used runInContext instead of runInNewContext
+
 ## v0.4.1
 
 - BugFix: use of declared variable throws error.
