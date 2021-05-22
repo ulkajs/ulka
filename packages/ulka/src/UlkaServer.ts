@@ -26,10 +26,11 @@ export class UlkaServer {
     return this
   }
 
-  listen() {
+  listen(fn?: Function) {
     this.server.listen(this.port, () => {
       console.log('')
       this.log()
+      fn && fn(this.server)
     })
   }
 

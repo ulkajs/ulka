@@ -26,7 +26,11 @@ export async function build(ulka: Ulka) {
   await runPlugins('afterBuild', { ulka })
 }
 
-export async function watch(ulka: Ulka, verbose = false): Promise<FSWatcher> {
+export async function watch(
+  ulka: Ulka,
+  verbose = false,
+  customFn?: Function
+): Promise<FSWatcher> {
   await build(ulka)
 
   const watcher = createWatcher(ulka)
@@ -54,6 +58,8 @@ export async function watch(ulka: Ulka, verbose = false): Promise<FSWatcher> {
     filepath.endsWith('.css')
       ? ulka.server.wss.reloadCss()
       : ulka.server.wss.reload()
+
+    customFn && customFn(watcher)
   })
 
   return watcher

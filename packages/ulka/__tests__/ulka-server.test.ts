@@ -1,3 +1,4 @@
+import fetch from 'node-fetch'
 import { UlkaServer } from '../src/UlkaServer'
 
 // @ts-ignore
@@ -7,8 +8,8 @@ beforeAll(() => {
 })
 
 describe('ulka:ulka-server', () => {
-  test('ulka-server:findport should not change anything if port is available', () => {
-    instance.findPort()
+  test('ulka-server:findport should not change anything if port is available', async () => {
+    await instance.findPort()
     expect(instance.port).toBe(3426)
   })
 
@@ -30,5 +31,23 @@ describe('ulka:ulka-server', () => {
     expect(() => instance.wss.reload()).not.toThrowError()
     expect(() => instance.wss.reloadCss()).not.toThrowError()
     expect(() => instance.wss.send('hi')).not.toThrowError()
+  })
+
+  test('ulka:listen should start the server', (done) => {
+    instance.listen(() => {
+      fetch(`http://localhost:${instance.port}/`).then((res) => {
+        expect(res.statusText).toBe('Not Found')
+        instance.server.close(() => done())
+      })
+    })
+  })
+
+  test('ulka:listen should serve the files', (done) => {
+    instance.listen(() => {
+      fetch(`http://localhost:${instance.port}/index.test.ts`).then((res) => {
+        expect(res.statusText).not.toBe('Not Found')
+        instance.server.close(() => done())
+      })
+    })
   })
 })

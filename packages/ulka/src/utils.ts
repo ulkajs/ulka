@@ -108,10 +108,9 @@ export function resolvePlugin(pluginConfig: PluginConfig, ulka: Ulka) {
     options = pluginConfig.options || {}
   }
 
-  const resolved = require.resolve(name, { paths: [ulka.cwd] })
-
   let plugin: { [key: string]: any } = {}
   try {
+    const resolved = require.resolve(name, { paths: [ulka.cwd] })
     let req = require(resolved)
     if (req.default) req = req.default
 
