@@ -32,8 +32,14 @@ export class Template {
     const matter = this.context.matter
     const { layout, configs, layoutFuncCache } = this.collection.ulka
 
-    if (!layout || !matter._layout || !configs.layout) return content
-    const lpath = path.join(configs.layout, matter._layout)
+    if (!layout || !configs.layout) return content
+
+    if (!matter._layout && !this.collection.config.layout) return content
+
+    const lpath = path.join(
+      configs.layout,
+      matter._layout || this.collection.config.layout
+    )
 
     try {
       const tpl = layout.contents.find(

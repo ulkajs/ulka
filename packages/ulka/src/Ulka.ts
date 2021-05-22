@@ -64,6 +64,7 @@ export class Ulka {
       sort() {},
       forEach() {},
       ignore: [],
+      layout: null,
     }
 
     const collection = new Collection(this, layoutConfig, '_layout')

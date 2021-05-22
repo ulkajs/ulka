@@ -6,6 +6,7 @@ export interface ContentConfig {
   sort: (a: Template, b: Template) => any
   match: string | string[]
   ignore: string[]
+  layout: string | null
 }
 
 export type PluginConfig =

@@ -159,6 +159,7 @@ export function validContentConfig(
     sort: conf.sort || (() => {}),
     forEach: conf.forEach || (() => {}),
     ignore: Array.isArray(conf.ignore) ? conf.ignore : [],
+    layout: conf.layout || null,
   }
 }
 
