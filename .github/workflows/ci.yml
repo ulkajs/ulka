@@ -18,7 +18,7 @@ jobs:
           - os: macos-latest
             node_version: 14
 
-    name: 'node-${{ matrix.node_version }},${{ matrix.os }}'
+    name: 'node-${{ matrix.node_version }}, ${{ matrix.os }}'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
