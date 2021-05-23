@@ -1,4 +1,5 @@
 import ejs from 'ejs'
+import path from 'path'
 
 import { Template } from './Template'
 
@@ -8,6 +9,8 @@ export class EjsTemplate extends Template {
   async compile() {
     const fn = EjsTemplate.ejs.compile(this.content as string, {
       beautify: false,
+      filename: path.join(this.collection.ulka.configs.include, 'ulka.ejs'),
+      root: this.collection.ulka.configs.include,
     })
 
     return async (ctx: object = {}) => {
