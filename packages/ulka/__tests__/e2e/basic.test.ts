@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import rimraf from 'rimraf'
+import readdir from 'recursive-readdir'
 import cheerio, { CheerioAPI } from 'cheerio'
 
 import { build, setup } from '../../src'
@@ -57,5 +58,15 @@ describe('e2e:basic - index.html', () => {
 
       expect(links).toEqual(['/blogs/post-1/'])
     })
+  })
+
+  test('all files should be built', async () => {
+    const files = (await readdir(path.join(cwd, '_site'))).map((p) =>
+      path.relative(path.join(cwd, '_site'), p).split(path.sep).join('/')
+    )
+
+    expect(files.sort()).toEqual(
+      ['index.html', 'custom/path/index.html', 'blogs/post-1/index.html'].sort()
+    )
   })
 })

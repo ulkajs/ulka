@@ -16,9 +16,7 @@ class SassTemplate extends Template {
         indentedSyntax: this.fileinfo.parsedpath.ext === '.sass',
       })
 
-      if (result.map) {
-        fs.writeFileSync(this.buildPath + '.map', result.map)
-      }
+      result.map && fs.writeFileSync(this.buildPath + '.map', result.map)
 
       return result.css
     }
