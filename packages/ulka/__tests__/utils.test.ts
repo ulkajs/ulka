@@ -95,6 +95,7 @@ describe('ulka:utils', () => {
       include: path.join(cwd, '_includes'),
       input: cwd,
       layout: path.join(cwd, '_layouts'),
+      liquidInSpecialFrontMatter: false,
       output: path.join(cwd, '_site'),
       plugins: [],
       verbose: false,

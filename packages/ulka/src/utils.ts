@@ -89,6 +89,7 @@ export const readConfigs = (ulka: Ulka) => {
     contents: req.contents || {},
     verbose: req.verbose || false,
     plugins: req.plugins || [],
+    liquidInSpecialFrontMatter: req.liquidInSpecialFrontMatter || false,
   }
 
   for (const name of Object.keys(configs.contents)) {
@@ -160,6 +161,7 @@ export function validContentConfig(
     forEach: conf.forEach || (() => {}),
     ignore: Array.isArray(conf.ignore) ? conf.ignore : [],
     layout: conf.layout || null,
+    link: conf.link || null,
   }
 }
 

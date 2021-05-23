@@ -65,6 +65,7 @@ export class Ulka {
       forEach() {},
       ignore: [],
       layout: null,
+      link: null,
     }
 
     const collection = new Collection(this, layoutConfig, '_layout')

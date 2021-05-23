@@ -2,6 +2,7 @@ import fs from 'fs'
 import util from 'util'
 import path from 'path'
 import c from 'ansi-colors'
+import { Liquid } from 'liquidjs'
 import matter from 'gray-matter'
 
 import { UlkaError } from '../UlkaError'
@@ -11,6 +12,7 @@ import { Collection } from '../Collection'
 
 const writeFile = util.promisify(fs.writeFile)
 const mkdir = util.promisify(fs.mkdir)
+const liquid = new Liquid()
 
 export class Template {
   public content: string | Buffer = ''
@@ -36,10 +38,21 @@ export class Template {
 
     if (!matter._layout && !this.collection.config.layout) return content
 
-    const lpath = path.join(
-      configs.layout,
-      matter._layout || this.collection.config.layout
-    )
+    const matterLayout = matter._layout
+      ? configs.liquidInSpecialFrontMatter
+        ? await liquid.parseAndRender(matter._layout, this.context)
+        : matter._layout
+      : null
+
+    const _layout =
+      matterLayout ||
+      (typeof this.collection.config.layout === 'function'
+        ? this.collection.config.layout(this)
+        : this.collection.config.layout)
+
+    if (typeof _layout !== 'string') return content
+
+    const lpath = path.join(configs.layout, _layout)
 
     try {
       const tpl = layout.contents.find(
@@ -90,18 +103,6 @@ export class Template {
     }
   }
 
-  // async renderAndWrite() {
-  //   const ulka = this.collection.ulka
-
-  //   await this.render()
-
-  //   await this.write()
-
-  //   ulka.configs.verbose && this.log()
-
-  //   return this
-  // }
-
   public async write(content: string | Buffer = this.content) {
     try {
       await writeFile(this.buildPath, content)
@@ -120,36 +121,52 @@ export class Template {
   }
 
   createCtx(ctx: object = {}) {
+    const matter = this.context.matter || {}
+    const ulka = this.collection.ulka
     let { link, buildPath } = this.getBuildPath()
 
-    const matter = this.context.matter || {}
-    if (matter._link) {
-      link = matter._link
-      buildPath = path.join(...link.split('/'))
-    }
-
-    buildPath = path.join(this.collection.ulka.configs.output, buildPath)
-
-    this.link = '/' + link
-
-    if (this.link !== '/') this.link += '/'
-
-    this.buildPath = buildPath
-
     this.context = {
+      link,
       matter,
-      link: this.link,
+      buildPath,
+      cwd: ulka.cwd,
+      task: ulka.task,
+      configs: ulka.configs,
       content: this.content,
       fileinfo: this.fileinfo,
-      buildPath: this.buildPath,
       name: this.collection.name,
-      cwd: this.collection.ulka.cwd,
-      task: this.collection.ulka.task,
-      configs: this.collection.ulka.configs,
-      collections: this.collection.ulka.collectionContents,
-      _collections: this.collection.ulka.collections,
+      _collections: ulka.collections,
+      collections: ulka.collectionContents,
       ...ctx,
     }
+
+    if (matter._link) {
+      link = ulka.configs.liquidInSpecialFrontMatter
+        ? liquid.parseAndRenderSync(matter._link, this.context)
+        : matter._link
+
+      buildPath = path.join(...link.split('/'))
+      if (link.endsWith('/index.html')) link = link.replace('/index.html', '/')
+    } else if (this.collection.config.link) {
+      link =
+        typeof this.collection.config.link === 'function'
+          ? this.collection.config.link(this)
+          : this.collection.config.link
+
+      buildPath = path.join(...link.split('/'))
+      if (link.endsWith('/index.html')) link = link.replace('/index.html', '/')
+    }
+
+    buildPath = path.join(ulka.configs.output, buildPath)
+
+    link = !link.startsWith('/') ? '/' + link : link
+
+    if (link !== '/' && !link.endsWith('/')) link += '/'
+
+    this.link = link
+    this.buildPath = buildPath
+    this.context.link = link
+    this.context.buildPath = buildPath
 
     return this
   }
