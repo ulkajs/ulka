@@ -39,36 +39,39 @@ export class Template {
   ): Promise<string | Buffer> {
     const matter = this.context.matter
 
-    // if matter._layout `false` then return content
-    if (matter._layout === false) return content
+    // if matter._layout `false` or `null`
+    // if there is no layout collection or no layout directory
+    // if matter._layout is not defined && no layout passed from content config
+    // then return content
 
-    // if there is no layout collection or no layout directory then return content
-    if (!this.ulka.layout || !this.ulka.configs.layout) return content
-
-    // if matter._layout is not defined && no layout passed from layout content then return content
-    if (!matter._layout && !this.configLayout) return content
+    if (
+      !this.ulka.layout ||
+      !this.ulka.configs.layout ||
+      matter._layout === false ||
+      matter._layout === null ||
+      (!matter._layout && !this.configLayout)
+    ) {
+      return content
+    }
 
     // if templateSpecialFrontMatter is true render matter._layout with @ulkajs/template-engine
     // give first priority to matter._layout and then from config
-    const base = this.ulka.configs.include
+
     const _layout = matter._layout
-      ? this.ulka.configs.templateSpecialFrontMatter
-        ? ulkaTemplate.render(matter._layout, this.context, { base })
-        : matter._layout
+      ? this._renderMatter(matter._layout)
       : typeof this.configLayout === 'function'
       ? this.configLayout(this)
       : this.configLayout
 
-    // if _layout is not string return content
-    // for eg. configLayout function ma return anything execept function
     if (typeof _layout !== 'string') return content
 
-    // absolute layout path to _layout
+    // absolute path to _layout
     const lpath = path.join(this.ulka.configs.layout, _layout)
 
     try {
       // find the layout in layout collection
       // if not found return content
+
       const tpl = this.ulka.layout.contents.find(
         (v: Template) => v.fileinfo.filepath === lpath
       )
@@ -158,21 +161,14 @@ export class Template {
 
     // if matter has _link prop and templateSpecialFrontMatter is turned on
     // render matter._link with @ulkajs/template-engine
-    if (matter._link) {
-      link = this.ulka.configs.templateSpecialFrontMatter
-        ? ulkaTemplate.render(matter._link, this.context, {
-            base: this.ulka.configs.include,
-          })
-        : matter._link
+    const _link = matter._link
+      ? this._renderMatter(matter._link)
+      : typeof this.configLink === 'function'
+      ? this.configLink(this)
+      : this.configLink
 
-      buildPath = path.join(...link.split('/'))
-      if (link.endsWith('/index.html')) link = link.replace('/index.html', '/')
-    } else if (this.configLink) {
-      link =
-        typeof this.configLink === 'function'
-          ? this.configLink(this)
-          : this.configLink
-
+    if (_link) {
+      link = _link
       buildPath = path.join(...link.split('/'))
       if (link.endsWith('/index.html')) link = link.replace('/index.html', '/')
     }
@@ -180,8 +176,7 @@ export class Template {
     buildPath = path.join(this.ulka.configs.output, buildPath)
 
     link = !link.startsWith('/') ? '/' + link : link
-
-    if (link !== '/' && !link.endsWith('/')) link += '/'
+    link = !link.endsWith('/') ? link + '/' : link
 
     this.link = link
     this.buildPath = buildPath
@@ -242,6 +237,12 @@ export class Template {
       .join('/')
 
     console.log(c.blue.bold('>'), c.dim(output))
+  }
+
+  private _renderMatter(data: string, context: object = {}) {
+    if (!this.ulka.configs.templateSpecialFrontMatter) return data
+    const base = this.ulka.configs.include
+    return ulkaTemplate.render(data, { ...this.context, ...context }, { base })
   }
 
   get hasMatter() {
