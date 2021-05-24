@@ -6,7 +6,13 @@ import chokidar from 'chokidar'
 import { UlkaError } from './UlkaError'
 
 import type { Ulka } from './Ulka'
-import type { Configs, ContentConfig, PluginConfig, Plugins } from './types'
+import type {
+  Configs,
+  ContentConfig,
+  PluginConfig,
+  Plugins,
+  ValidContentConfig,
+} from './types'
 
 export function getNetworkAddress() {
   const interfaces = os.networkInterfaces()
@@ -89,11 +95,7 @@ export const readConfigs = (ulka: Ulka) => {
     contents: req.contents || {},
     verbose: req.verbose || false,
     plugins: req.plugins || [],
-    liquidInSpecialFrontMatter: req.liquidInSpecialFrontMatter || false,
-  }
-
-  for (const name of Object.keys(configs.contents)) {
-    configs.contents[name] = validContentConfig(configs.contents[name], name)
+    templateSpecialFrontMatter: req.liquidInSpecialFrontMatter || false,
   }
 
   return configs
@@ -146,22 +148,21 @@ export function resolvePlugin(pluginConfig: PluginConfig, ulka: Ulka) {
   }
 }
 
-export function validContentConfig(
-  conf: ContentConfig,
-  cName: string
-): ContentConfig {
-  if (typeof conf.match !== 'string' && !Array.isArray(conf.match)) {
-    console.log(c.red(`> Please provide valid "match" for content ${cName}`))
-    conf.match = []
-  }
+export function createValidContentConfig(
+  config: ContentConfig
+): ValidContentConfig {
+  const match =
+    typeof config.match !== 'string' && !Array.isArray(config.match)
+      ? []
+      : config.match
 
   return {
-    match: conf.match,
-    sort: conf.sort || (() => {}),
-    forEach: conf.forEach || (() => {}),
-    ignore: Array.isArray(conf.ignore) ? conf.ignore : [],
-    layout: conf.layout || null,
-    link: conf.link || null,
+    match,
+    sort: config.sort || (() => {}),
+    forEach: config.forEach || (() => {}),
+    ignore: Array.isArray(config.ignore) ? config.ignore : [],
+    layout: config.layout || null,
+    link: config.link || null,
   }
 }
 

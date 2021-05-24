@@ -59,16 +59,9 @@ export class Ulka {
   async getLayouts() {
     if (!this.configs.layout && !fs.existsSync(this.configs.layout)) return
 
-    const layoutConfig = {
-      match: '**',
-      sort() {},
-      forEach() {},
-      ignore: [],
-      layout: null,
-      link: null,
-    }
+    const config = { match: '**' }
+    const collection = new Collection(this, '_layout').updateConfig(config)
 
-    const collection = new Collection(this, layoutConfig, '_layout')
     await collection.getContents(this.configs.layout)
     collection.read()
 
@@ -78,7 +71,7 @@ export class Ulka {
   async getCollections() {
     for (const name of Object.keys(this.configs.contents)) {
       const config = this.configs.contents[name]
-      const collection = new Collection(this, config, name)
+      const collection = new Collection(this, name).updateConfig(config)
 
       await collection.getContents()
       collection.read()

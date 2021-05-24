@@ -2,6 +2,15 @@ import type { Ulka } from './Ulka'
 import type { Template } from './Templates/Template'
 
 export interface ContentConfig {
+  forEach?: (temp: Template, index: number, temps: Template[]) => any
+  sort?: (a: Template, b: Template) => any
+  match?: string | string[]
+  ignore?: string[]
+  layout?: Function | string | null
+  link?: Function | string | null
+}
+
+export interface ValidContentConfig {
   forEach: (temp: Template, index: number, temps: Template[]) => any
   sort: (a: Template, b: Template) => any
   match: string | string[]
@@ -51,10 +60,10 @@ export interface Configs {
    */
   plugins: PluginConfig[]
   /**
-   * Enabling this will allow you to write liquid syntax
+   * Enabling this will allow you to write ulka `{{ js }}` syntax
    * in some frontmatter like `_link`, `_layout`
    */
-  liquidInSpecialFrontMatter: boolean
+  templateSpecialFrontMatter: boolean
 }
 
 export type PluginFunction = (arg: { ulka: Ulka; [key: string]: any }) => any

@@ -11,7 +11,7 @@ export class LiquidTemplate extends Template {
     return async (ctx: object = {}) => {
       const context = { ...this.context, ...ctx }
       return await LiquidTemplate.liquid.render(template, context, {
-        root: this.collection.ulka.configs.include,
+        root: this.ulka.configs.include,
         dynamicPartials: false,
       })
     }

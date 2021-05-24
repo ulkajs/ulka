@@ -10,7 +10,7 @@ export class UlkaTemplate extends Template {
       return UlkaTemplate.ulka.render(
         this.content as string,
         { ...this.context, ...ctx },
-        { base: this.collection.ulka.configs.include }
+        { base: this.ulka.configs.include }
       )
     }
   }

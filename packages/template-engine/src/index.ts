@@ -32,12 +32,12 @@ function render(
 function context(ctx: any, options: Options) {
   return {
     ...ctx,
-    require: (path: string) => customRequire(path, options),
+    include: (path: string) => includeFunction(path, options),
     console,
   }
 }
 
-function customRequire(requirePath: string, options: Options) {
+function includeFunction(requirePath: string, options: Options) {
   if (!options.base) throw new Error(`"base" is a required option.`)
 
   let req = ''

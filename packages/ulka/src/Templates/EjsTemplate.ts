@@ -9,8 +9,8 @@ export class EjsTemplate extends Template {
   async compile() {
     const fn = EjsTemplate.ejs.compile(this.content as string, {
       beautify: false,
-      filename: path.join(this.collection.ulka.configs.include, 'ulka.ejs'),
-      root: this.collection.ulka.configs.include,
+      filename: path.join(this.ulka.configs.include, 'ulka.ejs'),
+      root: this.ulka.configs.include,
     })
 
     return async (ctx: object = {}) => {

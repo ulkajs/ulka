@@ -4,7 +4,7 @@ import c from 'ansi-colors'
 import { FSWatcher } from 'chokidar'
 import {
   box,
-  validContentConfig,
+  createValidContentConfig,
   liveReloadScript,
   defineConfig,
   getNetworkAddress,
@@ -31,29 +31,13 @@ describe('ulka:utils', () => {
     ).toMatchSnapshot()
   })
 
-  test('utils:validContentConfig should return with expected type and values', () => {
+  test('utils:createValidContentConfig should return with expected type and values', () => {
     // @ts-ignore
-    const contentConfig = validContentConfig({ match: 'm' })
+    const contentConfig = createValidContentConfig({ match: 'm' })
     expect(contentConfig.match).toBe('m')
     expect(contentConfig.ignore).toEqual([])
     expect(typeof contentConfig.sort).toBe('function')
     expect(typeof contentConfig.forEach).toBe('function')
-  })
-
-  test('utils:validContentConfig should log a error on invalid match', () => {
-    const enabled = c.enabled
-    c.enabled = false
-    const spy = jest.spyOn(console, 'log')
-
-    // @ts-ignore
-    validContentConfig({ ignore: [] })
-
-    expect(spy.mock.calls).toEqual([
-      ['> Please provide valid "match" for content undefined'],
-    ])
-
-    c.enabled = enabled
-    spy.mockRestore()
   })
 
   test('utils:liveReloadScript should have the required live reload script', () => {
@@ -95,9 +79,9 @@ describe('ulka:utils', () => {
       include: path.join(cwd, '_includes'),
       input: cwd,
       layout: path.join(cwd, '_layouts'),
-      liquidInSpecialFrontMatter: false,
       output: path.join(cwd, '_site'),
       plugins: [],
+      templateSpecialFrontMatter: false,
       verbose: false,
     })
   })

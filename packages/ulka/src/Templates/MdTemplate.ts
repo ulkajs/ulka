@@ -13,7 +13,7 @@ export class MdTemplate extends Template {
     return async (ctx: object = {}) => {
       const context = { ...this.context, ...ctx }
       return await LiquidTemplate.liquid.render(tpl, context, {
-        root: this.collection.ulka.configs.include,
+        root: this.ulka.configs.include,
         dynamicPartials: false,
       })
     }

@@ -29,20 +29,20 @@ describe('template-engine:index', () => {
     )
   })
 
-  test('index:render, should require the required file', () => {
-    expect(typeof render(`{% require("LICENSE") %}`)).toBe('string')
+  test('index:render, should include the included file', () => {
+    expect(typeof render(`{% include("LICENSE") %}`)).toBe('string')
   })
 
   test('index:render should throw error on invalid base option', () => {
     expect(
       // @ts-ignore
-      () => render(`{% require("LICENSE") %}`, {}, { base: null })
+      () => render(`{% include("LICENSE") %}`, {}, { base: null })
     ).toThrowError()
   })
 
-  test('index:render should throw error on invalid require', () => {
+  test('index:render should throw error on invalid include', () => {
     expect(() =>
-      render(`{% require("somethingthatsnotfound") %}`)
+      render(`{% include("somethingthatsnotfound") %}`)
     ).toThrowError()
   })
 })
