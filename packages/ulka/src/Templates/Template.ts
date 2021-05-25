@@ -9,6 +9,7 @@ import { UlkaError } from '../UlkaError'
 
 import type { Ulka } from '../Ulka'
 import type { FileInfo } from '../FileInfo'
+import { cleanLink } from '../utils'
 
 const writeFile = util.promisify(fs.writeFile)
 const mkdir = util.promisify(fs.mkdir)
@@ -17,7 +18,6 @@ export class Template {
   public content: string | Buffer = ''
   public link: string = ''
   public buildPath: string = ''
-  public dontBuild = false
 
   public context: { [key: string]: any } = {}
 
@@ -28,6 +28,26 @@ export class Template {
     public configLayout?: Function | string | null,
     public configLink?: Function | string | null
   ) {}
+
+  clone() {
+    const Template =
+      this.ulka.engines[this.fileinfo.parsedpath.ext] ||
+      this.ulka.engines.default
+
+    const obj = new Template(
+      this.ulka,
+      this.fileinfo,
+      this.configName,
+      this.configLayout,
+      this.configLink
+    )
+
+    obj.content = this.content
+    obj.link = this.link
+    obj.buildPath = this.buildPath
+    obj.context = { ...this.context }
+    return obj
+  }
 
   async compile() {
     return async (_ctx: object = {}) => this.content
@@ -125,6 +145,8 @@ export class Template {
   }
 
   public async write(content: string | Buffer = this.content) {
+    if (!this.buildPath || this.buildPath === this.ulka.configs.output)
+      return this
     try {
       await writeFile(this.buildPath, content)
     } catch (e) {
@@ -170,13 +192,11 @@ export class Template {
     if (_link) {
       link = _link
       buildPath = path.join(...link.split('/'))
-      if (link.endsWith('/index.html')) link = link.replace('/index.html', '/')
     }
 
     buildPath = path.join(this.ulka.configs.output, buildPath)
 
-    link = !link.startsWith('/') ? '/' + link : link
-    link = !link.endsWith('/') ? link + '/' : link
+    link = cleanLink(link)
 
     this.link = link
     this.buildPath = buildPath
@@ -239,7 +259,7 @@ export class Template {
     console.log(c.blue.bold('>'), c.dim(output))
   }
 
-  private _renderMatter(data: string, context: object = {}) {
+  _renderMatter(data: string, context: object = {}) {
     if (!this.ulka.configs.templateSpecialFrontMatter) return data
     const base = this.ulka.configs.include
     return ulkaTemplate.render(data, { ...this.context, ...context }, { base })

@@ -1,0 +1,12 @@
+---
+_paginate:
+  collection: blogs
+  size: 2
+  path: /blogs/page-{% pagination.page %}/index.html
+---
+
+{% for item in pagination.current %}
+
+<h1>{{ item.matter.title }}</h1>
+
+{% endfor %}

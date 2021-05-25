@@ -10,9 +10,24 @@ import {
   getNetworkAddress,
   createWatcher,
   readConfigs,
+  paginate,
+  cleanLink,
 } from '../src/utils'
 
 describe('ulka:utils', () => {
+  test('utils:paginate should paginate the array', () => {
+    expect(paginate([1, 2, 3, 4], 2)).toEqual([
+      { current: [1, 2], next: [3, 4], page: 1, prev: null, total: 2 },
+      { current: [3, 4], next: null, page: 2, prev: [1, 2], total: 2 },
+    ])
+  })
+
+  test("utils:cleanLink should do what it's supposed to do", () => {
+    expect(cleanLink('test/page/index.html')).toBe('/test/page/')
+    expect(cleanLink('/test/page')).toBe('/test/page/')
+    expect(cleanLink('test/page')).toBe('/test/page/')
+  })
+
   test('utils:box should print box around string with green color', () => {
     expect(box('\nHello World\n')).toMatchSnapshot()
   })

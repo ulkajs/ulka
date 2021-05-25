@@ -32,6 +32,16 @@ export class Ulka {
 
     this.collectionContents = new Proxy(this.collections, {
       get(target, key: string) {
+        if (key === 'all') {
+          const tmp: { [key: string]: any }[] = []
+
+          Object.values(target).forEach((val) => {
+            tmp.push(...val.contents.map((c) => c.context))
+          })
+
+          return tmp
+        }
+
         if (!target[key]) return []
         return target[key].contents.map((c) => c.context)
       },
@@ -78,6 +88,8 @@ export class Ulka {
 
       this.collections[name] = collection
     }
+
+    Object.values(this.collections).forEach((cl) => cl.paginate())
     return this
   }
 

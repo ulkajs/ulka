@@ -1,8 +1,14 @@
 import fg from 'fast-glob'
+import path from 'path'
 
 import { FileInfo } from './FileInfo'
 import { UlkaError } from './UlkaError'
-import { createValidContentConfig, runPlugins } from './utils'
+import {
+  cleanLink,
+  createValidContentConfig,
+  paginate,
+  runPlugins,
+} from './utils'
 
 import type { Ulka } from './Ulka'
 import type { Template } from './Templates'
@@ -87,5 +93,62 @@ export class Collection {
         `Error occured while getting contents from collection ${this.name}`
       )
     }
+  }
+
+  paginate() {
+    const paginatedContents = []
+    for (const templ of this.contents) {
+      if (typeof templ.context.matter._paginate !== 'object') return
+
+      const {
+        items,
+        collection,
+        size,
+        link: _link,
+      } = templ.context.matter._paginate
+      let arr: any[] = []
+
+      if (typeof collection === 'string') {
+        arr = this.ulka.collectionContents[collection]
+      } else if (Array.isArray(items)) {
+        arr = items.map((i) =>
+          typeof i === 'string' ? templ._renderMatter(i) : i
+        )
+      }
+      arr = arr || []
+
+      if (arr.length === 0) return
+
+      const paginatedArr = paginate(arr, size || 10)
+
+      for (let i = 0; i < paginatedArr.length; i++) {
+        if (i === 0) {
+          templ.context.pagination = paginatedArr[i]
+        } else {
+          const newTmpl: Template = templ.clone()
+          newTmpl.context.pagination = paginatedArr[i]
+
+          let link =
+            typeof _link === 'string'
+              ? newTmpl._renderMatter(_link)
+              : templ.link + `page-${paginatedArr[i].page}/index.html`
+
+          const buildPath = path.join(
+            this.ulka.configs.output,
+            ...link.split('/')
+          )
+
+          link = cleanLink(link)
+
+          newTmpl.link = link
+          newTmpl.context.link = link
+          newTmpl.buildPath = buildPath
+          newTmpl.context.buildPath = buildPath
+
+          paginatedContents.push(newTmpl)
+        }
+      }
+    }
+    this.contents.push(...paginatedContents)
   }
 }

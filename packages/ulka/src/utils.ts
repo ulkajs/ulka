@@ -95,7 +95,7 @@ export const readConfigs = (ulka: Ulka) => {
     contents: req.contents || {},
     verbose: req.verbose || false,
     plugins: req.plugins || [],
-    templateSpecialFrontMatter: req.liquidInSpecialFrontMatter || false,
+    templateSpecialFrontMatter: req.templateSpecialFrontMatter || false,
   }
 
   return configs
@@ -226,4 +226,36 @@ export function createWatcher(ulka: Ulka) {
 
 export function defineConfig(configs: Configs) {
   return configs
+}
+
+export function paginate<T = any>(items: T[], size = 10) {
+  const total = Math.ceil(items.length / size)
+
+  let prev: T[] = []
+  let current = items.slice(0, size)
+
+  const all = []
+  for (let i = 1; i <= total; i++) {
+    const next = items.slice(i * size, (i + 1) * size)
+
+    all[i - 1] = {
+      current,
+      page: i,
+      total,
+      prev: prev.length > 0 ? prev : null,
+      next: next.length > 0 ? next : null,
+    }
+
+    prev = current
+    current = next
+  }
+
+  return all
+}
+
+export function cleanLink(link: string) {
+  link = link.endsWith('/index.html') ? link.replace('/index.html', '/') : link
+  link = link.startsWith('/') ? link : '/' + link
+  link = link.endsWith('/') ? link : link + '/'
+  return link
 }

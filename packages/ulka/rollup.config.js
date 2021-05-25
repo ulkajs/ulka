@@ -62,9 +62,6 @@ function replaceEvalWithFunction() {
 }
 
 // https://github.com/vitejs/vite/blob/main/packages/vite/rollup.config.js
-// LICENSE: https://github.com/vitejs/vite/blob/main/LICENSE
-// https://github.com/rollup/rollup/blob/master/build-plugins/generate-license-file.js
-// LICENSE: https://github.com/rollup/rollup/blob/master/LICENSE-CORE.md
 function licensePlugin() {
   return license({
     thirdParty(dependencies) {

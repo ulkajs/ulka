@@ -41,7 +41,7 @@ export async function watch(
     clearConsole()
     console.log(c.blueBright(`> Change detected in ${filepath}\n`))
 
-    if (eventName === 'unlink')
+    eventName === 'unlink' &&
       rimraf.sync(ulka.configs.output, { disableGlob: true })
 
     if (ulka.configpath.includes(filepath)) {
@@ -49,6 +49,7 @@ export async function watch(
       Object.keys(require.cache).forEach((key) => delete require.cache[key])
       await ulka.setup()
     }
+
     ulka.reset()
     ulka.configs.verbose = verbose
     await build(ulka)
