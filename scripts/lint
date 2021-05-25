@@ -1,8 +1,0 @@
-#!/usr/bin/env node
-const { sync } = require('execa')
-const c = require('ansi-colors')
-
-console.log(c.cyanBright.bold('┏━━━ 🕵️‍♀️ Lint ━━━━━━━━━━━━━━━━━━━\n'))
-sync('yarn', ['eslint', 'packages/**/src/**/*.ts', '--fix'], {
-  stdio: 'inherit',
-})

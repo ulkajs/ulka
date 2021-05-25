@@ -5,11 +5,11 @@
     "packages/*"
   ],
   "scripts": {
-    "cb": "scripty",
-    "lint": "scripty",
-    "clean": "scripty",
-    "build": "scripty",
-    "changelog": "scripty",
+    "cb": "wsrun --stages cb",
+    "lint": "eslint packages/**/src/**/*.ts",
+    "clean": "wsrun clean",
+    "build": "wsrun --stages build",
+    "changelog": "wsrun changelog",
     "test": "jest"
   },
   "devDependencies": {
@@ -39,7 +39,6 @@
     "prettier": "^2.3.0",
     "rimraf": "^3.0.2",
     "sass": "^1.33.0",
-    "scripty": "^2.0.0",
     "semver": "^7.3.5",
     "ts-jest": "^26.5.6",
     "ts-node": "^9.1.1",

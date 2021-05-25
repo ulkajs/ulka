@@ -1,6 +1,0 @@
-#!/usr/bin/env node
-const { sync } = require('execa')
-const c = require('ansi-colors')
-
-console.log(c.green.bold('┏━━━ 🧹 Cleaning & 📦 Building ━━━━━━━━━━━━━━━━━━━'))
-sync('yarn', ['wsrun', '--stages', 'cb'], { stdio: 'inherit' })
