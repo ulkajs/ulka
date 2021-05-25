@@ -2,6 +2,7 @@ import fs from 'fs'
 import util from 'util'
 import path from 'path'
 import c from 'ansi-colors'
+import unixify from 'unixify'
 import matter from 'gray-matter'
 import * as ulkaTemplate from '@ulkajs/template-engine'
 
@@ -86,7 +87,7 @@ export class Template {
     if (typeof _layout !== 'string') return content
 
     // absolute path to _layout
-    const lpath = path.join(this.ulka.configs.layout, _layout)
+    const lpath = unixify(path.join(this.ulka.configs.layout, _layout))
 
     try {
       // find the layout in layout collection
