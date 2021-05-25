@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const { execSync } = require('child_process')
+const { sync } = require('execa')
 const c = require('ansi-colors')
 
 console.log(c.green.bold('┏━━━ 🧹 Cleaning & 📦 Building ━━━━━━━━━━━━━━━━━━━'))
-execSync('yarn wsrun --stages cb', { stdio: 'inherit' })
+sync('yarn', ['wsrun', '--stages', 'cb'], { stdio: 'inherit' })

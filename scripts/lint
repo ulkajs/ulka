@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-const { execSync } = require('child_process');
-const c = require('ansi-colors');
+const { sync } = require('execa')
+const c = require('ansi-colors')
 
-console.log(c.cyanBright.bold('┏━━━ 🕵️‍♀️ Lint ━━━━━━━━━━━━━━━━━━━\n'));
-execSync('eslint --ext .ts packages/*/src/** --fix', { stdio: 'inherit' });
+console.log(c.cyanBright.bold('┏━━━ 🕵️‍♀️ Lint ━━━━━━━━━━━━━━━━━━━\n'))
+sync('yarn', ['eslint', 'packages/**/src/**/*.ts', '--fix'], {
+  stdio: 'inherit',
+})

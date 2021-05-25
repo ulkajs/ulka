@@ -24,6 +24,7 @@ describe('e2e:with-watch - index.html', () => {
       path.join(cwd, 'index.ejs'),
       `---\ntitle: Hello World\n---\n<h1 class="title"><%= matter.title %></h1>`
     )
+    fs.writeFileSync(path.join(cwd, '_site', 'sample.css'), `* {width: 10px}`)
   })
 
   test('should rebuild on change', (done) => {
