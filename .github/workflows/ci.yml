@@ -8,11 +8,11 @@ on:
   pull_request:
 
 jobs:
-  test:
+  build_test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, windows-latest]
         node-version: [12, 14]
         include:
           - os: macos-latest
