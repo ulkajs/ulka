@@ -48,7 +48,7 @@ describe('e2e:with-watch - index.html', () => {
 
 describe('e2e:with-watch - sample.css', () => {
   afterAll(() => {
-    fs.writeFileSync(path.join(cwd, '_site', 'sample.css'), `* {width: 10px}`)
+    fs.writeFileSync(path.join(cwd, 'sample.css'), `* {width: 10px}`)
   })
 
   test('should rebuild on change', (done) => {

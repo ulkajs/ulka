@@ -9,7 +9,7 @@ const cwd = path.join(__dirname, 'resource')
 
 beforeAll(async () => {
   const ulka = await setup(cwd, 'build', 'ulka-config.js')
-  plugin({ sourceMap: true }).afterSetup({ ulka })
+  plugin({ sourceMap: true, omitSourceMapUrl: true }).afterSetup({ ulka })
   // @ts-ignore
   await build(ulka)
 })
@@ -33,9 +33,7 @@ describe('plugin:sass - style.css', () => {
 
       p {
         color: crimson;
-      }
-
-      /*# sourceMappingURL=style.css.map */"
+      }"
     `)
   })
 })
