@@ -847,6 +847,11 @@
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
+"@types/normalize-path@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/normalize-path/-/normalize-path-3.0.0.tgz#bb5c46cab77b93350b4cf8d7ff1153f47189ae31"
+  integrity sha512-Nd8y/5t/7CRakPYiyPzr/IAfYusy1FkcZYFEAcoMZkwpJv2n4Wm+olW+e7xBdHEXhOnWdG9ddbar0gqZWS4x5Q==
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
@@ -890,11 +895,6 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.0.tgz#7036640b4e21cc2f259ae826ce843d277dad8cff"
   integrity sha512-RJJrrySY7A8havqpGObOB4W92QXKJo63/jFLLgpvOtsGUqbQZ9Sbgl35KMm1DjC6j7AvmmU2bIno+3IyEaemaw==
-
-"@types/unixify@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@types/unixify/-/unixify-1.0.0.tgz#22d673f3bc481cf899228d51bb30ecf0490ef76c"
-  integrity sha512-JZMxxE1x9vR5TfKM0SmiePGlAc4h7LK4likxmwYKDCZfJjPHe4yL/ulkuKWV7oOYTxtbmBHYisnpiaBssosQdw==
 
 "@types/ws@^7.4.4":
   version "7.4.4"
@@ -6355,13 +6355,6 @@ universalify@^0.1.0, universalify@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
-
-unixify@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/unixify/-/unixify-1.0.0.tgz#3a641c8c2ffbce4da683a5c70f03a462940c2090"
-  integrity sha1-OmQcjC/7zk2mg6XHDwOkYpQMIJA=
-  dependencies:
-    normalize-path "^2.1.1"
 
 unset-value@^1.0.0:
   version "1.0.0"

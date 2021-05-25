@@ -42,9 +42,9 @@
     "@types/ejs": "^3.0.6",
     "@types/markdown-it": "^12.0.1",
     "@types/mime-types": "^2.1.0",
+    "@types/normalize-path": "^3.0.0",
     "@types/recursive-readdir": "^2.2.0",
     "@types/rimraf": "^3.0.0",
-    "@types/unixify": "^1.0.0",
     "@types/ws": "^7.4.4",
     "@ulkajs/template-engine": "1.0.0",
     "ansi-colors": "^4.1.1",
@@ -58,11 +58,11 @@
     "magic-string": "^0.25.7",
     "markdown-it": "^12.0.6",
     "mime-types": "^2.1.30",
+    "normalize-path": "^3.0.0",
     "recursive-readdir": "^2.2.2",
     "rollup": "^2.48.0",
     "rollup-plugin-license": "^2.3.0",
     "tslib": "^2.2.0",
-    "unixify": "^1.0.0",
     "ws": "^7.4.5"
   },
   "keywords": [
