@@ -78,7 +78,7 @@ export class Template {
     // give first priority to matter._layout and then from config
 
     const _layout = matter._layout
-      ? this._renderMatter(matter._layout)
+      ? this._renderUlkaTemplate(matter._layout)
       : typeof this.configLayout === 'function'
       ? this.configLayout(this)
       : this.configLayout
@@ -182,19 +182,19 @@ export class Template {
     }
 
     const _link = matter._link
-      ? this._renderMatter(matter._link)
+      ? this._renderUlkaTemplate(matter._link)
       : typeof this.configLink === 'function'
       ? this.configLink(this)
       : this.configLink
 
     if (_link) {
-      link = _link
+      link = cleanLink(_link)
+
       buildPath = path.join(...link.split('/'))
+      if (link.endsWith('/')) buildPath = path.join(buildPath, 'index.html')
     }
 
     buildPath = path.join(this.ulka.configs.output, buildPath)
-
-    link = cleanLink(link)
 
     this.link = link
     this.buildPath = buildPath
@@ -234,16 +234,14 @@ export class Template {
     // if file is about.html create a folder named about
     // and a file inside about as index.html
     // about.html => about/index.html
-    if (ext === '.html') {
-      if (name !== 'index') {
-        rel = path.join(rel, name)
-        name = 'index'
-      }
+    if (ext === '.html' && name !== 'index') {
+      rel = path.join(rel, name)
+      name = 'index'
     }
 
     const buildPath = path.join(rel, name + ext)
 
-    const link = rel.split(path.sep).join('/')
+    const link = cleanLink(rel)
 
     return { link, buildPath }
   }
@@ -257,7 +255,7 @@ export class Template {
     console.log(c.blue.bold('>'), c.dim(output))
   }
 
-  _renderMatter(data: string, context: object = {}) {
+  _renderUlkaTemplate(data: string, context: object = {}) {
     const base = this.ulka.configs.include
     return ulkaTemplate.render(data, { ...this.context, ...context }, { base })
   }

@@ -98,8 +98,8 @@ export class Collection {
 
   paginate() {
     const paginatedContents = []
-    for (const tmpl of this.contents) {
-      if (typeof tmpl.context.matter._paginate !== 'object') return
+    for (const tpl of this.contents) {
+      if (typeof tpl.context.matter._paginate !== 'object') return
 
       const {
         size,
@@ -107,13 +107,13 @@ export class Collection {
         collection,
         link: _link,
         limit = Infinity,
-      } = tmpl.context.matter._paginate
+      } = tpl.context.matter._paginate
       let arr: any[] = []
 
       if (typeof collection === 'string') {
         arr = this.ulka.collectionContents[collection]
       } else if (typeof data === 'string') {
-        arr = get(tmpl.context, data.trim())
+        arr = get(tpl.context, data.trim())
         arr = Array.isArray(arr) ? arr : []
       } else if (Array.isArray(data)) {
         arr = data
@@ -122,33 +122,35 @@ export class Collection {
       if (arr.length === 0) return
 
       const paginatedArr = paginate(arr, size || 10)
-
       const len = Math.min(limit, paginatedArr.length)
+
       for (let i = 0; i < len; i++) {
         if (i === 0) {
-          tmpl.context.pagination = paginatedArr[i]
+          tpl.context.pagination = paginatedArr[i]
         } else {
-          const nTmpl: Template = tmpl.clone()
-          nTmpl.context.pagination = paginatedArr[i]
+          const newTpl: Template = tpl.clone()
+          newTpl.context.pagination = paginatedArr[i]
 
           let link =
             typeof _link === 'string'
-              ? nTmpl._renderMatter(_link)
-              : tmpl.link + `page-${paginatedArr[i].page}/index.html`
+              ? newTpl._renderUlkaTemplate(_link)
+              : tpl.link + `page-${paginatedArr[i].page}/index.html`
 
-          const buildPath = path.join(
+          let buildPath = path.join(
             this.ulka.configs.output,
             ...link.split('/')
           )
 
+          if (link.endsWith('/')) buildPath = path.join(buildPath, 'index.html')
+
           link = cleanLink(link)
 
-          nTmpl.link = link
-          nTmpl.context.link = link
-          nTmpl.buildPath = buildPath
-          nTmpl.context.buildPath = buildPath
+          newTpl.link = link
+          newTpl.context.link = link
+          newTpl.buildPath = buildPath
+          newTpl.context.buildPath = buildPath
 
-          paginatedContents.push(nTmpl)
+          paginatedContents.push(newTpl)
         }
       }
     }

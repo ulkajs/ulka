@@ -4,9 +4,9 @@ import c from 'ansi-colors'
 import { engines, Engines } from './Templates'
 import { UlkaServer } from './UlkaServer'
 import { Collection } from './Collection'
-import { readConfigs, resolvePlugin, runPlugins } from './utils'
+import { readConfigs, resolvePlugin, runPlugins, emptyPlugins } from './utils'
 
-import type { Configs, Plugins } from './types'
+import type { Configs, PluginFunction, Plugins } from './types'
 
 export class Ulka {
   public engines: Engines = engines()
@@ -51,6 +51,13 @@ export class Ulka {
   async setup() {
     this.engines = engines()
     await runPlugins('afterSetup', { ulka: this })
+    return this
+  }
+
+  use(obj: { [key: string]: PluginFunction }) {
+    for (const key of Object.keys(obj)) {
+      this.plugins[key as keyof Plugins].push(obj[key])
+    }
     return this
   }
 
@@ -107,17 +114,5 @@ export class Ulka {
     const timetaken = end > 100 ? end / 1000 + 's' : end + 'ms'
 
     console.log(c.greenBright(`\n> Built ${length} files in ${timetaken}`))
-  }
-}
-
-function emptyPlugins(): Plugins {
-  return {
-    afterBuild: [],
-    afterRender: [],
-    afterSetup: [],
-    afterWrite: [],
-    beforeBuild: [],
-    beforeRender: [],
-    beforeWrite: [],
   }
 }

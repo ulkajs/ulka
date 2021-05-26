@@ -22,10 +22,18 @@ describe('ulka:utils', () => {
     ])
   })
 
-  test("utils:cleanLink should do what it's supposed to do", () => {
-    expect(cleanLink('test/page/index.html')).toBe('/test/page/')
+  test('utils:cleanLink should add slash to front and end', () => {
     expect(cleanLink('/test/page')).toBe('/test/page/')
     expect(cleanLink('test/page')).toBe('/test/page/')
+  })
+
+  test('utils:cleanLink should remove index.html from end', () => {
+    expect(cleanLink('test/page/index.html')).toBe('/test/page/')
+    expect(cleanLink('test/page/index.html')).toBe('/test/page/')
+  })
+
+  test('utils:cleanLink should replace windows path sep with slash', () => {
+    expect(cleanLink('test\\page')).toBe('/test/page/')
   })
 
   test('utils:box should print box around string with green color', () => {

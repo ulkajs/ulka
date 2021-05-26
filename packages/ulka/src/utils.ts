@@ -223,7 +223,19 @@ export function createWatcher(ulka: Ulka) {
   })
 }
 
-export function defineConfig(configs: Configs) {
+export function emptyPlugins(): Plugins {
+  return {
+    afterBuild: [],
+    afterRender: [],
+    afterSetup: [],
+    afterWrite: [],
+    beforeBuild: [],
+    beforeRender: [],
+    beforeWrite: [],
+  }
+}
+
+export function defineConfig(configs: Configs | ((ulka: Ulka) => Configs)) {
   return configs
 }
 
@@ -252,8 +264,9 @@ export function paginate<T = any>(items: T[], size = 10) {
   return all
 }
 
-export function cleanLink(link: string) {
-  link = link.endsWith('/index.html') ? link.replace('/index.html', '/') : link
+export function cleanLink(path: string) {
+  let link = path.replace(/\\/g, '/').replace(/index.html$/, '')
+
   link = link.startsWith('/') ? link : '/' + link
   link = link.endsWith('/') ? link : link + '/'
   return link
