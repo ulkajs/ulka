@@ -1,5 +1,6 @@
-import fg from 'fast-glob'
 import path from 'path'
+import fg from 'fast-glob'
+import get from 'get-value'
 
 import { FileInfo } from './FileInfo'
 import { UlkaError } from './UlkaError'
@@ -97,44 +98,43 @@ export class Collection {
 
   paginate() {
     const paginatedContents = []
-    for (const templ of this.contents) {
-      if (typeof templ.context.matter._paginate !== 'object') return
+    for (const tmpl of this.contents) {
+      if (typeof tmpl.context.matter._paginate !== 'object') return
 
       const {
-        items,
-        collection,
         size,
         data,
+        collection,
         link: _link,
-      } = templ.context.matter._paginate
+        limit = Infinity,
+      } = tmpl.context.matter._paginate
       let arr: any[] = []
 
       if (typeof collection === 'string') {
         arr = this.ulka.collectionContents[collection]
-      } else if (Array.isArray(items)) {
-        arr = items.map((i) =>
-          typeof i === 'string' ? templ._renderMatter(i) : i
-        )
       } else if (typeof data === 'string') {
-        arr = []
+        arr = get(tmpl.context, data.trim())
+        arr = Array.isArray(arr) ? arr : []
+      } else if (Array.isArray(data)) {
+        arr = data
       }
-      arr = arr || []
 
       if (arr.length === 0) return
 
       const paginatedArr = paginate(arr, size || 10)
 
-      for (let i = 0; i < paginatedArr.length; i++) {
+      const len = Math.min(limit, paginatedArr.length)
+      for (let i = 0; i < len; i++) {
         if (i === 0) {
-          templ.context.pagination = paginatedArr[i]
+          tmpl.context.pagination = paginatedArr[i]
         } else {
-          const newTmpl: Template = templ.clone()
-          newTmpl.context.pagination = paginatedArr[i]
+          const nTmpl: Template = tmpl.clone()
+          nTmpl.context.pagination = paginatedArr[i]
 
           let link =
             typeof _link === 'string'
-              ? newTmpl._renderMatter(_link)
-              : templ.link + `page-${paginatedArr[i].page}/index.html`
+              ? nTmpl._renderMatter(_link)
+              : tmpl.link + `page-${paginatedArr[i].page}/index.html`
 
           const buildPath = path.join(
             this.ulka.configs.output,
@@ -143,12 +143,12 @@ export class Collection {
 
           link = cleanLink(link)
 
-          newTmpl.link = link
-          newTmpl.context.link = link
-          newTmpl.buildPath = buildPath
-          newTmpl.context.buildPath = buildPath
+          nTmpl.link = link
+          nTmpl.context.link = link
+          nTmpl.buildPath = buildPath
+          nTmpl.context.buildPath = buildPath
 
-          paginatedContents.push(newTmpl)
+          paginatedContents.push(nTmpl)
         }
       }
     }
