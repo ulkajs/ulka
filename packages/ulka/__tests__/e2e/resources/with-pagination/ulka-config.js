@@ -5,5 +5,4 @@ module.exports = {
     blogs: { match: 'blogs/**' },
   },
   output: '_site',
-  templateSpecialFrontMatter: true,
 }

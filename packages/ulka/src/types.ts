@@ -59,11 +59,6 @@ export interface Configs {
    * ```
    */
   plugins: PluginConfig[]
-  /**
-   * Enabling this will allow you to write ulka `{{ js }}` syntax
-   * in some frontmatter like `_link`, `_layout`
-   */
-  templateSpecialFrontMatter: boolean
 }
 
 export type PluginFunction = (arg: { ulka: Ulka; [key: string]: any }) => any

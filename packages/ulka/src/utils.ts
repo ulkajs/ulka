@@ -95,7 +95,6 @@ export const readConfigs = (ulka: Ulka) => {
     contents: req.contents || {},
     verbose: req.verbose || false,
     plugins: req.plugins || [],
-    templateSpecialFrontMatter: req.templateSpecialFrontMatter || false,
   }
 
   return configs

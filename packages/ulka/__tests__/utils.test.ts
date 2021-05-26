@@ -96,7 +96,6 @@ describe('ulka:utils', () => {
       layout: path.join(cwd, '_layouts'),
       output: path.join(cwd, '_site'),
       plugins: [],
-      templateSpecialFrontMatter: false,
       verbose: false,
     })
   })

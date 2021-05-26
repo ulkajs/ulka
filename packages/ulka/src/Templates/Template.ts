@@ -75,7 +75,6 @@ export class Template {
       return content
     }
 
-    // if templateSpecialFrontMatter is true render matter._layout with @ulkajs/template-engine
     // give first priority to matter._layout and then from config
 
     const _layout = matter._layout
@@ -182,8 +181,6 @@ export class Template {
       ...ctx,
     }
 
-    // if matter has _link prop and templateSpecialFrontMatter is turned on
-    // render matter._link with @ulkajs/template-engine
     const _link = matter._link
       ? this._renderMatter(matter._link)
       : typeof this.configLink === 'function'
@@ -261,7 +258,6 @@ export class Template {
   }
 
   _renderMatter(data: string, context: object = {}) {
-    if (!this.ulka.configs.templateSpecialFrontMatter) return data
     const base = this.ulka.configs.include
     return ulkaTemplate.render(data, { ...this.context, ...context }, { base })
   }

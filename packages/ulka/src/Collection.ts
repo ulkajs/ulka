@@ -104,6 +104,7 @@ export class Collection {
         items,
         collection,
         size,
+        data,
         link: _link,
       } = templ.context.matter._paginate
       let arr: any[] = []
@@ -114,6 +115,8 @@ export class Collection {
         arr = items.map((i) =>
           typeof i === 'string' ? templ._renderMatter(i) : i
         )
+      } else if (typeof data === 'string') {
+        arr = []
       }
       arr = arr || []
 
