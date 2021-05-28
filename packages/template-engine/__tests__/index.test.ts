@@ -1,3 +1,5 @@
+import fs from 'fs'
+import path from 'path'
 import { render } from '../src'
 
 describe('template-engine:index', () => {
@@ -29,20 +31,56 @@ describe('template-engine:index', () => {
     )
   })
 
+  test('index:render, should requrie the required file', () => {
+    expect(render(`{% require("package.json").name %}`).trim()).toBe(
+      'ulka-monorepo'
+    )
+  })
+
   test('index:render, should include the included file', () => {
     expect(typeof render(`{% include("LICENSE") %}`)).toBe('string')
   })
 
-  test('index:render should throw error on invalid base option', () => {
+  test('index:render should throw error on invalid base option on require', () => {
+    expect(
+      // @ts-ignore
+      () => render(`{% require("package.json") %}`, {}, { base: null })
+    ).toThrowError()
+  })
+
+  test('index:render should throw error on invalid base option on include', () => {
     expect(
       // @ts-ignore
       () => render(`{% include("LICENSE") %}`, {}, { base: null })
     ).toThrowError()
   })
 
-  test('index:render should throw error on invalid include', () => {
+  test('index:render should throw error on invalid require', () => {
+    expect(() =>
+      render(`{% require("somethingthatsnotfound") %}`)
+    ).toThrowError()
+  })
+
+  test('index:render should throw error on invalid inclue', () => {
     expect(() =>
       render(`{% include("somethingthatsnotfound") %}`)
     ).toThrowError()
+  })
+
+  test('index:render should pass the context to included file', () => {
+    const dir = path.join(__dirname, 'resources')
+    expect(
+      render(
+        fs.readFileSync(path.join(dir, 'main.ulka'), 'utf-8'),
+        {},
+        { base: dir }
+      )
+    ).toMatchInlineSnapshot(`
+      "
+      <h1>Hello World</h1>
+      <p><h1>Hello From Another</h1>
+      I am Roshan Acharya and this is ulka template engine</p>
+      "
+    `)
   })
 })

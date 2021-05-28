@@ -1,5 +1,6 @@
 import fs from 'fs'
 import vm from 'vm'
+import path from 'path'
 
 export interface Options {
   base: string
@@ -12,8 +13,16 @@ function render(
   data: { [key: string]: any } = {},
   options: Options = { base: process.cwd() }
 ) {
-  const ctx = vm.createContext(context(data, options))
+  const ctx = vm.createContext({
+    ...data,
+    require: (path: string) => requireFunction(path, options),
+    include: (path: string) => includeFunction(path, options, ctx),
+  })
 
+  return renderInContext(str, ctx)
+}
+
+function renderInContext(str: string, ctx: vm.Context) {
   return str.replace(/\\?{%(.*?)%}/gs, (match, js, index) => {
     if (match[0] === '\\' && str[index - 1] !== '\\') {
       return match.slice(1)
@@ -29,27 +38,27 @@ function render(
   })
 }
 
-function context(ctx: any, options: Options) {
-  return {
-    ...ctx,
-    include: (path: string) => includeFunction(path, options),
-    console,
-  }
-}
+function requireFunction(requirePath: string, options: Options) {
+  if (!options.base)
+    throw new Error(`"base" option cannot be undefined or null.`)
 
-function includeFunction(requirePath: string, options: Options) {
-  if (!options.base) throw new Error(`"base" is a required option.`)
-
-  let req = ''
   try {
-    req = require.resolve(requirePath, { paths: [options.base] })
+    const req = require.resolve(requirePath, { paths: [options.base] })
+    return require(req)
   } catch (err) {
     throw new Error(`Couldn't require ${requirePath}`)
   }
+}
 
-  try {
-    return require(req)
-  } catch (e) {
-    return fs.readFileSync(req, 'utf-8')
-  }
+function includeFunction(
+  includePath: string,
+  options: Options,
+  ctx: vm.Context
+) {
+  if (!options.base)
+    throw new Error(`"base" option cannot be undefined or null`)
+
+  const tpl = fs.readFileSync(path.join(options.base, includePath), 'utf-8')
+
+  return renderInContext(tpl, ctx)
 }
