@@ -6,7 +6,7 @@ import { UlkaServer } from './UlkaServer'
 import { Collection } from './Collection'
 import { readConfigs, resolvePlugin, runPlugins, emptyPlugins } from './utils'
 
-import type { Configs, PluginFunction, Plugins } from './types'
+import type { Configs, PluginFunction, PluginName, Plugins } from './types'
 
 export class Ulka {
   public engines: Engines = engines()
@@ -54,9 +54,9 @@ export class Ulka {
     return this
   }
 
-  use(obj: { [key: string]: PluginFunction }) {
-    for (const key of Object.keys(obj)) {
-      this.plugins[key as keyof Plugins].push(obj[key])
+  use<T extends PluginName = any>(obj: { [key in T]: PluginFunction<key> }) {
+    for (const [key, plugin] of Object.entries(obj)) {
+      this.plugins[key as PluginName].push(plugin as PluginFunction)
     }
     return this
   }
@@ -80,7 +80,7 @@ export class Ulka {
     const collection = new Collection(this, '_layout').updateConfig(config)
 
     await collection.getContents(this.configs.layout)
-    collection.read()
+    await collection.read()
 
     this.layout = collection
   }
@@ -91,7 +91,7 @@ export class Ulka {
       const collection = new Collection(this, name).updateConfig(config)
 
       await collection.getContents()
-      collection.read()
+      await collection.read()
 
       this.collections[name] = collection
     }

@@ -79,6 +79,8 @@ export type {
   Plugins,
   PluginFunction,
   ValidContentConfig,
+  PluginArg,
+  PluginName,
 } from './types'
 export {
   Engines,

@@ -26,11 +26,21 @@ export class Collection {
     return this
   }
 
-  read() {
+  async read() {
     try {
       for (const templ of this.contents) {
+        await runPlugins('beforeCreateContext', {
+          content: templ,
+          ulka: this.ulka,
+        })
+
         templ.readMatter()
         templ.createCtx()
+
+        await runPlugins('afterCreateContext', {
+          content: templ,
+          ulka: this.ulka,
+        })
       }
 
       this.contents.sort(this.config!.sort)

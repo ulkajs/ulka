@@ -61,16 +61,30 @@ export interface Configs {
   plugins: PluginConfig[]
 }
 
-export type PluginFunction = (arg: { ulka: Ulka; [key: string]: any }) => any
+export type PluginName =
+  | 'afterSetup'
+  | 'beforeBuild'
+  | 'afterBuild'
+  | 'beforeCreateContext'
+  | 'afterCreateContext'
+  | 'beforeRender'
+  | 'afterRender'
+  | 'beforeWrite'
+  | 'afterWrite'
 
-export interface Plugins {
-  afterSetup: PluginFunction[]
+export type PluginArg<T extends PluginName> = T extends
+  | 'beforeRender'
+  | 'afterRender'
+  | 'beforeWrite'
+  | 'afterWrite'
+  | 'beforeCreateContext'
+  | 'afterCreateContext'
+  ? { content: Template; ulka: Ulka }
+  : { ulka: Ulka }
 
-  beforeBuild: PluginFunction[]
-  afterBuild: PluginFunction[]
-
-  beforeRender: PluginFunction[]
-  afterRender: PluginFunction[]
-  beforeWrite: PluginFunction[]
-  afterWrite: PluginFunction[]
+export type PluginFunction<T extends PluginName = any> = (
+  arg: PluginArg<T>
+) => any
+export type Plugins = {
+  [key in PluginName]: PluginFunction<key>[]
 }

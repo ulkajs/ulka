@@ -11,7 +11,9 @@ import type {
   ContentConfig,
   PluginConfig,
   Plugins,
+  PluginName,
   ValidContentConfig,
+  PluginArg,
 } from './types'
 
 export function getNetworkAddress() {
@@ -165,11 +167,12 @@ export function createValidContentConfig(
   }
 }
 
-export async function runPlugins(
-  name: keyof Plugins,
-  options: Parameters<Plugins[typeof name][0]>[0]
+export async function runPlugins<T extends PluginName = any>(
+  name: T,
+  options: PluginArg<T>
 ) {
   for (const plugin of options.ulka.plugins[name]) {
+    // @ts-ignore
     await plugin(options)
   }
 }
@@ -226,12 +229,14 @@ export function createWatcher(ulka: Ulka) {
 export function emptyPlugins(): Plugins {
   return {
     afterBuild: [],
-    afterRender: [],
     afterSetup: [],
     afterWrite: [],
     beforeBuild: [],
-    beforeRender: [],
     beforeWrite: [],
+    afterRender: [],
+    beforeRender: [],
+    afterCreateContext: [],
+    beforeCreateContext: [],
   }
 }
 
