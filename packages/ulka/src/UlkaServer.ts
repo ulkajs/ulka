@@ -20,7 +20,6 @@ export class UlkaServer {
 
   constructor(public base: string, public port: number) {
     this.use(cors())
-    this.use(this.staticServer(port, base))
   }
 
   async findPort() {
@@ -31,6 +30,7 @@ export class UlkaServer {
   }
 
   listen(fn?: Function) {
+    this.use(this.staticServer(this.port, this.base))
     this.server.listen(this.port, () => {
       console.log('')
       this.log()
