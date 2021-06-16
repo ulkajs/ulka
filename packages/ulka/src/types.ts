@@ -22,6 +22,7 @@ export interface ValidContentConfig {
 export type PluginConfig =
   | string
   | { plugin: string; options: { [key: string]: any } }
+  | Function
 
 export interface Configs {
   /**
