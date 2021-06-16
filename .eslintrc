@@ -16,7 +16,10 @@
     "no-useless-constructor": "off",
     "@typescript-eslint/no-useless-constructor": ["error"],
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error", { "typedefs": false }]
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      { "typedefs": false, "functions": false }
+    ]
   },
   "ignorePatterns": ["scripts/**", "**/dist/**"]
 }
