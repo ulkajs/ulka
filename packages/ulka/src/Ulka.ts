@@ -1,9 +1,9 @@
 import fs from 'fs'
 import c from 'ansi-colors'
 
-import { engines, Engines } from './Templates'
 import { UlkaServer } from './UlkaServer'
 import { Collection } from './Collection'
+import { engines, Engines } from './Templates'
 import { readConfigs, resolvePlugin, runPlugins, emptyPlugins } from './utils'
 
 import type { Configs, Plugins } from './types'
@@ -26,9 +26,7 @@ export class Ulka {
     public port = 8080
   ) {
     this.plugins = emptyPlugins()
-    this.configs = readConfigs(this)
-    this.server = new UlkaServer(this.configs.output, this.port)
-    this.configs.plugins.forEach((p) => resolvePlugin(p, this))
+    this.server = new UlkaServer('', this.port)
 
     this.collectionContents = new Proxy(this.collections, {
       get(target, key: string) {
@@ -46,6 +44,11 @@ export class Ulka {
         return target[key].contents.map((c) => c.context)
       },
     })
+
+    this.configs = readConfigs(this)
+    this.configs.plugins.forEach((p) => resolvePlugin(p, this))
+
+    this.server.base = this.configs.output
   }
 
   async setup() {
