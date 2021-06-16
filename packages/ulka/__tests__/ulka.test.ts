@@ -20,11 +20,6 @@ describe('ulka:ulka', () => {
     expect(ulka.plugins).toEqual(emptyPlugins())
   })
 
-  test('ulka:use should add plugin to respective plugins array', () => {
-    ulka.use({ afterBuild() {} })
-    expect(ulka.plugins.afterBuild.length).toBe(1)
-  })
-
   test('ulka:task should be as provided during instance creating', () => {
     expect(ulka.task).toBe('build')
   })

@@ -6,7 +6,7 @@ import { UlkaServer } from './UlkaServer'
 import { Collection } from './Collection'
 import { readConfigs, resolvePlugin, runPlugins, emptyPlugins } from './utils'
 
-import type { Configs, PluginFunction, PluginName, Plugins } from './types'
+import type { Configs, Plugins } from './types'
 
 export class Ulka {
   public engines: Engines = engines()
@@ -51,13 +51,6 @@ export class Ulka {
   async setup() {
     this.engines = engines()
     await runPlugins('afterSetup', { ulka: this })
-    return this
-  }
-
-  use<T extends PluginName = any>(obj: { [key in T]: PluginFunction<key> }) {
-    for (const [key, plugin] of Object.entries(obj)) {
-      this.plugins[key as PluginName].push(plugin as PluginFunction)
-    }
     return this
   }
 
