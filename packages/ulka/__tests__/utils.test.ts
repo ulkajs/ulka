@@ -105,6 +105,7 @@ describe('ulka:utils', () => {
       output: path.join(cwd, '_site'),
       plugins: [],
       verbose: false,
+      copy: [],
     })
   })
 })

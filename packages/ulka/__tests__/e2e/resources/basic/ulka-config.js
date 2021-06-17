@@ -11,5 +11,5 @@ module.exports = () => ({
   },
   layout: '_layouts',
   output: '_site',
-  liquidInSpecialFrontMatter: true,
+  copy: ['*.css'],
 })

@@ -60,6 +60,22 @@ export interface Configs {
    * ```
    */
   plugins: PluginConfig[]
+
+  /**
+   * ## Array of globs to copy
+   *
+   * This is useful when you don't need something as a template
+   *
+   * For example:
+   * If you pass `**.png` to contents png, files will be treated as a template
+   * and will be added to respective collection.
+   * But passing `**.png` to copy will just copy the png files to the build folder
+   * and no collection will be created
+   *
+   * @example
+   * copy: ["**.{png,css,jpeg}", "fav.ico"]
+   */
+  copy: string[]
 }
 
 export type PluginName =

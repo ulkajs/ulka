@@ -97,6 +97,7 @@ export const readConfigs = (ulka: Ulka) => {
     contents: req.contents || {},
     verbose: req.verbose || false,
     plugins: req.plugins || [],
+    copy: req.copy || [],
   }
 
   return configs

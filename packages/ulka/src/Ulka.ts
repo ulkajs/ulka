@@ -1,4 +1,7 @@
 import fs from 'fs'
+import util from 'util'
+import path from 'path'
+import fg from 'fast-glob'
 import c from 'ansi-colors'
 
 import { UlkaServer } from './UlkaServer'
@@ -7,6 +10,8 @@ import { engines, Engines } from './Templates'
 import { readConfigs, resolvePlugin, runPlugins, emptyPlugins } from './utils'
 
 import type { Configs, Plugins } from './types'
+
+const copyAsync = util.promisify(fs.copyFile)
 
 export class Ulka {
   public engines: Engines = engines()
@@ -105,10 +110,25 @@ export class Ulka {
       length += this.collections[name].contents.length
     }
 
+    length += (await this.copy()).length
+
     const end = new Date().getTime() - start
-
     const timetaken = end > 100 ? end / 1000 + 's' : end + 'ms'
-
     console.log(c.greenBright(`\n> Built ${length} files in ${timetaken}`))
+  }
+
+  async copy(cwd = this.configs.input) {
+    const files = await fg(this.configs.copy, { cwd, absolute: true })
+
+    await Promise.all(
+      files.map((file) => {
+        const relative = path.relative(this.configs.input, file)
+        const dest = path.join(this.configs.output, relative)
+
+        return copyAsync(file, dest)
+      })
+    )
+
+    return files
   }
 }

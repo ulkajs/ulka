@@ -66,7 +66,13 @@ describe('e2e:basic - index.html', () => {
     )
 
     expect(files.sort()).toEqual(
-      ['index.html', 'custom/path/index.html', 'blogs/post-1/index.html'].sort()
+      [
+        'index.html',
+        'custom/path/index.html',
+        'blogs/post-1/index.html',
+        'copy-this-file-2.css',
+        'copy-this-file.css',
+      ].sort()
     )
   })
 })
