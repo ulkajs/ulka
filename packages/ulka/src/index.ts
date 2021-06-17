@@ -44,12 +44,6 @@ export async function watch(
     eventName === 'unlink' &&
       rimraf.sync(ulka.configs.output, { disableGlob: true })
 
-    if (ulka.configpath.includes(filepath)) {
-      rimraf.sync(ulka.configs.output, { disableGlob: true })
-      Object.keys(require.cache).forEach((key) => delete require.cache[key])
-      // await ulka.setup()
-    }
-
     ulka.reset()
     ulka.configs.verbose = verbose
     await build(ulka)

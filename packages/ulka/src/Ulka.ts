@@ -68,7 +68,7 @@ export class Ulka {
     this.layoutFuncCache = {}
 
     this.plugins = emptyPlugins()
-    this.configs = readConfigs(this)
+    // this.configs = readConfigs(this)
     this.configs.plugins.forEach((p) => resolvePlugin(p, this))
 
     return this
