@@ -106,6 +106,7 @@ describe('ulka:utils', () => {
       plugins: [],
       verbose: false,
       copy: [],
+      metaData: {},
     })
   })
 })

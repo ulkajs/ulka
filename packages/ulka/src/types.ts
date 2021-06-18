@@ -76,6 +76,7 @@ export interface Configs {
    * copy: ["**.{png,css,jpeg}", "fav.ico"]
    */
   copy: string[]
+  metaData: { [key: string]: any }
 }
 
 export type PluginName =

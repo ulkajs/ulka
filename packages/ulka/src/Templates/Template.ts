@@ -6,11 +6,11 @@ import normalizePath from 'normalize-path'
 import matter from 'gray-matter'
 import * as ulkaTemplate from '@ulkajs/template-engine'
 
+import { cleanLink } from '../utils'
 import { UlkaError } from '../UlkaError'
 
 import type { Ulka } from '../Ulka'
 import type { FileInfo } from '../FileInfo'
-import { cleanLink } from '../utils'
 
 const writeFile = util.promisify(fs.writeFile)
 const mkdir = util.promisify(fs.mkdir)
@@ -178,6 +178,7 @@ export class Template {
       configs: this.ulka.configs,
       _collections: this.ulka.collections,
       collections: this.ulka.collectionContents,
+      metaData: this.ulka.configs.metaData,
       ...ctx,
     }
 
