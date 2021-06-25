@@ -1,5 +1,5 @@
 ---
-_link: "index.html"
+_permalink: "index.html"
 _layout: "someinvalidlayout.ejs"
 ---
 <div class="reading-time">{% time %}</div>

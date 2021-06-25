@@ -182,8 +182,8 @@ export class Template {
       ...ctx,
     }
 
-    const _link = matter._link
-      ? this._renderUlkaTemplate(matter._link)
+    const _link = matter._permalink
+      ? this._renderUlkaTemplate(matter._permalink)
       : typeof this.configLink === 'function'
       ? this.configLink(this)
       : this.configLink
