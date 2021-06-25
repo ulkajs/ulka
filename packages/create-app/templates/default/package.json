@@ -1,0 +1,14 @@
+{
+  "name": "ulka-default-starter",
+  "version": "1.0.0",
+  "description": "default starter for ulka",
+  "main": "index.js",
+  "scripts": {
+    "build": "ulka",
+    "dev": "ulka -w"
+  },
+  "devDependencies": {
+    "ulka": "1.0.0"
+  },
+  "license": "MIT"
+}

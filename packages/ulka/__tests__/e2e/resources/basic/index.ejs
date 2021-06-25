@@ -1,0 +1,16 @@
+---
+_layout: 'layout.liquid'
+title: Home Page
+---
+
+<% collections.boooo %>
+
+<ul class="links">
+  <% collections.blog.forEach(b => {%>
+
+  <li>
+    <a href="<%= b.link %>"><%= b.matter.title %></a>
+  </li>
+
+  <%})%>
+</ul>

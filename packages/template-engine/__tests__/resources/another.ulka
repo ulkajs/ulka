@@ -1,0 +1,2 @@
+<h1>Hello From Another</h1>
+{% toAnother %}

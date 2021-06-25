@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ulka:utils utils:box should print box around a string with a side paddin of 4 1`] = `
+"╭───────────────────╮
+│    Hello World    │
+╰───────────────────╯"
+`;
+
+exports[`ulka:utils utils:box should print box around string with green color 1`] = `
+"[32m╭[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m╮[39m
+[32m│[39m   Hello World   [32m│[39m
+[32m╰[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m─[39m[32m╯[39m"
+`;
+
+exports[`ulka:utils utils:box should should print box around a string without color 1`] = `
+"╭─────────────────╮
+│   Hello World   │
+╰─────────────────╯"
+`;
+
+exports[`ulka:utils utils:box should work for strings with ansi 1`] = `
+"╭───────────────────╮
+│    [32mHello World[39m    │
+╰───────────────────╯"
+`;
+
+exports[`ulka:utils utils:liveReloadScript should have the required live reload script 1`] = `
+"<script>
+if ('WebSocket' in window) {
+  const protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+  const address = protocol + window.location.host + window.location.pathname;
+  const ws = new WebSocket(address);
+      
+  ws.addEventListener('message', e => {
+    if(e.data === \\"reload\\"){
+      location.reload()
+    }else if(e.data === \\"reload-css\\"){
+      const links = document.querySelectorAll(\\"link[rel='stylesheet']\\")
+      links.forEach(link => (link.href += \\"\\"))
+    }else {
+      console.log(e.data)
+    }
+  });
+}else {
+    console.warn(\\"Your browser doesn't support websockets, so can't live reload\\")
+}
+</script>"
+`;
