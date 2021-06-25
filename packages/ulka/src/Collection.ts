@@ -135,10 +135,10 @@ export class Collection {
       const len = Math.min(limit, paginatedArr.length)
 
       for (let i = 0; i < len; i++) {
-        if (i === 0) {
+        if (i === 0 && tpl.context.link !== 'infer') {
           tpl.context.pagination = paginatedArr[i]
         } else {
-          const newTpl: Template = tpl.clone()
+          const newTpl: Template = i === 0 ? tpl : tpl.clone()
           newTpl.context.pagination = paginatedArr[i]
 
           let link =
@@ -160,7 +160,7 @@ export class Collection {
           newTpl.buildPath = buildPath
           newTpl.context.buildPath = buildPath
 
-          paginatedContents.push(newTpl)
+          i !== 0 && paginatedContents.push(newTpl)
         }
       }
     }
