@@ -115,7 +115,7 @@ export class Collection {
         size,
         data,
         collection,
-        link: _link,
+        permalink: _link,
         limit = Infinity,
       } = tpl.context.matter._paginate
       let arr: any[] = []
