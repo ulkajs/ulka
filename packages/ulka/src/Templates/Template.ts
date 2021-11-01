@@ -97,13 +97,7 @@ export class Template {
       )
       if (!tpl) return content
 
-      // if layout is found in layoutcache then renderFunc will be that cache
-      // else compile the layout and cache the renderFunc
-      let renderFunc = this.ulka.layoutFuncCache[lpath]
-      if (!renderFunc) {
-        renderFunc = await tpl.compile()
-        this.ulka.layoutFuncCache[lpath] = renderFunc
-      }
+      const renderFunc = await tpl.compile()
 
       // current template context is inside _ cause layout will have its own context
       // _ in layout will be reference to current template context

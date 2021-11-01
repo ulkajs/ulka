@@ -19,7 +19,6 @@ export class Ulka {
   public configs: Configs
   public server: UlkaServer
   public plugins: Plugins
-  public layoutFuncCache: { [key: string]: (...args: any) => any } = {}
   public collections: { [key: string]: Collection } = {}
   // only to provide in context, don't change this ever
   public collectionContents: any
@@ -65,7 +64,6 @@ export class Ulka {
   reset() {
     this.collections = {}
     this.layout = undefined
-    this.layoutFuncCache = {}
 
     // this.plugins = emptyPlugins()
     // this.configs = readConfigs(this)
