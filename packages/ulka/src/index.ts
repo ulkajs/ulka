@@ -17,7 +17,7 @@ export async function build(ulka: Ulka) {
     await ulka.getLayouts()
     await ulka.getCollections()
     await ulka.write()
-  } catch (e) {
+  } catch (e: any) {
     console.log('')
     console.log(e.message)
     e.custom && console.log(c.redBright(`> ${e.custom}`))

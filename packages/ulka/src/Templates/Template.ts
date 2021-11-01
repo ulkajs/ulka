@@ -112,7 +112,7 @@ export class Template {
 
       // recurse the current function incase layout has another layout
       return tpl.layout(contentWithLayout, { _ })
-    } catch (e) {
+    } catch (e: any) {
       const cwd = this.ulka.cwd
       const rlpath = path.relative(cwd, lpath)
       const rfpath = path.relative(cwd, this.fileinfo.filepath)
@@ -131,7 +131,7 @@ export class Template {
       const renderFunction = await this.compile()
       const content = await renderFunction(ctx)
       this.content = await this.layout(content)
-    } catch (e) {
+    } catch (e: any) {
       const cwd = this.ulka.cwd
       const rfpath = path.relative(cwd, this.fileinfo.filepath)
 
@@ -149,7 +149,7 @@ export class Template {
       return this
     try {
       await writeFile(this.buildPath, content)
-    } catch (e) {
+    } catch (e: any) {
       const rbpath = path.relative(this.ulka.cwd, this.buildPath)
       const rfpath = path.relative(this.ulka.cwd, this.fileinfo.filepath)
 

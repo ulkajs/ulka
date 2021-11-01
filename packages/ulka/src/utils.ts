@@ -82,7 +82,7 @@ export const readConfigs = (ulka: Ulka) => {
     const r = require(cpath)
     if (typeof r === 'function') req = r(ulka)
     else req = r
-  } catch (e) {
+  } catch (e: any) {
     if (e.code !== 'MODULE_NOT_FOUND') {
       console.log(e.message)
       console.log(c.red(`> Error on file: ${ulka.configpath}`))
@@ -130,7 +130,7 @@ export function resolvePlugin(pluginConfig: PluginConfig, ulka: Ulka) {
           c.redBright(`> ${name} exports ${typeof req} instead of function`)
         )
       }
-    } catch (e) {
+    } catch (e: any) {
       if (e.code === 'MODULE_NOT_FOUND') {
         c.redBright(`> Can't resolve plugin ${name}`)
       } else {
@@ -146,7 +146,7 @@ export function resolvePlugin(pluginConfig: PluginConfig, ulka: Ulka) {
     const fn = async (...args: any) => {
       try {
         await plugin[p](...args)
-      } catch (e) {
+      } catch (e: any) {
         throw new UlkaError(`Error while using plugin ${name}.${p}`, e.message)
       }
     }

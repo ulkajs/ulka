@@ -45,7 +45,7 @@ export class Collection {
 
       this.contents.sort(this.config!.sort)
       this.contents.forEach(this.config!.forEach)
-    } catch (e) {
+    } catch (e: any) {
       throw new UlkaError(
         e.message,
         `Error while reading from collection ${this.name}`
@@ -98,7 +98,7 @@ export class Collection {
           )
         })
       )
-    } catch (e) {
+    } catch (e: any) {
       throw new UlkaError(
         e.message,
         `Error occured while getting contents from collection ${this.name}`

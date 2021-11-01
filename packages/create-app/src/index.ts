@@ -79,7 +79,7 @@ export async function run() {
     console.log(c.blueBright(`> npm install`))
     console.log(c.blueBright(`> npm run dev`))
     console.log()
-  } catch (err) {
+  } catch (err: any) {
     console.log(c.redBright(`> ${err.message}`))
   }
 }

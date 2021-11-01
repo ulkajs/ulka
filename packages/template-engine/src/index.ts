@@ -45,7 +45,7 @@ function requireFunction(requirePath: string, options: Options) {
   try {
     const req = require.resolve(requirePath, { paths: [options.base] })
     return require(req)
-  } catch (err) {
+  } catch (err: any) {
     throw new Error(`Couldn't require ${requirePath}`)
   }
 }
