@@ -1,3 +1,4 @@
+import path from 'path'
 import * as ulka from '@ulkajs/template-engine'
 
 import { Template } from './Template'
@@ -10,7 +11,7 @@ export class UlkaTemplate extends Template {
       return UlkaTemplate.ulka.render(
         this.content as string,
         { ...this.context, ...ctx },
-        { base: this.ulka.configs.include }
+        { base: path.dirname(this.fileinfo.filepath) }
       )
     }
   }

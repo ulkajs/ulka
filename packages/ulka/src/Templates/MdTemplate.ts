@@ -1,3 +1,4 @@
+import path from 'path'
 import MarkdownIt from 'markdown-it'
 
 import { Template } from './Template'
@@ -13,7 +14,7 @@ export class MdTemplate extends Template {
     return async (ctx: object = {}) => {
       const context = { ...this.context, ...ctx }
       return await LiquidTemplate.liquid.render(tpl, context, {
-        root: this.ulka.configs.include,
+        root: path.dirname(this.fileinfo.filepath),
         dynamicPartials: false,
       })
     }

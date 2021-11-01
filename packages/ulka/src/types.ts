@@ -41,7 +41,6 @@ export interface Configs {
   input: string
   output: string
   layout: string
-  include: string
   contents: { [key: string]: ContentConfig }
   verbose: boolean
   /**

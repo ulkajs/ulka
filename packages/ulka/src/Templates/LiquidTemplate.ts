@@ -1,3 +1,4 @@
+import path from 'path'
 import { Liquid } from 'liquidjs'
 
 import { Template } from './Template'
@@ -11,7 +12,7 @@ export class LiquidTemplate extends Template {
     return async (ctx: object = {}) => {
       const context = { ...this.context, ...ctx }
       return await LiquidTemplate.liquid.render(template, context, {
-        root: this.ulka.configs.include,
+        root: path.dirname(this.fileinfo.filepath),
         dynamicPartials: false,
       })
     }

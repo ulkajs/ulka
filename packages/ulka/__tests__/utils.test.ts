@@ -99,7 +99,6 @@ describe('ulka:utils', () => {
     // @ts-ignore
     expect(readConfigs({ cwd, configpath: 'ulka-config.js' })).toEqual({
       contents: {},
-      include: path.join(cwd, '_includes'),
       input: cwd,
       layout: path.join(cwd, '_layouts'),
       output: path.join(cwd, '_site'),

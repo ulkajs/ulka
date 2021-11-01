@@ -257,7 +257,7 @@ export class Template {
   }
 
   _renderUlkaTemplate(data: string, context: object = {}) {
-    const base = this.ulka.configs.include
+    const base = path.dirname(this.fileinfo.filepath)
     return ulkaTemplate.render(data, { ...this.context, ...context }, { base })
   }
 

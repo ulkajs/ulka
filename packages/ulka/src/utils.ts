@@ -93,7 +93,6 @@ export const readConfigs = (ulka: Ulka) => {
     input: path.join(cwd, req.input || '.'),
     output: path.join(cwd, req.output || '_site'),
     layout: path.join(cwd, req.layout || '_layouts'),
-    include: path.join(cwd, req.include || '_includes'),
     contents: req.contents || {},
     verbose: req.verbose || false,
     plugins: req.plugins || [],
