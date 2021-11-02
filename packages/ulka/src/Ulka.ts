@@ -64,10 +64,9 @@ export class Ulka {
   reset() {
     this.collections = {}
     this.layout = undefined
-
-    // this.plugins = emptyPlugins()
-    // this.configs = readConfigs(this)
-    // this.configs.plugins.forEach((p) => resolvePlugin(p, this))
+    this.plugins = emptyPlugins()
+    this.configs = readConfigs(this)
+    this.configs.plugins.forEach((p) => resolvePlugin(p, this))
 
     return this
   }
