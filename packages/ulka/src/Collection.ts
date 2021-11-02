@@ -124,7 +124,11 @@ export class Collection {
         arr = this.ulka.collectionContents[collection]
       } else if (typeof data === 'string') {
         arr = get(tpl.context, data.trim())
-        arr = Array.isArray(arr) ? arr : []
+        arr = Array.isArray(arr)
+          ? arr
+          : typeof arr === 'object'
+          ? Object.keys(arr)
+          : []
       } else if (Array.isArray(data)) {
         arr = data
       } else if (typeof data === 'object') {
