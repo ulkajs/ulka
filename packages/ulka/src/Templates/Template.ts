@@ -158,12 +158,15 @@ export class Template {
 
   createCtx(ctx: object = {}) {
     const matter = this.context.matter || {}
-    let { link, buildPath } = this.getBuildPath()
+    const { link, buildPath } = this.getBuildPath()
+
+    this.link = link
+    this.buildPath = buildPath
 
     this.context = {
-      link,
       matter,
-      buildPath,
+      link: this.link,
+      buildPath: this.buildPath,
       cwd: this.ulka.cwd,
       task: this.ulka.task,
       content: this.content,
@@ -183,18 +186,18 @@ export class Template {
       : this.configLink
 
     if (_link) {
-      link = cleanLink(_link)
+      this.link = cleanLink(_link)
 
-      buildPath = path.join(...link.split('/'))
-      if (link.endsWith('/')) buildPath = path.join(buildPath, 'index.html')
+      this.buildPath = path.join(...this.link.split('/'))
+
+      if (this.link.endsWith('/'))
+        this.buildPath = path.join(this.buildPath, 'index.html')
     }
 
-    buildPath = path.join(this.ulka.configs.output, buildPath)
+    this.buildPath = path.join(this.ulka.configs.output, this.buildPath)
 
-    this.link = link
-    this.buildPath = buildPath
-    this.context.link = link
-    this.context.buildPath = buildPath
+    this.context.link = this.link
+    this.context.buildPath = this.buildPath
 
     return this
   }
