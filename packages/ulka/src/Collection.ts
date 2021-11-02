@@ -117,6 +117,7 @@ export class Collection {
         collection,
         permalink: _link,
         limit = Infinity,
+        singleValue = false,
       } = tpl.context.matter._paginate
       let arr: any[] = []
 
@@ -141,6 +142,12 @@ export class Collection {
       const len = Math.min(limit, paginatedArr.length)
 
       for (let i = 0; i < len; i++) {
+        if (singleValue && size === 1) {
+          paginatedArr[i].current = paginatedArr[i].current[0]
+          paginatedArr[i].prev = paginatedArr[i].prev?.[0]
+          paginatedArr[i].next = paginatedArr[i].next?.[0]
+        }
+
         if (i === 0 && tpl.context.link !== '/_PAGINATE_/') {
           tpl.context.pagination = paginatedArr[i]
         } else {
