@@ -127,6 +127,8 @@ export class Collection {
         arr = Array.isArray(arr) ? arr : []
       } else if (Array.isArray(data)) {
         arr = data
+      } else if (typeof data === 'object') {
+        arr = Object.keys(data)
       }
 
       if (arr.length === 0) continue
