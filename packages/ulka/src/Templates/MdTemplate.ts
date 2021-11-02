@@ -15,7 +15,7 @@ export class MdTemplate extends Template {
       const context = { ...this.context, ...ctx }
       return await LiquidTemplate.liquid.render(tpl, context, {
         root: path.dirname(this.fileinfo.filepath),
-        dynamicPartials: false,
+        dynamicPartials: true,
       })
     }
   }
