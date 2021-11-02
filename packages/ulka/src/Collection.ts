@@ -135,7 +135,7 @@ export class Collection {
       const len = Math.min(limit, paginatedArr.length)
 
       for (let i = 0; i < len; i++) {
-        if (i === 0 && tpl.context.link !== 'infer') {
+        if (i === 0 && tpl.context.link !== '/_PAGINATE_/') {
           tpl.context.pagination = paginatedArr[i]
         } else {
           const newTpl: Template = i === 0 ? tpl : tpl.clone()
