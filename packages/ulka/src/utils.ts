@@ -274,10 +274,10 @@ export function paginate<T = any>(items: T[], size = 10) {
   return all
 }
 
-export function cleanLink(path: string) {
-  let link = path.replace(/\\/g, '/').replace(/index.html$/, '')
+export function cleanLink(p: string) {
+  let link = p.replace(/\\/g, '/').replace(/index.html$/, '')
 
   link = link.startsWith('/') ? link : '/' + link
-  link = link.endsWith('/') ? link : link + '/'
+  link = link.endsWith('/') || path.extname(link) !== '' ? link : link + '/'
   return link
 }
