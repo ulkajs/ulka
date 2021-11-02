@@ -17,6 +17,7 @@ function render(
     ...data,
     require: (path: string) => requireFunction(path, options),
     include: (path: string) => includeFunction(path, options, ctx),
+    console: console,
   })
 
   return renderInContext(str, ctx)
