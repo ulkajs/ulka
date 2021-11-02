@@ -142,7 +142,7 @@ export class Collection {
       const len = Math.min(limit, paginatedArr.length)
 
       for (let i = 0; i < len; i++) {
-        if (singleValue && size === 1) {
+        if (singleValue) {
           paginatedArr[i].current = paginatedArr[i].current[0]
           paginatedArr[i].prev = paginatedArr[i].prev?.[0]
           paginatedArr[i].next = paginatedArr[i].next?.[0]
