@@ -13,7 +13,7 @@ export class LiquidTemplate extends Template {
       const context = { ...this.context, ...ctx }
       return await LiquidTemplate.liquid.render(template, context, {
         root: path.dirname(this.fileinfo.filepath),
-        dynamicPartials: false,
+        dynamicPartials: true,
       })
     }
   }
