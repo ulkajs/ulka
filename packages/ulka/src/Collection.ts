@@ -109,7 +109,7 @@ export class Collection {
   paginate() {
     const paginatedContents = []
     for (const tpl of this.contents) {
-      if (typeof tpl.context.matter._paginate !== 'object') return
+      if (typeof tpl.context.matter._paginate !== 'object') continue
 
       const {
         size,
@@ -129,7 +129,7 @@ export class Collection {
         arr = data
       }
 
-      if (arr.length === 0) return
+      if (arr.length === 0) continue
 
       const paginatedArr = paginate(arr, size || 10)
       const len = Math.min(limit, paginatedArr.length)
