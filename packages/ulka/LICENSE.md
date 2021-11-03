@@ -141,6 +141,13 @@ Repository: git+https://github.com/ulkajs/ulka.git
 
 ---------------------------------------
 
+## aggregate-error
+License: MIT
+By: Sindre Sorhus
+Repository: sindresorhus/aggregate-error
+
+---------------------------------------
+
 ## ansi-colors
 License: MIT
 By: Brian Woodward, Jason Schilling, Jon Schlinkert, Jordan
@@ -255,6 +262,13 @@ Repository: git+https://github.com/paulmillr/chokidar.git
 > LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 > OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 > THE SOFTWARE.
+
+---------------------------------------
+
+## clean-stack
+License: MIT
+By: Sindre Sorhus
+Repository: sindresorhus/clean-stack
 
 ---------------------------------------
 
@@ -921,6 +935,13 @@ Repository: jonschlinkert/gray-matter
 
 ---------------------------------------
 
+## indent-string
+License: MIT
+By: Sindre Sorhus
+Repository: sindresorhus/indent-string
+
+---------------------------------------
+
 ## is-binary-path
 License: MIT
 By: Sindre Sorhus
@@ -1457,6 +1478,13 @@ Repository: jshttp/on-finished
 > CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 > TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 > SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+---------------------------------------
+
+## p-map
+License: MIT
+By: Sindre Sorhus
+Repository: sindresorhus/p-map
 
 ---------------------------------------
 

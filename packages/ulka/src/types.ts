@@ -76,6 +76,7 @@ export interface Configs {
    */
   copy: string[]
   metaData: { [key: string]: any }
+  concurrency: number
 }
 
 export type PluginName =

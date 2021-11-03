@@ -1,6 +1,7 @@
 import fs from 'fs'
 import util from 'util'
 import path from 'path'
+import pMap from 'p-map'
 import fg from 'fast-glob'
 import c from 'ansi-colors'
 
@@ -117,13 +118,15 @@ export class Ulka {
   async copy(cwd = this.configs.input) {
     const files = await fg(this.configs.copy, { cwd, absolute: true })
 
-    await Promise.all(
-      files.map((file) => {
+    await pMap(
+      files,
+      (file) => {
         const relative = path.relative(this.configs.input, file)
         const dest = path.join(this.configs.output, relative)
 
         return copyAsync(file, dest)
-      })
+      },
+      { concurrency: this.configs.concurrency }
     )
 
     return files

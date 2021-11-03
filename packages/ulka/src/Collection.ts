@@ -1,4 +1,5 @@
 import path from 'path'
+import pMap from 'p-map'
 import fg from 'fast-glob'
 import get from 'get-value'
 
@@ -54,8 +55,9 @@ export class Collection {
   }
 
   async write() {
-    await Promise.all(
-      this.contents.map(async (tpl) => {
+    await pMap(
+      this.contents,
+      async (tpl) => {
         const opts = { content: tpl, type: 'file', ulka: this.ulka }
 
         await runPlugins('beforeRender', opts)
@@ -67,8 +69,10 @@ export class Collection {
         await runPlugins('afterWrite', opts)
 
         this.ulka.configs.verbose && tpl.log()
-      })
+      },
+      { concurrency: this.ulka.configs.concurrency }
     )
+
     return this
   }
 
@@ -81,8 +85,9 @@ export class Collection {
         dot: true,
       })
 
-      this.contents = await Promise.all(
-        files.map(async (file) => {
+      this.contents = await pMap(
+        files,
+        async (file: string) => {
           const fileinfo = await new FileInfo(file).read()
 
           const Template =
@@ -96,7 +101,8 @@ export class Collection {
             this.config!.layout,
             this.config!.link
           )
-        })
+        },
+        { concurrency: this.ulka.configs.concurrency }
       )
     } catch (e: any) {
       throw new UlkaError(

@@ -98,6 +98,8 @@ export const readConfigs = (ulka: Ulka) => {
     plugins: req.plugins || [],
     copy: req.copy || [],
     metaData: req.metaData || {},
+    concurrency:
+      typeof req.concurrency === 'number' ? req.concurrency : Infinity,
   }
 
   return configs

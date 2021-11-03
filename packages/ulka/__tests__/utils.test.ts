@@ -106,6 +106,7 @@ describe('ulka:utils', () => {
       verbose: false,
       copy: [],
       metaData: {},
+      concurrency: Infinity,
     })
   })
 })
