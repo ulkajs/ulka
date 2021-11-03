@@ -3,14 +3,17 @@ import path from 'path'
 import plugin from '../src'
 import rimraf from 'rimraf'
 
-import { build, setup } from 'ulka'
+import { build, Ulka } from 'ulka'
 
 const cwd = path.join(__dirname, 'resource')
 
 beforeAll(async () => {
-  const ulka = await setup(cwd, 'build', 'ulka-config.js')
-  plugin({ sourceMap: true, omitSourceMapUrl: true }).afterSetup({ ulka })
-  // @ts-ignore
+  const ulka = new Ulka(cwd, 'build', 'ulka-config.js')
+
+  const p = plugin({ sourceMap: true, omitSourceMapUrl: true })
+  ulka.plugins.afterSetup.push(p.afterSetup)
+
+  ulka.setup()
   await build(ulka)
 })
 

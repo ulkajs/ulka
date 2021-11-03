@@ -35,7 +35,7 @@ class SassTemplate extends Template {
   }
 }
 
-export default (opts: sass.Options = {}) => ({
+export default (opts: sass.Options) => ({
   afterSetup({ ulka }: Parameters<PluginFunction>[0]) {
     SassTemplate.opts = opts
 

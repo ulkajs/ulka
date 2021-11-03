@@ -1,0 +1,5 @@
+---
+_paginate:
+    data: obj
+    permalink: somerandompath
+---

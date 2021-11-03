@@ -1,0 +1,7 @@
+---
+_paginate:
+    data: arr
+    size: 1
+    singleValue: true
+    permalink: somerandompath
+---

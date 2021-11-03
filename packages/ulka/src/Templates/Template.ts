@@ -107,9 +107,8 @@ export class Template {
       // recurse the current function incase layout has another layout
       return tpl.layout(contentWithLayout, { _ })
     } catch (e: any) {
-      const cwd = this.ulka.cwd
-      const rlpath = path.relative(cwd, lpath)
-      const rfpath = path.relative(cwd, this.fileinfo.filepath)
+      const rlpath = path.relative(this.ulka.cwd, lpath)
+      const rfpath = path.relative(this.ulka.cwd, this.fileinfo.filepath)
 
       throw new UlkaError(
         e.message,
