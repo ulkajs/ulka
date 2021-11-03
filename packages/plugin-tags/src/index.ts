@@ -1,10 +1,15 @@
 import { PluginFunction } from 'ulka'
 
-const plugin: () => {
+type PluginType = (options?: { matterKey?: string; contextKey?: string }) => {
   afterCreateContext: PluginFunction<'afterCreateContext'>
   afterBuild: PluginFunction<'afterBuild'>
-} = ({ matterKey = 'tags', contextKey = 'tags' } = {}) => {
-  let tags: { [key: string]: { [key: string]: any } } = {}
+}
+
+const plugin: PluginType = ({
+  matterKey = 'tags',
+  contextKey = 'tags',
+} = {}) => {
+  let tags: { [key: string]: any } = {}
 
   return {
     afterCreateContext: ({ content }) => {
