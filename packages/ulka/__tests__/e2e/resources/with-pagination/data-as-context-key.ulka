@@ -1,0 +1,10 @@
+---
+_permalink: pages2/index.html
+_paginate:
+    data: arr
+    size: 1
+    permalink: pages2/page-{% pagination.page %}/
+---
+
+
+{% pagination.current.map(t => `<h1>${t}</h1>`) %}

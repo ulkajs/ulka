@@ -1,5 +1,0 @@
----
-_paginate:
-    data: {"python": 1, "django": 2}
-    permalink: somerandompath
----

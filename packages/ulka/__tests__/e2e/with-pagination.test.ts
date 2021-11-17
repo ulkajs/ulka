@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import rimraf from 'rimraf'
+import cheerio from 'cheerio'
 import readdir from 'recursive-readdir'
 
 import { build, setup } from '../../src'
@@ -17,27 +18,119 @@ afterAll(() => {
 })
 
 describe('e2e:with-pagination', () => {
-  let files: string[] = []
-  beforeAll(async () => {
-    files = await readdir(path.join(cwd, '_site'))
+  describe('pagination of blogs.liquid should work', () => {
+    test('two pages should be build', async () => {
+      const all = await readdir(path.join(cwd, '_site', 'blogs'))
+      const pages = all.filter((a) => a.match(/page-[0-9]/))
+      expect(pages.length).toBe(2)
+    })
+
+    test('each page should have correct titles', async () => {
+      const titles = (await readdir(path.join(cwd, '_site', 'blogs')))
+        .filter((a) => a.match(/page-[0-9]/))
+        .sort()
+        .map((a) => cheerio.load(fs.readFileSync(a, 'utf-8')))
+        .map(($) =>
+          $('h1')
+            .toArray()
+            .map((a) => $(a).text())
+        )
+
+      expect(titles).toEqual([['Post-1', 'Post-2'], ['Post-3']])
+    })
   })
 
-  test('should have all the paginated files written', async () => {
-    expect(files.filter((f) => f.includes('page')).length).toEqual(3)
+  describe('pagination of index.ejs should work', () => {
+    test('three pages should be build', async () => {
+      const all = await readdir(path.join(cwd, '_site', 'pages'))
+      const pages = all.filter((a) => a.match(/page-[0-9]/))
+      expect(pages.length).toBe(3)
+    })
+
+    test('each page should have correct titles', async () => {
+      const titles = (await readdir(path.join(cwd, '_site', 'pages')))
+        .filter((a) => a.match(/page-[0-9]/))
+        .sort()
+        .map((a) => cheerio.load(fs.readFileSync(a, 'utf-8')))
+        .map(($) =>
+          $('h1')
+            .toArray()
+            .map((a) => +$(a).text())
+        )
+
+      expect(titles).toEqual([
+        [1, 2, 3, 4],
+        [5, 6, 7, 8],
+        [9, 10],
+      ])
+    })
   })
 
-  test('each files should have expected contents', () => {
-    const contents = files
-      .sort()
-      .map((file) => fs.readFileSync(file, 'utf-8').replace(/\s/g, ''))
-      .filter((f) => f)
+  describe('pagination of data-as-context-key.ulka should work', () => {
+    test('four pages should be build', async () => {
+      const all = await readdir(path.join(cwd, '_site', 'pages2'))
+      expect(all.length).toBe(4)
+    })
 
-    expect(contents).toEqual([
-      '<h1>Post-1</h1><h1>Post-2</h1>',
-      '<h1>Post-3</h1>',
-      '<h1>1</h1><h1>2</h1><h1>3</h1><h1>4</h1>',
-      '<h1>5</h1><h1>6</h1><h1>7</h1><h1>8</h1>',
-      '<h1>9</h1><h1>10</h1>',
-    ])
+    test('each page should have correct titles', async () => {
+      const titles = (await readdir(path.join(cwd, '_site', 'pages2')))
+        .map((a) => +cheerio.load(fs.readFileSync(a, 'utf-8'))('h1').text())
+        .sort()
+
+      expect(titles).toEqual([1, 2, 3, 4])
+    })
+  })
+
+  describe('pagination of data-as-context-key2.ulka should work', () => {
+    test('two pages should be build', async () => {
+      const all = await readdir(path.join(cwd, '_site', 'pages3'))
+      expect(all.length).toBe(2)
+    })
+
+    test('each page should have correct content', async () => {
+      const contents = (await readdir(path.join(cwd, '_site', 'pages3')))
+        .map((a) => fs.readFileSync(a, 'utf-8').trim())
+        .sort()
+
+      expect(contents).toEqual(['react', 'node'].sort())
+    })
+  })
+
+  describe('pagination of data-as-object.ulka should work', () => {
+    test('two pages should be build', async () => {
+      const all = await readdir(path.join(cwd, '_site', 'pages4'))
+      expect(all.length).toBe(2)
+    })
+
+    test('each page should have correct content', async () => {
+      const contents = (await readdir(path.join(cwd, '_site', 'pages4')))
+        .map((a) => fs.readFileSync(a, 'utf-8').trim())
+        .sort()
+
+      expect(contents).toEqual(['django', 'python'].sort())
+    })
+  })
+
+  describe('pagination of data-as-context-key3.ulka should not work', () => {
+    test('pagination should be undefined', () => {
+      expect(
+        fs
+          .readFileSync(
+            path.join(cwd, '_site', 'pages5', 'index.html'),
+            'utf-8'
+          )
+          .trim()
+      ).toBe('undefined')
+    })
+  })
+
+  describe('pagination of with-single-value.ulka should work', () => {
+    test('all pages should return number', async () => {
+      const contents = (await readdir(path.join(cwd, '_site', 'pages6')))
+        .map((a) => fs.readFileSync(a, 'utf-8').trim())
+        .sort()
+
+      expect(contents).toEqual(['number', 'number', 'number'])
+    })
   })
 })

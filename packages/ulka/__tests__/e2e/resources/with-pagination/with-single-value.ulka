@@ -1,0 +1,10 @@
+---
+_permalink: _PAGINATE_
+_paginate:
+    data: [1, 2, 3]
+    size: 1
+    singleValue: true
+    permalink: /pages6/{% pagination.page %}/
+---
+
+{% typeof pagination.current %}

@@ -1,8 +1,9 @@
 ---
+_permalink: _PAGINATE_
 _paginate:
   data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   size: 4
-  permalink: /page-{% pagination.page - 1 %}/index.html
+  permalink: pages/page-{% pagination.page %}/
 ---
 
 <%for (const num of pagination.current) {%>
