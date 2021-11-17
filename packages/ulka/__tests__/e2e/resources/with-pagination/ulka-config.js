@@ -4,12 +4,7 @@ module.exports = defineConfig({
   input: '.',
   contents: {
     root: {
-      match: [
-        'index.ejs',
-        'blogs.liquid',
-        'data-as-*.ulka',
-        'with-single-value.ulka',
-      ],
+      match: ['index.ejs', 'blogs.liquid', 'data-as-*.ulka', 'with*.ulka'],
       forEach: (templ) => {
         if (templ.fileinfo.filepath.includes('data-as-context-key.ulka'))
           templ.context.arr = [1, 2, 3, 4]

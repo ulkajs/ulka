@@ -133,4 +133,14 @@ describe('e2e:with-pagination', () => {
       expect(contents).toEqual(['number', 'number', 'number'])
     })
   })
+
+  describe('pagination of without-pagination-permalink.ulka should work', () => {
+    test('all pages should have correct content', async () => {
+      const contents = (await readdir(path.join(cwd, '_site', 'pages7')))
+        .map((a) => fs.readFileSync(a, 'utf-8').trim())
+        .sort()
+
+      expect(contents).toEqual(['1,2,3,4,5,6,7,8,9,10', '11,12'].sort())
+    })
+  })
 })

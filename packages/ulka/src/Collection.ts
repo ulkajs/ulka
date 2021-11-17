@@ -140,6 +140,8 @@ export class Collection {
         arr = data
       } else if (typeof data === 'object') {
         arr = Object.keys(data)
+      } else {
+        arr = []
       }
 
       if (arr.length === 0) continue
