@@ -1,10 +1,12 @@
+import path from 'path'
 import fetch from 'node-fetch'
 import { UlkaServer } from '../src/UlkaServer'
 
+const cwd = path.join(__dirname, 'e2e', 'resources', 'basic')
 // @ts-ignore
 let server: UlkaServer
 beforeAll(() => {
-  server = new UlkaServer(__dirname, 3426)
+  server = new UlkaServer(cwd, 3426)
 })
 
 describe('ulka:ulka-server', () => {
@@ -14,7 +16,7 @@ describe('ulka:ulka-server', () => {
   })
 
   test('ulka-server should have prop prop as provided to create instance', () => {
-    expect(server.base).toBe(__dirname)
+    expect(server.base).toBe(cwd)
     expect(server.port).toBe(3426)
   })
 
@@ -34,20 +36,13 @@ describe('ulka:ulka-server', () => {
   })
 
   test('ulka:listen should start the server', (done) => {
-    server.listen(() => {
-      fetch(`http://localhost:${server.port}/`).then((res) => {
-        expect(res.statusText).toBe('Not Found')
-        server.server.close(() => done())
-      })
-    })
-  })
+    const callback = async () => {
+      const res = await fetch(`http://localhost:${server.port}/someranrompath`)
+      expect(res.statusText).toBe('Not Found')
+      expect((await res.text()).trim()).toBe(`This is 404`)
+      server.server.close(() => done())
+    }
 
-  test('ulka:listen should serve the files', (done) => {
-    server.listen(() => {
-      fetch(`http://localhost:${server.port}/index.test.ts`).then((res) => {
-        expect(res.statusText).not.toBe('Not Found')
-        server.server.close(() => done())
-      })
-    })
+    server.listen(callback)
   })
 })
