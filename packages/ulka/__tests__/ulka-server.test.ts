@@ -37,7 +37,11 @@ describe('ulka:ulka-server', () => {
 
   test('ulka:listen should start the server', (done) => {
     const callback = async () => {
-      const res = await fetch(`http://localhost:${server.port}/someranrompath`)
+      const res = await fetch(`http://localhost:${server.port}`)
+      const res2 = await fetch(`http://localhost:${server.port}/ulka-config.js`)
+
+      expect(res2.statusText).not.toBe('Not Found')
+
       expect(res.statusText).toBe('Not Found')
       expect((await res.text()).trim()).toBe(`This is 404`)
       server.server.close(() => done())
