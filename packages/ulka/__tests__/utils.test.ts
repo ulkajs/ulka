@@ -12,6 +12,7 @@ import {
   readConfigs,
   paginate,
   cleanLink,
+  clearConsole,
 } from '../src/utils'
 
 describe('ulka:utils', () => {
@@ -55,12 +56,53 @@ describe('ulka:utils', () => {
   })
 
   test('utils:createValidContentConfig should return with expected type and values', () => {
-    // @ts-ignore
     const contentConfig = createValidContentConfig({ match: 'm' })
     expect(contentConfig.match).toBe('m')
     expect(contentConfig.ignore).toEqual([])
     expect(typeof contentConfig.sort).toBe('function')
     expect(typeof contentConfig.forEach).toBe('function')
+  })
+
+  test('utils:createValidContentConfig should return match as empty array if match is not provided', () => {
+    const config = createValidContentConfig({})
+    expect(config.match).toEqual([])
+  })
+
+  test('utils:clearConsole should call console.clear and process.stdout.write', () => {
+    const spyConsole = jest.spyOn(console, 'clear').mockImplementation(() => {})
+    const spyStd = jest
+      .spyOn(process.stdout, 'write')
+      .mockImplementation(() => true)
+
+    clearConsole()
+
+    expect(spyConsole.mock.calls.length).toBe(1)
+    expect(spyStd.mock.calls.length).toBe(1)
+
+    spyConsole.mockRestore()
+    spyStd.mockRestore()
+  })
+
+  test('utils:clearConsole should call process.stdout.write with correct argument', () => {
+    jest.spyOn(console, 'clear').mockImplementation(() => {})
+    const spyStd = jest
+      .spyOn(process.stdout, 'write')
+      .mockImplementation(() => true)
+
+    const platform = process.platform
+
+    Object.defineProperty(process, 'platform', { value: 'win32' })
+    clearConsole()
+    expect(spyStd.mock.calls[0][0]).toBe('\x1B[2J\x1B[0f')
+    spyStd.mockClear()
+
+    Object.defineProperty(process, 'platform', { value: 'linux' })
+    clearConsole()
+    expect(spyStd.mock.calls[0][0]).toBe('\x1B[2J\x1B[3J\x1B[H')
+
+    Object.defineProperty(process, 'platform', { value: platform })
+
+    jest.restoreAllMocks()
   })
 
   test('utils:liveReloadScript should have the required live reload script', () => {

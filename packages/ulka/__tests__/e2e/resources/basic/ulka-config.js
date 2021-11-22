@@ -1,7 +1,7 @@
 module.exports = () => ({
   input: '.',
   contents: {
-    root: { match: '{index,custom_path}.ejs' },
+    root: { match: '{index,custom_path}.ejs', layout: 'l.liquid' },
     blog: {
       match: 'blogs/**/*.md',
       layout() {

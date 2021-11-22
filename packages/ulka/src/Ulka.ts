@@ -73,7 +73,7 @@ export class Ulka {
   }
 
   async getLayouts() {
-    if (!this.configs.layout && !fs.existsSync(this.configs.layout)) return
+    if (!this.configs.layout || !fs.existsSync(this.configs.layout)) return
 
     const config = { match: '**' }
     const collection = new Collection(this, '_layout').updateConfig(config)

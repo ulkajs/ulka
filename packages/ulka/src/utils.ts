@@ -152,7 +152,7 @@ export function resolvePlugin(pluginConfig: PluginConfig, ulka: Ulka) {
       }
     }
     // @ts-ignore
-    if (ulka.plugins[p]) ulka.plugins[p].push(fn)
+    ulka.plugins[p] && ulka.plugins[p].push(fn)
   }
 }
 
@@ -251,7 +251,7 @@ export function defineConfig(configs: Configs | ((ulka: Ulka) => Configs)) {
   return configs
 }
 
-export function paginate<T = any>(items: T[], size = 10) {
+export function paginate<T = any>(items: T[], size: number) {
   const total = Math.ceil(items.length / size)
 
   let prev: T[] = []

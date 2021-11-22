@@ -70,7 +70,7 @@ export class Template {
       !this.ulka.configs.layout ||
       matter._layout === false ||
       matter._layout === null ||
-      (!matter._layout && !this.configLayout)
+      (typeof matter._layout === 'undefined' && !this.configLayout)
     ) {
       return content
     }
@@ -125,8 +125,6 @@ export class Template {
       const content = await renderFunction(ctx)
       this.content = await this.layout(content)
     } catch (e: any) {
-      if (e.custom) throw e
-
       throw new UlkaError(
         e.message,
         `Error occured while rendering file ${path.relative(
@@ -156,7 +154,7 @@ export class Template {
   }
 
   createCtx(ctx: object = {}) {
-    const matter = this.context.matter || {}
+    const matter = this.context.matter
     const { link, buildPath } = this.getBuildPath()
 
     this.link = link
@@ -189,8 +187,8 @@ export class Template {
 
       this.buildPath = path.join(...this.link.split('/'))
 
-      if (this.link.endsWith('/'))
-        this.buildPath = path.join(this.buildPath, 'index.html')
+      this.link.endsWith('/') &&
+        (this.buildPath = path.join(this.buildPath, 'index.html'))
     }
 
     this.buildPath = path.join(this.ulka.configs.output, this.buildPath)
@@ -203,17 +201,18 @@ export class Template {
 
   readMatter() {
     if (!this.hasMatter) {
-      if (this.contentShouldBeString) this.content = this.fileinfo.str
-      else this.content = this.fileinfo.buffer!
+      if (this.contentShouldBeString) {
+        this.content = this.fileinfo.str
+      } else {
+        this.content = this.fileinfo.buffer!
+      }
 
       this.context.matter = {}
-      return this
+    } else {
+      const { data, content } = matter(this.fileinfo.str)
+      this.content = content
+      this.context.matter = data
     }
-
-    const { data, content } = matter(this.fileinfo.str)
-
-    this.content = content
-    this.context.matter = data
 
     return this
   }
