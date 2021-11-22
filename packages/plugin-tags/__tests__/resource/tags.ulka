@@ -1,7 +1,7 @@
 ---
 _permalink: tags.json
 ---
-{% 
+{{ 
 (() => {
     const keys = Object.keys(tags)
 
@@ -11,4 +11,4 @@ _permalink: tags.json
     }
     return JSON.stringify(obj, null, 2)
 })()
-%}
+}}

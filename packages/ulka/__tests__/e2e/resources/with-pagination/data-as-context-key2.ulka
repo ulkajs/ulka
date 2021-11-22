@@ -3,7 +3,7 @@ _permalink: pages3/index.html
 _paginate:
     data: obj
     size: 1
-    permalink: pages3/page-{% pagination.page %}/
+    permalink: pages3/page-{{ pagination.page }}/
 ---
 
-{% pagination.current[0] %}
+{{ pagination.current[0] }}

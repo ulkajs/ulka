@@ -24,7 +24,7 @@ function render(
 }
 
 function renderInContext(str: string, ctx: vm.Context) {
-  return str.replace(/\\?{%(.*?)%}/gs, (match, js, index) => {
+  return str.replace(/\\?{{(.*?)}}/gs, (match, js, index) => {
     if (match[0] === '\\' && str[index - 1] !== '\\') {
       return match.slice(1)
     }

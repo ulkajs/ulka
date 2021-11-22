@@ -4,7 +4,7 @@ _paginate:
     data: [1, 2, 3]
     size: 1
     singleValue: true
-    permalink: /pages6/{% pagination.page %}/
+    permalink: /pages6/{{ pagination.page }}/
 ---
 
-{% typeof pagination.current %}
+{{ typeof pagination.current }}

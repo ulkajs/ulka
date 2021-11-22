@@ -2,5 +2,5 @@
 _permalink: "index.html"
 _layout: "someinvalidlayout.ejs"
 ---
-<div class="reading-time">{% time %}</div>
-<div class="after-setup">{% afterSetup %}</div>
+<div class="reading-time">{{ time }}</div>
+<div class="after-setup">{{ afterSetup }}</div>

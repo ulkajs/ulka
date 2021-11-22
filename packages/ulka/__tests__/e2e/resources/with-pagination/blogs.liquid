@@ -3,7 +3,7 @@ _permalink: _PAGINATE_
 _paginate:
   collection: blogs
   size: 2
-  permalink: /blogs/page-{% pagination.page %}/index.html
+  permalink: /blogs/page-{{ pagination.page }}/index.html
 ---
 
 {% for item in pagination.current %}
