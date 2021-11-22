@@ -4,12 +4,13 @@ import rimraf from 'rimraf'
 import readdir from 'recursive-readdir'
 import cheerio, { CheerioAPI } from 'cheerio'
 
-import { build, setup } from '../../src'
+import { build, setup, Ulka } from '../../src'
 
 const cwd = path.join(__dirname, 'resources', 'basic')
 
+let ulka: Ulka
 beforeAll(async () => {
-  const ulka = await setup(cwd, 'build', 'ulka-config.js')
+  ulka = await setup(cwd, 'build', 'ulka-config.js')
   // @ts-ignore
   await build(ulka)
 })
@@ -74,5 +75,18 @@ describe('e2e:basic - index.html', () => {
         'copy-this-file.css',
       ].sort()
     )
+  })
+
+  test('layout throws error', async () => {
+    const orignalLayout = ulka.configs.contents.root.layout
+    const logSpy = jest.spyOn(console, 'log')
+    ulka.configs.contents.root.layout = () => {
+      throw new Error('Error Thrown')
+    }
+    await build(ulka)
+    expect(logSpy.mock.calls.toString().includes('Error Thrown')).toBe(true)
+
+    logSpy.mockRestore()
+    ulka.configs.contents.root.layout = orignalLayout
   })
 })

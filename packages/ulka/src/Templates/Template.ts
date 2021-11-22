@@ -107,12 +107,12 @@ export class Template {
       // recurse the current function incase layout has another layout
       return tpl.layout(contentWithLayout, { _ })
     } catch (e: any) {
-      const rlpath = path.relative(this.ulka.cwd, lpath)
-      const rfpath = path.relative(this.ulka.cwd, this.fileinfo.filepath)
-
       throw new UlkaError(
         e.message,
-        `Error occured while rendering layout ${rlpath} for ${rfpath}`
+        `Error occured while rendering layout ${path.relative(
+          this.ulka.cwd,
+          lpath
+        )} for ${path.relative(this.ulka.cwd, this.fileinfo.filepath)}`
       )
     }
   }
@@ -125,14 +125,14 @@ export class Template {
       const content = await renderFunction(ctx)
       this.content = await this.layout(content)
     } catch (e: any) {
-      const cwd = this.ulka.cwd
-      const rfpath = path.relative(cwd, this.fileinfo.filepath)
-
       if (e.custom) throw e
 
       throw new UlkaError(
         e.message,
-        `Error occured while rendering file ${rfpath}`
+        `Error occured while rendering file ${path.relative(
+          this.ulka.cwd,
+          this.fileinfo.filepath
+        )}`
       )
     }
   }
@@ -143,12 +143,12 @@ export class Template {
     try {
       await writeFile(this.buildPath, content)
     } catch (e: any) {
-      const rbpath = path.relative(this.ulka.cwd, this.buildPath)
-      const rfpath = path.relative(this.ulka.cwd, this.fileinfo.filepath)
-
       throw new UlkaError(
         e.message,
-        `Error occured while writing file ${rfpath} to ${rbpath}`
+        `Error occured while writing file ${path.relative(
+          this.ulka.cwd,
+          this.fileinfo.filepath
+        )} to ${path.relative(this.ulka.cwd, this.buildPath)}`
       )
     }
 
