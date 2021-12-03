@@ -34,22 +34,26 @@ export class Ulka {
     this.plugins = emptyPlugins()
     this.server = new UlkaServer('', this.port)
 
-    this.collectionContents = new Proxy(this.collections, {
-      get(target, key: string) {
-        if (key === 'all') {
-          const tmp: { [key: string]: any }[] = []
+    const that = this
+    this.collectionContents = new Proxy(
+      {},
+      {
+        get(_, key: string) {
+          if (key === 'all') {
+            const tmp: { [key: string]: any }[] = []
 
-          Object.values(target).forEach((val) => {
-            tmp.push(...val.contents.map((c) => c.context))
-          })
+            Object.values(that.collections).forEach((val) => {
+              tmp.push(...val.contents.map((c) => c.context))
+            })
 
-          return tmp
-        }
+            return tmp
+          }
 
-        if (!target[key]) return []
-        return target[key].contents.map((c) => c.context)
-      },
-    })
+          if (!that.collections[key]) return []
+          return that.collections[key].contents.map((c) => c.context)
+        },
+      }
+    )
 
     this.configs = readConfigs(this)
     this.configs.plugins.forEach((p) => resolvePlugin(p, this))

@@ -102,10 +102,11 @@ export class Template {
       // current template context is inside _ cause layout will have its own context
       // _ in layout will be reference to current template context
       const _ = { ...this.context, content, ...ctx }
-      const contentWithLayout = await renderFunc({ _ })
+      // const contentWithLayout = await renderFunc({ _ })
+      const contentWithLayout = await renderFunc(_)
 
       // recurse the current function incase layout has another layout
-      return tpl.layout(contentWithLayout, { _ })
+      return tpl.layout(contentWithLayout, _)
     } catch (e: any) {
       throw new UlkaError(
         e.message,
