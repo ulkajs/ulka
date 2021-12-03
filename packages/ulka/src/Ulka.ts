@@ -13,6 +13,7 @@ import { readConfigs, resolvePlugin, runPlugins, emptyPlugins } from './utils'
 import type { Configs, Plugins } from './types'
 
 const copyAsync = util.promisify(fs.copyFile)
+const mkdirAsync = util.promisify(fs.mkdir)
 
 export class Ulka {
   public engines: Engines = engines()
@@ -120,11 +121,13 @@ export class Ulka {
 
     await pMap(
       files,
-      (file) => {
+      async (file) => {
         const relative = path.relative(this.configs.input, file)
         const dest = path.join(this.configs.output, relative)
 
-        return copyAsync(file, dest)
+        await mkdirAsync(path.dirname(dest), { recursive: true })
+
+        await copyAsync(file, dest)
       },
       { concurrency: this.configs.concurrency }
     )
