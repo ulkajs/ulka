@@ -17,7 +17,7 @@ function render(
     ...data,
     require: (path: string) => requireFunction(path, options),
     include: (path: string) => includeFunction(path, options, ctx),
-    console: console,
+    console: { log: console.log },
   })
 
   return renderInContext(str, ctx)
@@ -59,7 +59,19 @@ function includeFunction(
   if (!options.base)
     throw new Error(`"base" option cannot be undefined or null`)
 
-  const tpl = fs.readFileSync(path.join(options.base, includePath), 'utf-8')
+  const absIncPath = path.join(options.base, includePath)
+  const tpl = fs.readFileSync(absIncPath, 'utf-8')
 
-  return renderInContext(tpl, ctx)
+  patchRequireAndInclude(ctx, { base: path.dirname(absIncPath) })
+
+  const data = renderInContext(tpl, ctx)
+
+  patchRequireAndInclude(ctx, { base: options.base })
+
+  return data
+}
+
+function patchRequireAndInclude(ctx: vm.Context, options: Options) {
+  ctx.require = (path: string) => requireFunction(path, options)
+  ctx.include = (path: string) => includeFunction(path, options, ctx)
 }
