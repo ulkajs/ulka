@@ -1,9 +1,0 @@
-node_modules/
-temp/
-src/
-__tests__/
-.npmignore
-tsconfig.json
-rollup.config.js
-api-extractor.json
-CHANGELOG.md

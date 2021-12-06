@@ -1,7 +1,0 @@
-node_modules/
-src/
-scripts/
-__tests__/
-tsconfig.json
-CHANGELOG.md
-.npmignore

@@ -9,6 +9,9 @@
     "name": "Roshan Acharya",
     "email": "acharyaroshan2357@gmail.com"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "cb": "run-s clean build",
     "build": "tsc",
