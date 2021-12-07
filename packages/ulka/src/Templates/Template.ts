@@ -56,7 +56,7 @@ export class Template {
 
   protected async layout(
     content: string | Buffer,
-    ctx: object = {}
+    ctx: { [key: string]: any } = {}
   ): Promise<string | Buffer> {
     const matter = this.context.matter
 
@@ -101,12 +101,21 @@ export class Template {
 
       // current template context is inside _ cause layout will have its own context
       // _ in layout will be reference to current template context
-      const _ = { ...this.context, content, ...ctx }
+      const matter1 = tpl.context.matter || {}
+      const matter2 = this.context.matter || {}
+      const matter3 = ctx.matter || {}
+      const context = {
+        ...this.context,
+        ...ctx,
+        content,
+        matter: { ...matter1, ...matter2, ...matter3 },
+      }
+
       // const contentWithLayout = await renderFunc({ _ })
-      const contentWithLayout = await renderFunc(_)
+      const contentWithLayout = await renderFunc(context)
 
       // recurse the current function incase layout has another layout
-      return tpl.layout(contentWithLayout, _)
+      return tpl.layout(contentWithLayout, context)
     } catch (e: any) {
       throw new UlkaError(
         e.message,
@@ -161,13 +170,20 @@ export class Template {
     this.link = link
     this.buildPath = buildPath
 
+    const that = this
     this.context = {
       matter,
-      link: this.link,
-      buildPath: this.buildPath,
+      get link() {
+        return that.link
+      },
+      get buildPath() {
+        return that.buildPath
+      },
       cwd: this.ulka.cwd,
       task: this.ulka.task,
-      content: this.content,
+      get content() {
+        return that.content
+      },
       name: this.configName,
       fileinfo: this.fileinfo,
       configs: this.ulka.configs,
@@ -193,9 +209,6 @@ export class Template {
     }
 
     this.buildPath = path.join(this.ulka.configs.output, this.buildPath)
-
-    this.context.link = this.link
-    this.context.buildPath = this.buildPath
 
     return this
   }

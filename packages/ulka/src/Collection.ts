@@ -154,7 +154,7 @@ export class Collection {
           paginatedArr[i].next = paginatedArr[i].next?.[0]
         }
 
-        if (i === 0 && tpl.context.link !== '/_PAGINATE_/') {
+        if (i === 0 && tpl.link !== '/_PAGINATE_/') {
           tpl.context.pagination = paginatedArr[i]
         } else {
           const newTpl: Template = i === 0 ? tpl : tpl.clone()
@@ -175,9 +175,7 @@ export class Collection {
           link = cleanLink(link)
 
           newTpl.link = link
-          newTpl.context.link = link
           newTpl.buildPath = buildPath
-          newTpl.context.buildPath = buildPath
 
           i !== 0 && paginatedContents.push(newTpl)
         }
