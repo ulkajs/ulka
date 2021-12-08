@@ -73,6 +73,7 @@
     "recursive-readdir": "^2.2.2",
     "rollup": "^2.48.0",
     "rollup-plugin-license": "^2.3.0",
+    "slugify": "^1.6.3",
     "tslib": "^2.2.0",
     "ws": "^7.4.5"
   },

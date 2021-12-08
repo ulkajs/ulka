@@ -2,8 +2,9 @@ import fs from 'fs'
 import util from 'util'
 import path from 'path'
 import c from 'ansi-colors'
-import normalizePath from 'normalize-path'
+import slugify from 'slugify'
 import matter from 'gray-matter'
+import normalizePath from 'normalize-path'
 import * as ulkaTemplate from '@ulkajs/template-engine'
 
 import { cleanLink } from '../utils'
@@ -190,6 +191,7 @@ export class Template {
       _collections: this.ulka.collections,
       collections: this.ulka.collectionContents,
       metaData: this.ulka.configs.metaData,
+      slugify: (str: string) => slugify(str, { lower: true, trim: true }),
       ...ctx,
     }
 
@@ -241,11 +243,10 @@ export class Template {
 
     // if ext = html and name != index.html then create folder with name and change name to index
     // for eg:
-    // if file is about.html create a folder named about
-    // and a file inside about as index.html
     // about.html => about/index.html
+    // about/index.html => about/index.html
     if (ext === '.html' && name !== 'index') {
-      rel = path.join(rel, name)
+      rel = path.join(rel, slugify(name, { lower: true, trim: true }))
       name = 'index'
     }
 
