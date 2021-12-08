@@ -21,6 +21,7 @@ describe('ulka:index', () => {
         "defineConfig": [Function],
         "resolvePlugin": [Function],
         "setup": [Function],
+        "slugify": [Function],
         "watch": [Function],
       }
     `)

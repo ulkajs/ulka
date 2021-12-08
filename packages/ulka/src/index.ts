@@ -1,5 +1,6 @@
 import c from 'ansi-colors'
 import rimraf from 'rimraf'
+import _slugify from 'slugify'
 
 import type { FSWatcher } from 'chokidar'
 
@@ -90,3 +91,6 @@ export {
   Template,
   UlkaTemplate,
 } from './Templates'
+
+export const slugify = (str: string) =>
+  _slugify(str, { lower: true, trim: true })
