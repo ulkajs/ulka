@@ -21,8 +21,7 @@ describe('ulka:ulka-server', () => {
   })
 
   test('ulka-server:log should call console.log', () => {
-    const spy = jest.spyOn(console, 'log')
-    spy.mockImplementation(() => {})
+    const spy = jest.spyOn(console, 'log').mockImplementation(() => {})
     server.log()
 
     expect(spy).toHaveBeenCalledTimes(1)
@@ -36,6 +35,8 @@ describe('ulka:ulka-server', () => {
   })
 
   test('ulka:listen should start the server', (done) => {
+    const spy = jest.spyOn(console, 'log').mockImplementation(() => {})
+
     const callback = async () => {
       const res = await fetch(`http://localhost:${server.port}`)
       const res2 = await fetch(`http://localhost:${server.port}/ulka-config.js`)
@@ -44,7 +45,10 @@ describe('ulka:ulka-server', () => {
 
       expect(res.statusText).toBe('Not Found')
       expect((await res.text()).trim()).toBe(`This is 404`)
-      server.server.close(() => done())
+      server.server.close(() => {
+        done()
+        spy.mockRestore()
+      })
     }
 
     server.listen(callback)

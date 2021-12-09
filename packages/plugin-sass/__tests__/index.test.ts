@@ -8,6 +8,7 @@ import { build, Ulka } from 'ulka'
 const cwd = path.join(__dirname, 'resource')
 
 beforeAll(async () => {
+  jest.spyOn(console, 'log').mockImplementation(() => {})
   const ulka = new Ulka(cwd, 'build', 'ulka-config.js')
 
   const p = plugin({ sourceMap: true, omitSourceMapUrl: true })
@@ -18,6 +19,7 @@ beforeAll(async () => {
 })
 
 afterAll(() => {
+  jest.restoreAllMocks()
   rimraf.sync(path.join(cwd, '_site'))
 })
 

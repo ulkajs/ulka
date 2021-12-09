@@ -7,6 +7,7 @@ import { build, setup } from 'ulka'
 const cwd = path.join(__dirname, 'resource')
 
 beforeAll(async () => {
+  jest.spyOn(console, 'log').mockImplementation(() => {})
   const ulka = await setup(cwd, 'build', 'ulka-config.js')
 
   const p = plugin()
@@ -17,6 +18,7 @@ beforeAll(async () => {
 })
 
 afterAll(() => {
+  jest.restoreAllMocks()
   rimraf.sync(path.join(cwd, '_site'))
 })
 

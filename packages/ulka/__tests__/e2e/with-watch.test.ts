@@ -11,11 +11,14 @@ const cwd = path.join(__dirname, 'resources', 'with-watch')
 // @ts-ignore
 let ulka: Ulka
 beforeAll(async () => {
+  jest.spyOn(console, 'log').mockImplementation(() => {})
   ulka = await setup(cwd, 'build', 'ulka-config.js')
 })
 
 afterAll(async () => {
   rimraf.sync(path.join(cwd, '_site'))
+
+  jest.restoreAllMocks()
 })
 
 describe('e2e:with-watch - index.html', () => {
