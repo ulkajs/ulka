@@ -8,7 +8,7 @@ import { Ulka } from './Ulka'
 import { runPlugins, createWatcher, clearConsole } from './utils'
 
 export async function setup(cwd: string, task: string, cpath: string) {
-  return await new Ulka(cwd, task, cpath).setup()
+  return await Ulka.init(cwd, task, cpath)
 }
 
 export async function build(ulka: Ulka) {
@@ -51,7 +51,7 @@ export async function watch(
     eventName === 'unlink' &&
       rimraf.sync(ulka.configs.output, { disableGlob: true })
 
-    ulka.reset()
+    await ulka.reset()
     ulka.configs.verbose = verbose
     await build(ulka)
 
@@ -69,7 +69,7 @@ export async function watch(
 
 export { Ulka, clearConsole }
 export { FileInfo } from './FileInfo'
-export { defineConfig, box, resolvePlugin } from './utils'
+export { defineConfig, box, resolvePlugin, runPlugins } from './utils'
 export { UlkaError } from './UlkaError'
 export { Collection } from './Collection'
 export { UlkaServer } from './UlkaServer'
@@ -77,12 +77,14 @@ export type {
   Configs,
   ContentConfig,
   PluginConfig,
-  Plugins,
+  PluginsList,
+  Plugin,
   PluginFunction,
   ValidContentConfig,
   PluginArg,
   PluginName,
 } from './types'
+
 export {
   Engines,
   EjsTemplate,

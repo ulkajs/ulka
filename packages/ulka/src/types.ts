@@ -1,28 +1,21 @@
 import type { Ulka } from './Ulka'
 import type { Template } from './Templates/Template'
 
-export interface ContentConfig {
-  forEach?: (temp: Template, index: number, temps: Template[]) => any
-  sort?: (a: Template, b: Template) => any
-  match?: string | string[]
-  ignore?: string[]
-  layout?: Function | string | null
-  link?: Function | string | null
-}
-
 export interface ValidContentConfig {
   forEach: (temp: Template, index: number, temps: Template[]) => any
   sort: (a: Template, b: Template) => any
   match: string | string[]
   ignore: string[]
-  layout: Function | string | null
-  link: Function | string | null
+  layout: ((temp: Template) => string) | string | null
+  link: ((temp: Template) => string) | string | null
 }
+
+export type ContentConfig = Partial<ValidContentConfig>
 
 export type PluginConfig =
   | string
   | { plugin: string; options: { [key: string]: any } }
-  | Function
+  | Plugin
 
 export interface Configs {
   /**
@@ -97,12 +90,19 @@ export type PluginArg<T extends PluginName> = T extends
   | 'afterWrite'
   | 'beforeCreateContext'
   | 'afterCreateContext'
-  ? { content: Template; ulka: Ulka }
+  ? { template: Template; ulka: Ulka }
   : { ulka: Ulka }
 
 export type PluginFunction<T extends PluginName = any> = (
   arg: PluginArg<T>
 ) => any
-export type Plugins = {
+
+export type PluginsList = {
   [key in PluginName]: PluginFunction<key>[]
 }
+
+export type Plugin<T = { [key: string]: any }> = (options?: T) => Partial<
+  {
+    [key in PluginName]: PluginFunction<key>
+  }
+>

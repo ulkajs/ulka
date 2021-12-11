@@ -3,18 +3,18 @@ import path from 'path'
 import plugin from '../src'
 import rimraf from 'rimraf'
 
-import { build, Ulka } from 'ulka'
+import { build, setup, runPlugins } from 'ulka'
 
 const cwd = path.join(__dirname, 'resource')
 
 beforeAll(async () => {
   jest.spyOn(console, 'log').mockImplementation(() => {})
-  const ulka = new Ulka(cwd, 'build', 'ulka-config.js')
+  const ulka = await setup(cwd, 'build', 'ulka-config.js')
 
   const p = plugin({ sourceMap: true, omitSourceMapUrl: true })
   ulka.plugins.afterSetup.push(p.afterSetup)
+  await runPlugins('afterSetup', { ulka })
 
-  ulka.setup()
   await build(ulka)
 })
 

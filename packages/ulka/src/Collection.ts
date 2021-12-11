@@ -31,7 +31,7 @@ export class Collection {
     try {
       for (const templ of this.contents) {
         await runPlugins('beforeCreateContext', {
-          content: templ,
+          template: templ,
           ulka: this.ulka,
         })
 
@@ -39,7 +39,7 @@ export class Collection {
         templ.createCtx()
 
         await runPlugins('afterCreateContext', {
-          content: templ,
+          template: templ,
           ulka: this.ulka,
         })
       }
@@ -58,7 +58,7 @@ export class Collection {
     await pMap(
       this.contents,
       async (tpl) => {
-        const opts = { content: tpl, type: 'file', ulka: this.ulka }
+        const opts = { template: tpl, ulka: this.ulka }
 
         await runPlugins('beforeRender', opts)
         await tpl.render()

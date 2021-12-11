@@ -3,13 +3,13 @@ import { emptyPlugins } from '../src/utils'
 
 // @ts-ignore
 let ulka: Ulka
-beforeAll(() => {
-  ulka = new Ulka(__dirname, 'build', '')
+beforeAll(async () => {
+  ulka = await Ulka.init(__dirname, 'build', '')
 })
 
 describe('ulka:ulka', () => {
-  beforeEach(() => {
-    ulka.reset()
+  beforeEach(async () => {
+    await ulka.reset()
   })
 
   test('ulka:collections should be empty at first', () => {

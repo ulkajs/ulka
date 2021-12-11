@@ -7,8 +7,8 @@ exports.default = () => {
     afterSetup({ ulka }) {
       ulka.afterSetup = 'done'
     },
-    beforeRender({ ulka, content }) {
-      content.context.afterSetup = ulka.afterSetup
+    beforeRender({ ulka, template }) {
+      template.context.afterSetup = ulka.afterSetup
     },
   }
 }

@@ -10,7 +10,7 @@ import type {
   Configs,
   ContentConfig,
   PluginConfig,
-  Plugins,
+  PluginsList,
   PluginName,
   ValidContentConfig,
   PluginArg,
@@ -73,15 +73,16 @@ export function box(str: string, padding = 3, fn: Function = c.green) {
     .join('\n')
 }
 
-export const readConfigs = (ulka: Ulka) => {
+export const readConfigs = async (ulka: Ulka) => {
   const cwd = ulka.cwd
   const cpath = path.join(cwd, ulka.configpath)
 
   let req: { [key: string]: any } = {}
   try {
     const r = require(cpath)
-    if (typeof r === 'function') req = r(ulka)
-    else req = r
+    if (typeof r === 'function') {
+      req = await r(ulka)
+    } else req = r
   } catch (e: any) {
     if (e.code !== 'MODULE_NOT_FOUND') {
       console.log(e.message)
@@ -233,7 +234,7 @@ export function createWatcher(ulka: Ulka) {
   })
 }
 
-export function emptyPlugins(): Plugins {
+export function emptyPlugins(): PluginsList {
   return {
     afterBuild: [],
     afterSetup: [],
@@ -247,7 +248,12 @@ export function emptyPlugins(): Plugins {
   }
 }
 
-export function defineConfig(configs: Configs | ((ulka: Ulka) => Configs)) {
+export function defineConfig(
+  configs:
+    | Partial<Configs>
+    | ((ulka: Ulka) => Partial<Configs>)
+    | ((ulka: Ulka) => Promise<Partial<Configs>>)
+) {
   return configs
 }
 

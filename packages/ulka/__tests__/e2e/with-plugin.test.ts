@@ -3,14 +3,14 @@ import path from 'path'
 import rimraf from 'rimraf'
 import cheerio, { CheerioAPI } from 'cheerio'
 
-import { build, setup } from '../../src'
+import { build, setup, Ulka } from '../../src'
 
 const cwd = path.join(__dirname, 'resources', 'with-plugin')
 
+let ulka: Ulka
 beforeAll(async () => {
   jest.spyOn(console, 'log').mockImplementation(() => {})
-  const ulka = await setup(cwd, 'build', 'ulka-config.js')
-  // @ts-ignore
+  ulka = await setup(cwd, 'build', 'ulka-config.js')
   await build(ulka)
 })
 
@@ -19,7 +19,7 @@ afterAll(() => {
   rimraf.sync(path.join(cwd, '_site'))
 })
 
-describe('e2e:basic - index.html', () => {
+describe('e2e:with-plugin - index.html', () => {
   // @ts-ignore
   let $: CheerioAPI
 

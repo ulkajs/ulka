@@ -27,8 +27,8 @@ export class Template {
     public ulka: Ulka,
     public fileinfo: FileInfo,
     public configName?: string,
-    public configLayout?: Function | string | null,
-    public configLink?: Function | string | null
+    public configLayout?: ((temp: Template) => string) | string | null,
+    public configLink?: ((temp: Template) => string) | string | null
   ) {}
 
   clone() {

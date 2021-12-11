@@ -20,6 +20,7 @@ describe('ulka:index', () => {
         "clearConsole": [Function],
         "defineConfig": [Function],
         "resolvePlugin": [Function],
+        "runPlugins": [Function],
         "setup": [Function],
         "slugify": [Function],
         "watch": [Function],

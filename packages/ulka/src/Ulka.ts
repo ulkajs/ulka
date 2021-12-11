@@ -10,7 +10,7 @@ import { Collection } from './Collection'
 import { engines, Engines } from './Templates'
 import { readConfigs, resolvePlugin, runPlugins, emptyPlugins } from './utils'
 
-import type { Configs, Plugins } from './types'
+import type { Configs, PluginsList } from './types'
 
 const copyAsync = util.promisify(fs.copyFile)
 const mkdirAsync = util.promisify(fs.mkdir)
@@ -18,61 +18,71 @@ const mkdirAsync = util.promisify(fs.mkdir)
 export class Ulka {
   public engines: Engines = engines()
   public layout?: Collection
+  // @ts-expect-error
   public configs: Configs
   public server: UlkaServer
-  public plugins: Plugins
+  public plugins: PluginsList = emptyPlugins()
   public collections: { [key: string]: Collection } = {}
   // only to provide in context, don't change this ever
   public collectionContents: any
 
-  constructor(
+  private constructor(
     public cwd: string,
     public task: string,
     public configpath: string,
     public port = 8080
   ) {
-    this.plugins = emptyPlugins()
     this.server = new UlkaServer('', this.port)
 
-    const that = this
     this.collectionContents = new Proxy(
       {},
       {
-        get(_, key: string) {
+        get: (_, key: string) => {
           if (key === 'all') {
             const tmp: { [key: string]: any }[] = []
 
-            Object.values(that.collections).forEach((val) => {
+            Object.values(this.collections).forEach((val) => {
               tmp.push(...val.contents.map((c) => c.context))
             })
 
             return tmp
           }
 
-          if (!that.collections[key]) return []
-          return that.collections[key].contents.map((c) => c.context)
+          if (!this.collections[key]) return []
+          return this.collections[key].contents.map((c) => c.context)
         },
       }
     )
-
-    this.configs = readConfigs(this)
-    this.configs.plugins.forEach((p) => resolvePlugin(p, this))
-
-    this.server.base = this.configs.output
   }
 
-  async setup() {
+  private async _setup() {
     this.engines = engines()
-    await runPlugins('afterSetup', { ulka: this })
+    this.plugins = emptyPlugins()
+    this.configs = await readConfigs(this)
+    this.configs.plugins.forEach((p) => resolvePlugin(p, this))
+    this.server.base = this.configs.output
     return this
   }
 
-  reset() {
+  static async init(
+    cwd: string,
+    task: string,
+    configpath: string,
+    port = 8080
+  ): Promise<Ulka> {
+    const ulka = await new Ulka(cwd, task, configpath, port)._setup()
+
+    await runPlugins('afterSetup', { ulka })
+
+    return ulka
+  }
+
+  async reset() {
     this.collections = {}
+
     this.layout = undefined
-    this.plugins = emptyPlugins()
-    this.configs = readConfigs(this)
-    this.configs.plugins.forEach((p) => resolvePlugin(p, this))
+
+    await this._setup()
 
     return this
   }

@@ -1,16 +1,16 @@
 import { Template, FileInfo, Ulka } from '../src'
 
 describe('ulka:template', () => {
-  test('clone method should work', () => {
+  test('clone method should work', async () => {
     const finfo = new FileInfo(__filename)
-    const ulka = new Ulka(__dirname, 'build', '')
+    const ulka = await Ulka.init(__dirname, 'build', '')
     const template = new Template(ulka, finfo)
     expect(template.clone()).not.toBe(template)
   })
 
-  test('matter should be empty object if hasMatter is false', () => {
+  test('matter should be empty object if hasMatter is false', async () => {
     const finfo = new FileInfo(__filename)
-    const ulka = new Ulka(__dirname, 'build', '')
+    const ulka = await Ulka.init(__dirname, 'build', '')
 
     class A extends Template {
       get hasMatter() {
@@ -23,9 +23,9 @@ describe('ulka:template', () => {
     expect(template.context.matter).toEqual({})
   })
 
-  test('content should be string if contentShouldBeString is true', () => {
+  test('content should be string if contentShouldBeString is true', async () => {
     const finfo = new FileInfo(__filename)
-    const ulka = new Ulka(__dirname, 'build', '')
+    const ulka = await Ulka.init(__dirname, 'build', '')
 
     class A extends Template {
       get hasMatter() {

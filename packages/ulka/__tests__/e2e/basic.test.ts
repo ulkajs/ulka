@@ -12,7 +12,6 @@ let ulka: Ulka
 beforeAll(async () => {
   jest.spyOn(console, 'log').mockImplementation(() => {})
   ulka = await setup(cwd, 'build', 'ulka-config.js')
-  // @ts-ignore
   await build(ulka)
 })
 

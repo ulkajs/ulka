@@ -8,8 +8,8 @@ module.exports = () => {
     afterSetup({ ulka }) {
       ulka.afterSetup = 'done'
     },
-    beforeRender({ ulka, content }) {
-      content.context.time = 'random-text'
+    beforeRender({ ulka, template }) {
+      template.context.time = 'random-text'
     },
   }
 }

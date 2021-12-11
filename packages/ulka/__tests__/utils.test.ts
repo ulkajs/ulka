@@ -136,10 +136,10 @@ describe('ulka:utils', () => {
     expect(watcher instanceof FSWatcher).toBe(true)
   })
 
-  test('utils:readConfigs should return default config as cofig path will not be found', () => {
+  test('utils:readConfigs should return default config as cofig path will not be found', async () => {
     const cwd = process.cwd()
     // @ts-ignore
-    expect(readConfigs({ cwd, configpath: 'ulka-config.js' })).toEqual({
+    expect(await readConfigs({ cwd, configpath: 'ulka-config.js' })).toEqual({
       contents: {},
       input: cwd,
       layout: path.join(cwd, '_layouts'),
