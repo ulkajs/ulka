@@ -79,7 +79,13 @@ describe('template-engine:index', () => {
       "
       <h1>Hello World</h1>
       <p><h1>Hello From Another</h1>
-      I am Roshan Acharya and this is ulka template engine</p>
+      <head>
+        <title>Hello World</title>
+      </head>
+
+      Hello World
+      I am Roshan Acharya and this is ulka template engine
+      </p>
       "
     `)
   })
