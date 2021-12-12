@@ -1,6 +1,6 @@
 import fs from 'fs'
 import sass from 'sass'
-import { Template, PluginFunction } from 'ulka'
+import { Template, Plugin } from 'ulka'
 
 class SassTemplate extends Template {
   static sass = sass
@@ -35,11 +35,13 @@ class SassTemplate extends Template {
   }
 }
 
-export default (opts: sass.Options) => ({
-  afterSetup({ ulka }: Parameters<PluginFunction>[0]) {
+const plugin: Plugin = (opts: sass.Options = {}) => ({
+  afterSetup({ ulka }) {
     SassTemplate.opts = opts
 
     ulka.engines['.sass'] = SassTemplate
     ulka.engines['.scss'] = SassTemplate
   },
 })
+
+export default plugin

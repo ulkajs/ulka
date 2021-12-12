@@ -12,7 +12,7 @@ beforeAll(async () => {
   const ulka = await setup(cwd, 'build', 'ulka-config.js')
 
   const p = plugin({ sourceMap: true, omitSourceMapUrl: true })
-  ulka.plugins.afterSetup.push(p.afterSetup)
+  ulka.plugins.afterSetup.push(p.afterSetup!)
   await runPlugins('afterSetup', { ulka })
 
   await build(ulka)

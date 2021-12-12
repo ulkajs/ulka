@@ -11,8 +11,8 @@ beforeAll(async () => {
   const ulka = await setup(cwd, 'build', 'ulka-config.js')
 
   const p = plugin()
-  ulka.plugins.afterCreateContext.push(p.afterCreateContext)
-  ulka.plugins.afterBuild.push(p.afterBuild)
+  ulka.plugins.afterCreateContext.push(p.afterCreateContext!)
+  ulka.plugins.afterBuild.push(p.afterBuild!)
 
   await build(ulka)
 })
