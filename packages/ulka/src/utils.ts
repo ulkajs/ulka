@@ -116,7 +116,7 @@ export function resolvePlugin(pluginConfig: PluginConfig, ulka: Ulka) {
     name = pluginConfig.plugin
     options = pluginConfig.options || {}
   } else if (typeof pluginConfig === 'function') {
-    plugin = pluginConfig()
+    plugin = pluginConfig({})
   }
 
   if (name) {

@@ -67,7 +67,7 @@ export interface Configs {
    * @example
    * copy: ["**.{png,css,jpeg}", "fav.ico"]
    */
-  copy: string[]
+  copy: string[] | { match: string[]; output: (path: string) => string }
   metaData: { [key: string]: any }
   concurrency: number
 }
@@ -101,7 +101,7 @@ export type PluginsList = {
   [key in PluginName]: PluginFunction<key>[]
 }
 
-export type Plugin<T = { [key: string]: any }> = (options?: T) => Partial<
+export type Plugin<T = any> = (options: T) => Partial<
   {
     [key in PluginName]: PluginFunction<key>
   }

@@ -35,7 +35,7 @@ class SassTemplate extends Template {
   }
 }
 
-const plugin: Plugin = (opts: sass.Options = {}) => ({
+const plugin: Plugin = (opts: sass.Options) => ({
   afterSetup({ ulka }) {
     SassTemplate.opts = opts
 

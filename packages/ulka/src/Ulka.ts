@@ -131,13 +131,21 @@ export class Ulka {
   }
 
   async copy(cwd = this.configs.input) {
-    const files = await fg(this.configs.copy, { cwd, absolute: true })
+    let files: string[] = []
+    let pathFn = (p: string) => p
+
+    if (Array.isArray(this.configs.copy)) {
+      files = await fg(this.configs.copy, { cwd, absolute: true })
+    } else {
+      files = await fg(this.configs.copy.match, { cwd, absolute: true })
+      pathFn = this.configs.copy.output || pathFn
+    }
 
     await pMap(
       files,
       async (file) => {
         const relative = path.relative(this.configs.input, file)
-        const dest = path.join(this.configs.output, relative)
+        const dest = pathFn(path.join(this.configs.output, relative))
 
         await mkdirAsync(path.dirname(dest), { recursive: true })
 
