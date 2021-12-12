@@ -10,7 +10,7 @@ beforeAll(async () => {
   jest.spyOn(console, 'log').mockImplementation(() => {})
   const ulka = await setup(cwd, 'build', 'ulka-config.js')
 
-  const p = plugin()
+  const p = plugin({})
   ulka.plugins.afterCreateContext.push(p.afterCreateContext!)
   ulka.plugins.afterBuild.push(p.afterBuild!)
 
