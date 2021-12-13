@@ -56,7 +56,6 @@ export class Ulka {
   }
 
   private async _setup() {
-    this.engines = engines()
     this.plugins = emptyPlugins()
     this.configs = await readConfigs(this)
     this.configs.plugins.forEach((p) => resolvePlugin(p, this))
