@@ -21,10 +21,10 @@
 
    ```sh
    # with npm
-   npm init @ulkajs/app
+   npm init ulka
 
    # with yarn
-   yarn create @ulkajs/app
+   yarn create ulka
    ```
 
    Then chose the template and project name.
@@ -33,10 +33,10 @@
 
    ```sh
     # with npm
-    npm init @ulkajs/app my-blog -- --template default-blog
+    npm init ulka my-blog -- --template default-blog
 
     # with yarn
-    yarn create @ulkajs/app my-blog --template default-blog
+    yarn create ulka my-blog --template default-blog
    ```
 
 1. Navigate to project name and install dependencies.
