@@ -7,7 +7,7 @@ const config: Config.InitialOptions = {
   collectCoverageFrom: [
     'packages/**/src/**/**.ts',
     '!**/**/cli.ts',
-    '!packages/create-app/**',
+    '!packages/create-ulka/**',
   ],
   coverageThreshold: {
     global: {
