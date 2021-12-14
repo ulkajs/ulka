@@ -31,6 +31,8 @@ export class Template {
     public configLink?: ((temp: Template) => string) | string | null
   ) {}
 
+  static reset() {}
+
   clone() {
     const Template =
       this.ulka.engines[this.fileinfo.parsedpath.ext] ||

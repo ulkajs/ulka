@@ -81,8 +81,11 @@ export class Ulka {
 
     this.layout = undefined
 
-    await this._setup()
+    for (const engine of Object.values(this.engines)) {
+      engine.reset()
+    }
 
+    await this._setup()
     return this
   }
 

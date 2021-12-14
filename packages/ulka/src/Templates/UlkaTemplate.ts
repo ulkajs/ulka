@@ -16,6 +16,10 @@ export class UlkaTemplate extends Template {
     }
   }
 
+  static reset(): void {
+    UlkaTemplate.ulka = ulka
+  }
+
   get hasMatter() {
     return true
   }

@@ -6,6 +6,10 @@ import { Template } from './Template'
 export class EjsTemplate extends Template {
   static ejs = ejs
 
+  static reset(): void {
+    EjsTemplate.ejs = ejs
+  }
+
   async compile() {
     const fn = EjsTemplate.ejs.compile(this.content as string, {
       beautify: false,

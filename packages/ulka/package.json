@@ -55,7 +55,7 @@
     "@types/ws": "^7.4.4",
     "@ulkajs/template-engine": "1.0.0",
     "ansi-colors": "^4.1.1",
-    "chokidar": "^3.5.1",
+    "chokidar": "^3.5.2",
     "commander": "^7.2.0",
     "connect": "^3.7.0",
     "cors": "^2.8.5",

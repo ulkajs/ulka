@@ -6,6 +6,10 @@ import { Template } from './Template'
 export class LiquidTemplate extends Template {
   static liquid = new Liquid({ dynamicPartials: true })
 
+  static reset(): void {
+    LiquidTemplate.liquid = new Liquid({ dynamicPartials: true })
+  }
+
   async compile() {
     const template = LiquidTemplate.liquid.parse(this.content as string)
 

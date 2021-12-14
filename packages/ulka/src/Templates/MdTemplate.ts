@@ -5,7 +5,11 @@ import { Template } from './Template'
 import { LiquidTemplate } from './LiquidTemplate'
 
 export class MdTemplate extends Template {
-  static md = new MarkdownIt()
+  static md = new MarkdownIt({ html: true })
+
+  static reset(): void {
+    MdTemplate.md = new MarkdownIt({ html: true })
+  }
 
   async compile() {
     const html = MdTemplate.md.render(this.content as string)
