@@ -26,7 +26,10 @@ export default [
     plugins: [
       typescript(),
       nodeResolve({ preferBuiltins: true }),
-      commonjs({ ignoreTryCatch: true }),
+      commonjs({
+        ignoreTryCatch: true,
+        ignoreDynamicRequires: true,
+      }),
       json(),
       licensePlugin(),
       replaceEvalWithFunction(),
