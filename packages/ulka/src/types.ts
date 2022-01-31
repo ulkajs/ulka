@@ -65,9 +65,15 @@ export interface Configs {
    * and no collection will be created
    *
    * @example
-   * copy: ["**.{png,css,jpeg}", "fav.ico"]
+   * copy: ["**.{png,css,jpeg}", "fav.ico", { match: ["temporary/**"], output: (p) => p + ".tmp" }]
+   *
    */
-  copy: string[] | { match: string[]; output: (path: string) => string }
+  copy: (
+    | { match: string[] | string; output: (path: string) => string }
+    | string
+    | string[]
+  )[]
+
   metaData: { [key: string]: any }
   concurrency: number
 }

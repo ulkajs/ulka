@@ -133,28 +133,34 @@ export class Ulka {
   }
 
   async copy(cwd = this.configs.input) {
-    let files: string[] = []
-    let pathFn = (p: string) => p
+    const files: string[] = []
 
-    if (Array.isArray(this.configs.copy)) {
-      files = await fg(this.configs.copy, { cwd, absolute: true })
-    } else {
-      files = await fg(this.configs.copy.match, { cwd, absolute: true })
-      pathFn = this.configs.copy.output || pathFn
+    for (const each of this.configs.copy) {
+      let _files: string[] = []
+      let pathFn = (p: string) => p
+
+      if (typeof each === 'string' || Array.isArray(each))
+        _files = await fg(each, { cwd, absolute: true })
+      else if (each.match) {
+        _files = await fg(each.match, { absolute: true, cwd })
+        pathFn = each.output || pathFn
+      }
+
+      await pMap(
+        _files,
+        async (file) => {
+          const relative = path.relative(this.configs.input, file)
+          const dest = pathFn(path.join(this.configs.output, relative))
+
+          await mkdirAsync(path.dirname(dest), { recursive: true })
+
+          await copyAsync(file, dest)
+        },
+        { concurrency: this.configs.concurrency }
+      )
+
+      files.push(..._files)
     }
-
-    await pMap(
-      files,
-      async (file) => {
-        const relative = path.relative(this.configs.input, file)
-        const dest = pathFn(path.join(this.configs.output, relative))
-
-        await mkdirAsync(path.dirname(dest), { recursive: true })
-
-        await copyAsync(file, dest)
-      },
-      { concurrency: this.configs.concurrency }
-    )
 
     return files
   }

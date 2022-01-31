@@ -9,7 +9,7 @@ const cwd = path.join(__dirname, 'resources', 'with-plugin')
 
 let ulka: Ulka
 beforeAll(async () => {
-  jest.spyOn(console, 'log').mockImplementation(() => {})
+  // jest.spyOn(console, 'log').mockImplementation(() => {})
   ulka = await setup(cwd, 'build', 'ulka-config.js')
   await build(ulka)
 })
