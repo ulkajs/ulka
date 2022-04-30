@@ -1,6 +1,6 @@
 {
   "name": "create-ulka",
-  "version": "1.0.0",
+  "version": "1.0.0-experimental.1",
   "bin": {
     "create-ulka": "bin/index.js"
   },

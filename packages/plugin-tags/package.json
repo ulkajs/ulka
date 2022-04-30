@@ -1,6 +1,6 @@
 {
   "name": "@ulkajs/plugin-tags",
-  "version": "1.0.0",
+  "version": "1.0.0-experimental.1",
   "description": "Tags support for ulkajs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/ulkajs/ulka/tree/main/packages/plugin-tags#readme",
   "devDependencies": {
-    "ulka": "1.0.0"
+    "ulka": "1.0.0-experimental.1"
   },
   "peerDependencies": {
     "ulka": ">=1.0.0"

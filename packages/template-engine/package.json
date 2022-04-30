@@ -1,6 +1,6 @@
 {
   "name": "@ulkajs/template-engine",
-  "version": "1.0.0",
+  "version": "1.0.0-experimental.1",
   "description": "Simple template engine for ulka static site generator",
   "main": "dist/index.js",
   "bin": {
