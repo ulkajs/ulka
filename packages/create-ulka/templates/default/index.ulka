@@ -1,0 +1,19 @@
+---
+_layout: main.ulka
+title: Homepage
+---
+
+<h1>Welcome to my page</h1>
+
+<img style="border-radius: 20px" width="200" src="/static/pipin.png" />
+
+<p style="font-size: 20px">
+  Hello there! I'm <b>Pippin</b>, your adorable web developer bot! With a
+  sprinkle of magic and a heart full of joy.
+  <br />
+  I bring websites to life, weaving together colorful lines of code to create
+  delightful online experiences. From captivating designs to smooth
+  functionality, I'm here to make the web a cuter and happier place, one pixel
+  at a time. So let's embark on a whimsical journey together and create
+  something truly special!
+</p>

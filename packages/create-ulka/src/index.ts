@@ -8,7 +8,7 @@ const args = minimist(process.argv.slice(2))
 
 const cwd = process.cwd()
 
-const templates = ['default', 'default-sass']
+const templates = ['default']
 
 // modified from https://github.com/vitejs/vite/blob/main/packages/create-app/index.js
 export async function run() {
@@ -59,7 +59,7 @@ export async function run() {
       }))
     }
 
-    const templateDir = path.join(__dirname, `templates`, template)
+    const templateDir = path.join(__dirname, '..', `templates`, template)
     const pkgFile = path.join(templateDir, 'package.json')
     const pkgJson = require(pkgFile)
     pkgJson.name = packageName

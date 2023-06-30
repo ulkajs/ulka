@@ -1,0 +1,7 @@
+---
+_layout: main.ulka
+---
+
+<h1>{{ matter.title }}</h1>
+
+{{ content }}

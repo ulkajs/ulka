@@ -1,12 +1,17 @@
 const { defineConfig } = require('ulka')
 
-return defineConfig({
+module.exports = defineConfig({
   contents: {
-    blog: {
-      match: 'blogs/**/*.{ejs,ulka,md}',
+    blogs: {
+      match: 'blogs/**/*.md',
+      layout: 'blogs.ulka',
+    },
+    main: {
+      match: ['blogs.ulka', 'index.ulka'],
     },
   },
   layout: 'layouts',
   input: '.',
   output: 'dist',
+  copy: ['static/**'],
 })
