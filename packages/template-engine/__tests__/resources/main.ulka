@@ -1,0 +1,3 @@
+{{ const toAnother = 'I am Roshan Acharya and this is ulka template engine' }}
+<h1>{{ require('./main.js') }}</h1>
+<p>{{ include('./partials/another.ulka') }}</p>

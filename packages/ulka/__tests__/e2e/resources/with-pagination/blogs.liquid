@@ -1,0 +1,13 @@
+---
+_permalink: _PAGINATE_
+_paginate:
+  collection: blogs
+  size: 2
+  permalink: /blogs/page-{{ pagination.page }}/index.html
+---
+
+{% for item in pagination.current %}
+
+<h1>{{ item.matter.title }}</h1>
+
+{% endfor %}

@@ -1,0 +1,12 @@
+nav {
+  display: flex;
+  gap: 40px;
+}
+
+.blog-item {
+  padding: 15px;
+  border: 1px solid #ffffff5b;
+  border-radius: 5px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

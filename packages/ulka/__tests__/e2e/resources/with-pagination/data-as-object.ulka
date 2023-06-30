@@ -1,0 +1,9 @@
+---
+_permalink: _PAGINATE_
+_paginate:
+    data: {"python": 1, "django": 2}
+    size: 1
+    permalink: /pages4/{{ pagination.page }}/
+---
+
+{{ pagination.current[0] }}

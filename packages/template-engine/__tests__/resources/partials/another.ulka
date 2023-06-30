@@ -1,0 +1,4 @@
+<h1>Hello From Another</h1>
+{{ include('./head.ulka') }}
+{{ require('../main.js') }}
+{{ toAnother }}

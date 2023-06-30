@@ -1,0 +1,33 @@
+{
+  "name": "@ulkajs/template-engine",
+  "version": "1.0.0",
+  "description": "Simple template engine for ulka static site generator",
+  "main": "dist/index.js",
+  "bin": {
+    "ulka-render": "bin/ulka-render.js"
+  },
+  "author": {
+    "name": "Roshan Acharya",
+    "email": "acharyaroshan2357@gmail.com"
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "cb": "run-s clean build",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path . --lerna-package template-engine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ulkajs/ulka.git",
+    "directory": "packages/template-engine"
+  },
+  "bugs": {
+    "url": "https://github.com/ulkajs/ulka/issues"
+  },
+  "homepage": "https://github.com/ulkajs/ulka/tree/main/packages/template-engine#readme"
+}

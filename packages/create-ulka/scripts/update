@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+const fs = require('fs')
+const path = require('path')
+
+const version = require('../../ulka/package.json').version
+
+const packagejsons = (n) => path.join('templates', n, 'package.json')
+
+for (const pkgfile of packagejsons) {
+  try {
+    const pkg = require(pkgfile)
+
+    pkg.devDependencies.ulka = version
+
+    fs.writeFileSync(pkgfile, JSON.stringify(pkg, null, 2))
+  } catch (err) {}
+}

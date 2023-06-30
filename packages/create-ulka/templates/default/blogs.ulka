@@ -1,0 +1,14 @@
+---
+_layout: main.ulka
+title: All Posts
+---
+
+{{
+  collections.blogs.map((blog) => {
+    return /* HTML */ `<div class="blog-item">
+      <a href="${blog.link}">${blog.matter.title}</a> <br />
+      <span style="color: #999">Author: ${blog.matter.author}</span>
+      <p>${blog.matter.description}</p>
+    </div>`
+  })
+}}

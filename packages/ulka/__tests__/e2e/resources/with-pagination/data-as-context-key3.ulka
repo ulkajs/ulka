@@ -1,0 +1,8 @@
+---
+_permalink: /pages5/index.html
+_paginate:
+    data: somekeythatdoesntexist
+    permalink: /pages5/{{ pagination.current }}/
+---
+
+{{ typeof pagination }}
