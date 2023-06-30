@@ -1,7 +1,7 @@
 {
   "name": "ulka",
   "description": "A simpler static site generator written in javascript",
-  "version": "1.0.0-experimental.1",
+  "version": "1.0.0",
   "bin": {
     "ulka": "bin/ulka.js"
   },
@@ -15,8 +15,7 @@
     "types:rollup": "api-extractor run && rimraf temp",
     "clean": "rimraf dist temp",
     "cb": "run-s clean build",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path .",
-    "release": "../../scripts/release"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s --commit-path ."
   },
   "files": [
     "dist",
@@ -53,7 +52,7 @@
     "@types/recursive-readdir": "^2.2.0",
     "@types/rimraf": "^3.0.0",
     "@types/ws": "^7.4.4",
-    "@ulkajs/template-engine": "1.0.0-experimental.1",
+    "@ulkajs/template-engine": "1.0.0",
     "ansi-colors": "^4.1.1",
     "chokidar": "^3.5.2",
     "commander": "^7.2.0",
